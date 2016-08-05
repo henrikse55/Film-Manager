@@ -8,6 +8,8 @@ namespace Client
 {
     static class Program
     {
+
+        public static ClientForm clientform; //ClientForm er static så all classes can have access til den
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
@@ -16,7 +18,7 @@ namespace Client
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new ClientForm());
+            Application.Run(clientform = new ClientForm());
         }
     }
 }
