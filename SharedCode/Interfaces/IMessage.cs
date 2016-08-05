@@ -3,17 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Net.Sockets;
 
-namespace Client
+namespace SharedCode.Interfaces
 {
-    class NetworkHandler
+    interface IMessage
     {
-        public NetworkHandler()
-        {
+        int Command { get; }
 
-        }
-
-
+        String[] args { get; }
     }
 }
