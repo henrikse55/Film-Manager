@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Windows.Forms;
 using System.Threading;
+using Client.Network;
+using Client.Handler;
 namespace Client
 {
     static class Program
