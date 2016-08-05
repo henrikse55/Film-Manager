@@ -25,6 +25,7 @@ namespace Client.Handler
         {
             do
             {
+                if(QueuedMessages.Count > 0)
                await RunCommand();
                Thread.Sleep(200);
             } while (true);

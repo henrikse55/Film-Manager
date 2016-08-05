@@ -7,6 +7,7 @@ namespace Client
 {
     static class Program
     {
+        public static ClientForm clientform;
         public static MessageHandler messageHandler = new MessageHandler();
         public static NetworkHandler Network = new NetworkHandler();
 
@@ -22,7 +23,7 @@ namespace Client
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new ClientForm());
+            Application.Run(clientform = new ClientForm());
         }
     }
 }
