@@ -9,7 +9,7 @@ using System.Threading;
 using System.IO;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
-using SharedCode.Network;
+using Shared.Network;
 
 namespace Client.Network
 {
@@ -81,6 +81,7 @@ namespace Client.Network
             StateObject state = (StateObject)ar.AsyncState;
 
             int bytesRec = state.ClientSocket.EndReceive(ar);
+            Message message = Deserialize(state.buffer);
         }
 
         public byte[] Serialize(Object o)
@@ -95,7 +96,7 @@ namespace Client.Network
             }
         }
 
-        public Object Deserialize(byte[] buffer)
+        public Message Deserialize(byte[] buffer)
         {
             if (buffer == null)
                 throw new NullReferenceException();
@@ -103,7 +104,7 @@ namespace Client.Network
             using (MemoryStream stream = new MemoryStream(buffer))
             {
                 BinaryFormatter bf = new BinaryFormatter();
-                return bf.Deserialize(stream);
+                return (Message) bf.Deserialize(stream);
             }
         }
     }

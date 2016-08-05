@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
-namespace SharedCode.Interfaces
+using Shared.Enums;
+namespace Shared.Interfaces
 {
     interface IMessage
     {
-        int Command { get; }
+        MessageIDs Command { get; }
 
         String[] args { get; }
     }

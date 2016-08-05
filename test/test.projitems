@@ -9,7 +9,9 @@
     <Import_RootNamespace>test</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)Enums\MessageIDs.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Interfaces\IMessage.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Network\Message.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Network\StateObject.cs" />
   </ItemGroup>
 </Project>

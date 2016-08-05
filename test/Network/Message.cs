@@ -3,28 +3,29 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
-
-using SharedCode.Interfaces;
-namespace SharedCode.Network
+using Shared.Interfaces;
+using Shared.Enums;
+namespace Shared.Network
 {
+    [Serializable]
     class Message : IMessage
     {
-        int i = 0;
-        public int Command
+        MessageIDs MessageID;
+        String[] arg;
+        public Message(MessageIDs ID, String[] args)
         {
-            get{throw new NotImplementedException();}
+            MessageID = ID;
+            arg = args;
+        }
+
+        public MessageIDs Command
+        {
+            get{ return MessageID;}
         }
 
         public string[] args
         {
-            get{ throw new NotImplementedException();}
-        }
-
-        public int test
-        {
-            get { return i; }
-            set { i = value; }
+            get{ return arg;}
         }
     }
 }
