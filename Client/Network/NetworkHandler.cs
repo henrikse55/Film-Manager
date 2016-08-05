@@ -6,6 +6,10 @@ using System.Threading.Tasks;
 using System.Net;
 using System.Net.Sockets;
 using System.Threading;
+using System.IO;
+using System.Runtime.Serialization;
+using System.Runtime.Serialization.Formatters.Binary;
+using SharedCode.Network;
 
 namespace Client.Network
 {
@@ -77,14 +81,30 @@ namespace Client.Network
             StateObject state = (StateObject)ar.AsyncState;
 
             int bytesRec = state.ClientSocket.EndReceive(ar);
-            String Message = bytesToString(state.buffer, bytesRec);
-
         }
 
-
-        private String bytesToString(Byte[] buffer, int count)
+        public byte[] Serialize(Object o)
         {
-            return Encoding.ASCII.GetString(buffer,0,count);
+            if (o == null)
+                throw new NullReferenceException();
+            BinaryFormatter bf = new BinaryFormatter();
+            using (MemoryStream stream = new MemoryStream())
+            {
+                bf.Serialize(stream, o);
+                return stream.ToArray();
+            }
+        }
+
+        public Object Deserialize(byte[] buffer)
+        {
+            if (buffer == null)
+                throw new NullReferenceException();
+
+            using (MemoryStream stream = new MemoryStream(buffer))
+            {
+                BinaryFormatter bf = new BinaryFormatter();
+                return bf.Deserialize(stream);
+            }
         }
     }
 }
