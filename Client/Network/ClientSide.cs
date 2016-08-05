@@ -8,7 +8,6 @@ using System.Net.Sockets;
 using System.Threading;
 using Client.Network;
 using Shared.Network;
-using System.Threading;
 
 
 namespace Client.Network
@@ -75,7 +74,6 @@ namespace Client.Network
                 Console.WriteLine("Failed to connect");
             }
         }
-        bool Fill = true;
         private void onRecive(IAsyncResult ar)
         {
             try

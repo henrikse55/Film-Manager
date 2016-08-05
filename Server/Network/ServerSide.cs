@@ -14,7 +14,6 @@ namespace Server.Network
     public class ServerSide : IDisposable
     {
         private List<Socket> Clients = new List<Socket>();
-        private int ClientCount = 0;
         private int Port = 7777;
         private Socket server;
 
