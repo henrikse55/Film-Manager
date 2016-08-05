@@ -21,7 +21,7 @@ namespace Client.Handler
             QueuedMessages.Add(message);
         }
 
-        async void init()
+        public async void init()
         {
             do
             {
