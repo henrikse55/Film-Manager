@@ -14,17 +14,18 @@ namespace Client.Handler
 {
     class MessageHandler
     {
-        public List<Message> QueuedMessages = new List<Message>();
+        private List<Message> QueuedMessages = new List<Message>();
 
         public void QueueMessage(Message message)
         {
             QueuedMessages.Add(message);
         }
 
-        async void init()
+        public async void init()
         {
             do
             {
+               if(QueuedMessages.Count > 0)
                await RunCommand();
                Thread.Sleep(200);
             } while (true);

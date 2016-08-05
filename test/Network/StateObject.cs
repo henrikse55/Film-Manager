@@ -15,14 +15,14 @@ namespace Shared.Network
         /// <param name="socket">The Client Socket</param>
         public StateObject(Socket socket)
         {
-            ClientSocket = socket;
+            Socket = socket;
         }
 
         public const int bufferSize = 1024;
 
         public byte[] buffer = new byte[bufferSize];
 
-        public Socket ClientSocket;
+        public Socket Socket;
 
     }
 }

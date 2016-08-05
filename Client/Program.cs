@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-
+using System.Threading;
 using Client.Handler;
 using Client.Network;
 namespace Client
@@ -19,6 +19,10 @@ namespace Client
         [STAThread]
         static void Main()
         {
+            Thread.Sleep(500);
+            new Thread(new ThreadStart(messageHandler.init)).Start();
+            new Thread(new ThreadStart(Network.Init)).Start();
+
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new ClientForm());

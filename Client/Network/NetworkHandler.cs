@@ -37,28 +37,25 @@ namespace Client.Network
         /// </summary>
         public void Init()
         {
-            IPAddress ipAddress = IPAddress.Parse(ServerIP);
-            IPEndPoint endPoint = new IPEndPoint(ipAddress, ServerPort);
-
-            ClientSocket = new Socket(ipAddress.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
-            int i = 0;
-            do
+            try
             {
-                try
+                IPAddress ipAddress = IPAddress.Parse(ServerIP);
+                IPEndPoint endIP = new IPEndPoint(ipAddress, ServerPort);
+
+                ClientSocket = new Socket(ipAddress.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
+                int i = 0;
+                do
                 {
                     ConnectDone.Reset();
                     StateObject state = new StateObject(ClientSocket);
                     ClientSocket.BeginConnect(IPAddress.Parse(ServerIP), ServerPort, new AsyncCallback(ConnectionCallBack), state);
                     ConnectDone.WaitOne();
-                }
-                catch
-                {
-                }
-            } while (i != 5);
-
-            if (i == 5)
+                    i++;
+                } while (!ClientSocket.Connected & i < 10);
+            }
+            catch (Exception e)
             {
-                MessageBox.Show("Failed to connect to the server", "Network error");
+                Console.WriteLine("Error: " + e.Message);
             }
         }
 
@@ -72,10 +69,10 @@ namespace Client.Network
             {
                 ConnectDone.Set();
                 StateObject state = (StateObject)ar.AsyncState;
-                state.ClientSocket.EndConnect(ar);
+                state.Socket.EndConnect(ar);
 
-                Console.WriteLine("Connceted To {0}", state.ClientSocket.RemoteEndPoint);
-                state.ClientSocket.BeginReceive(state.buffer, 0, state.buffer.Length, 0 , new AsyncCallback(ReciveCallBack), state);
+                Console.WriteLine("Connceted To {0}", state.Socket.RemoteEndPoint);
+                state.Socket.BeginReceive(state.buffer, 0, state.buffer.Length, 0 , new AsyncCallback(ReciveCallBack), state);
             }
             catch (Exception)
             {
@@ -92,10 +89,11 @@ namespace Client.Network
         {
             StateObject state = (StateObject)ar.AsyncState;
 
-            int bytesRec = state.ClientSocket.EndReceive(ar);
-            Shared.Network.Message message = Deserialize(state.buffer);
+            int bytesRec = state.Socket.EndReceive(ar);
+            Shared.Network.Message message = Serilizer.Deserialize(state.buffer);
+            Program.messageHandler.QueueMessage(message);
 
-            state.ClientSocket.BeginReceive(state.buffer, 0, state.buffer.Length, 0, new AsyncCallback(ReciveCallBack), state);
+            state.Socket.BeginReceive(state.buffer, 0, state.buffer.Length, 0, new AsyncCallback(ReciveCallBack), state);
         }
 
         private void SendCallBack(IAsyncResult ar)
@@ -106,32 +104,8 @@ namespace Client.Network
 
         public void Send(Shared.Network.Message message)
         {
-            Byte[] bytesToSend = Serialize(message);
+            Byte[] bytesToSend = Serilizer.Serialize(message);
             ClientSocket.BeginSend(bytesToSend, 0, bytesToSend.Length, 0, new AsyncCallback(SendCallBack), ClientSocket);
-        }
-
-        public byte[] Serialize(Object o)
-        {
-            if (o == null)
-                throw new NullReferenceException();
-            BinaryFormatter bf = new BinaryFormatter();
-            using (MemoryStream stream = new MemoryStream())
-            {
-                bf.Serialize(stream, o);
-                return stream.ToArray();
-            }
-        }
-
-        public Shared.Network.Message Deserialize(byte[] buffer)
-        {
-            if (buffer == null)
-                throw new NullReferenceException();
-
-            using (MemoryStream stream = new MemoryStream(buffer))
-            {
-                BinaryFormatter bf = new BinaryFormatter();
-                return (Shared.Network.Message) bf.Deserialize(stream);
-            }
         }
     }
 }
