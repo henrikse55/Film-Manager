@@ -10,6 +10,7 @@ using System.IO;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
 using Shared.Network;
+using System.Windows.Forms;
 
 namespace Client.Network
 {
@@ -43,11 +44,22 @@ namespace Client.Network
             int i = 0;
             do
             {
-                ConnectDone.Reset();
-                StateObject state = new StateObject(ClientSocket);
-                ClientSocket.BeginConnect(IPAddress.Parse(ServerIP), ServerPort ,new AsyncCallback(ConnectionCallBack), state);
-                ConnectDone.WaitOne();
+                try
+                {
+                    ConnectDone.Reset();
+                    StateObject state = new StateObject(ClientSocket);
+                    ClientSocket.BeginConnect(IPAddress.Parse(ServerIP), ServerPort, new AsyncCallback(ConnectionCallBack), state);
+                    ConnectDone.WaitOne();
+                }
+                catch
+                {
+                }
             } while (i != 5);
+
+            if (i == 5)
+            {
+                MessageBox.Show("Failed to connect to the server", "Network error");
+            }
         }
 
         /// <summary>
@@ -81,7 +93,21 @@ namespace Client.Network
             StateObject state = (StateObject)ar.AsyncState;
 
             int bytesRec = state.ClientSocket.EndReceive(ar);
-            Message message = Deserialize(state.buffer);
+            Shared.Network.Message message = Deserialize(state.buffer);
+
+            state.ClientSocket.BeginReceive(state.buffer, 0, state.buffer.Length, 0, new AsyncCallback(ReciveCallBack), state);
+        }
+
+        private void SendCallBack(IAsyncResult ar)
+        {
+            Socket socket = (Socket)ar.AsyncState;
+            int i = socket.EndSend(ar);
+        }
+
+        public void Send(Shared.Network.Message message)
+        {
+            Byte[] bytesToSend = Serialize(message);
+            ClientSocket.BeginSend(bytesToSend, 0, bytesToSend.Length, 0, new AsyncCallback(SendCallBack), ClientSocket);
         }
 
         public byte[] Serialize(Object o)
@@ -96,7 +122,7 @@ namespace Client.Network
             }
         }
 
-        public Message Deserialize(byte[] buffer)
+        public Shared.Network.Message Deserialize(byte[] buffer)
         {
             if (buffer == null)
                 throw new NullReferenceException();
@@ -104,7 +130,7 @@ namespace Client.Network
             using (MemoryStream stream = new MemoryStream(buffer))
             {
                 BinaryFormatter bf = new BinaryFormatter();
-                return (Message) bf.Deserialize(stream);
+                return (Shared.Network.Message) bf.Deserialize(stream);
             }
         }
     }

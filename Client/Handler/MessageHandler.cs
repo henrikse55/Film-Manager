@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,7 +14,6 @@ namespace Client.Handler
 {
     class MessageHandler
     {
-        private BackgroundWorker bw = new BackgroundWorker();
         public List<Message> QueuedMessages = new List<Message>();
 
         public void QueueMessage(Message message)
@@ -21,7 +21,16 @@ namespace Client.Handler
             QueuedMessages.Add(message);
         }
 
-        async void RunCommand()
+        async void init()
+        {
+            do
+            {
+               await RunCommand();
+               Thread.Sleep(200);
+            } while (true);
+        }
+
+        async Task RunCommand()
         {
             Message message = getNextInQueue();
 
