@@ -9,7 +9,7 @@ namespace Client
     {
         public static ClientForm clientform;
         public static MessageHandler messageHandler = new MessageHandler();
-        public static NetworkHandler Network = new NetworkHandler();
+        public static ClientSide Network = new ClientSide();
 
         /// <summary>
         /// The main entry point for the application.
@@ -18,7 +18,6 @@ namespace Client
         static void Main()
         {
             Thread.Sleep(500);
-            new Thread(new ThreadStart(messageHandler.init)).Start();
             new Thread(new ThreadStart(Network.Init)).Start();
 
             Application.EnableVisualStyles();

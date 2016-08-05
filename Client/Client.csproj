@@ -65,7 +65,9 @@
       <DependentUpon>Helpform_Client.cs</DependentUpon>
     </Compile>
     <Compile Include="Handler\MessageHandler.cs" />
-    <Compile Include="Network\NetworkHandler.cs" />
+    <Compile Include="Interfaces\IMessage.cs" />
+    <Compile Include="Network\ClientSide.cs" />
+    <Compile Include="Network\Container\MessageContainer.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Forms\SettingsForm_Client.cs">
@@ -107,6 +109,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Network\Messages\" />
   </ItemGroup>
   <Import Project="..\test\test.projitems" Label="Shared" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

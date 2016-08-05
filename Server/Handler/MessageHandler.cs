@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-using Client.Interfaces;
-using Client.Network;
-namespace Client.Handler
+using Server.Interfaces;
+
+namespace Server.Network
 {
     public class MessageHandler
     {

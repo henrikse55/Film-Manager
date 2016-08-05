@@ -46,6 +46,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Handler\MessageHandler.cs" />
+    <Compile Include="Interfaces\IMessage.cs" />
+    <Compile Include="Network\Containers\MessageContainer.cs" />
+    <Compile Include="Network\ServerSide.cs" />
     <Compile Include="ServerForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -78,6 +82,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Network\Messages\" />
   </ItemGroup>
   <Import Project="..\test\test.projitems" Label="Shared" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
