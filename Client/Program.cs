@@ -18,7 +18,7 @@ namespace Client
         static void Main()
         {
             Thread.Sleep(500);
-            new Thread(new ThreadStart(Network.Init)).Start();
+            //new Thread(new ThreadStart(Network.Init)).Start();
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
