@@ -8,7 +8,7 @@ using Shared.Enums;
 namespace Shared.Network
 {
     [Serializable]
-    class Message : IMessage
+    class Message
     {
         MessageIDs MessageID;
         String[] arg;

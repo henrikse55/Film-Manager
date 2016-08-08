@@ -62,7 +62,7 @@ namespace Server.Data
                 {
                     using (reader = command.ExecuteReader())
                     {
-                        using (DataTable table = new DataTable())
+                        using (DataTable table = new DataTable("Temp"))
                         {
                             table.Load(reader);
                             connection.Close();

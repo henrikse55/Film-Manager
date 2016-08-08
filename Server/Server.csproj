@@ -65,6 +65,7 @@
     <Compile Include="Handler\MessageHandler.cs" />
     <Compile Include="Interfaces\IMessage.cs" />
     <Compile Include="Network\Containers\MessageContainer.cs" />
+    <Compile Include="Network\Messages\SyncFilmsMessage.cs" />
     <Compile Include="Network\ServerSide.cs" />
     <Compile Include="ServerForm.cs">
       <SubType>Form</SubType>
@@ -99,9 +100,7 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Network\Messages\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="Data\DataHolder.mdf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
