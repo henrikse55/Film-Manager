@@ -21,7 +21,7 @@ namespace Client
 
         private void Edit_Client_Load(object sender, EventArgs e)
         {
-            textBox1.Text = selected[0].Value.ToString();
+            textBox1.Text = selected[0].Value.ToString(); 
         }
 
         private void OkayButton_Click(object sender, EventArgs e)
