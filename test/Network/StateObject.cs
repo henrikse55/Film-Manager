@@ -18,7 +18,7 @@ namespace Shared.Network
             this.socket = socket;
         }
 
-        public const int bufferSize = 1024;
+        public const int bufferSize = 5128;
 
         public byte[] buffer = new byte[bufferSize];
 
