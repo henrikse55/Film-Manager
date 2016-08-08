@@ -8,7 +8,7 @@ namespace Shared.Interfaces
 {
     interface IMessage
     {
-        MessageIDs Command { get; }
+        String Command { get; }
 
         String[] args { get; }
     }

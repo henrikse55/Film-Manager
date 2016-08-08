@@ -5,6 +5,7 @@ using Client.Network;
 using Client.Handler;
 using System.Text;
 using System.Collections.Generic;
+using Client.Network.Messages;
 
 namespace Client
 {
@@ -22,6 +23,8 @@ namespace Client
         {
             Thread.Sleep(500);
             new Thread(new ThreadStart(Network.Init)).Start();
+
+            messageHandler.addMessage(new SyncFilms());
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);

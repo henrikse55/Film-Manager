@@ -81,6 +81,7 @@
     <Compile Include="Network\ClientSide.cs" />
     <Compile Include="Network\Container\MessageContainer.cs" />
     <Compile Include="Network\Messages\RowLock.cs" />
+    <Compile Include="Network\Messages\SyncFilms.cs" />
     <Compile Include="Other\Filter.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

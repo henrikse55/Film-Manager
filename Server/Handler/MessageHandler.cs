@@ -28,7 +28,7 @@ namespace Server.Network
                 if (command.Name.ToUpper().Equals(network.Message.ToUpper()))
                 {
                     Console.WriteLine("Found Message");
-                    command.Run(network.args);
+                    command.Run(network.args, network.Client);
                 }
             }
         }

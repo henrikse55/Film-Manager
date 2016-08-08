@@ -11,6 +11,6 @@ namespace Server.Interfaces
     {
         String Name { get; }
 
-        void Run(String[] args);
+        void Run(String[] args, Socket socket);
     }
 }

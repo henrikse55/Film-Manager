@@ -23,10 +23,12 @@ namespace Client
                 table.Columns.Add(s);
             }
 
-            table.Rows.Add("1", "StarWars", "Sci-Fi", "Space", "Stuen");
-            table.Rows.Add("2", "Narnia", "Fantasy", "noget", "Soveværelse");
-            table.Rows.Add("3", "Rush Hour", "Action", "ting", "Stuen");
+            //table.Rows.Add("1", "StarWars", "Sci-Fi", "Space", "Stuen");
+            //table.Rows.Add("2", "Narnia", "Fantasy", "noget", "Soveværelse");
+            //table.Rows.Add("3", "Rush Hour", "Action", "ting", "Stuen");
             FilmGrid.DataSource = table;
+
+            Program.Network.Send(Program.CreateNetworkMessage("SendData"));
         }
 
         private void settingsToolStripMenuItem_Click(object sender, EventArgs e)
@@ -67,6 +69,11 @@ namespace Client
         {
             Search search = new Search();
             search.Show();
+        }
+
+        public void SyncData(String XML)
+        {
+            table.ReadXml(XML);
         }
     }
 }
