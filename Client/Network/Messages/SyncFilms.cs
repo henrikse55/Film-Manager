@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Client.Interfaces;
+using Shared.Network;
 
 namespace Client.Network.Messages
 {
@@ -14,10 +15,16 @@ namespace Client.Network.Messages
             get{ return "SendData";}
         }
 
-        //XML
         public void Run(string[] args)
         {
-            Program.clientform.AddData(args);
+            int Size = int.Parse(args[0]);
+            Byte[] buffer = new byte[Size];
+            Program.Network.socket.BeginReceive(buffer,0,buffer.Length, 0, new AsyncCallback(asyncNet), Program.Network.socket);    
+        }
+
+        private void asyncNet(IAsyncResult ar)
+        {
+            
         }
     }
 }
