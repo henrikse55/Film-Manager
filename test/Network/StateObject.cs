@@ -24,5 +24,7 @@ namespace Shared.Network
 
         public Socket socket;
 
+        public StringBuilder sb = new StringBuilder();
+
     }
 }

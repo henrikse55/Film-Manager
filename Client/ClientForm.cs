@@ -2,6 +2,9 @@
 using Client.Forms;
 using System.Windows.Forms;
 using System.Data;
+using System.IO;
+using System.Text;
+using System.Xml;
 
 namespace Client
 {
@@ -71,9 +74,24 @@ namespace Client
             search.Show();
         }
 
-        public void SyncData(String XML)
+        public void AddData(params Object[] obj)
         {
-            table.ReadXml(XML);
+            table.Rows.Add(obj[0], obj[1], obj[2], obj[3], obj[4]);
+
+            RefreshGrid();
+        }
+
+        private delegate void RefreshGridCallBack();
+        public void RefreshGrid()
+        {
+            if (FilmGrid.InvokeRequired)
+            {
+                RefreshGridCallBack callback = new RefreshGridCallBack(RefreshGrid);
+                FilmGrid.Invoke(callback);
+            }else
+            {
+                FilmGrid.Update();
+            }
         }
     }
 }

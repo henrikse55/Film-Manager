@@ -8,7 +8,7 @@ using System.Net.Sockets;
 using System.Threading;
 using Client.Network;
 using Shared.Network;
-
+using System.Windows.Forms;
 
 namespace Client.Network
 {
@@ -83,12 +83,12 @@ namespace Client.Network
 
                 int BytesRec = state.socket.EndReceive(ar);
                 String Message = BytesToString(state.buffer, BytesRec);
+
                 Console.WriteLine("Recived: " + Message);
-
-
                 String[] temp = Message.Split('-');
                 var argsTemp = temp.ToList();
                 argsTemp.RemoveAt(0);
+
 
                 state.socket.BeginReceive(state.buffer, 0, state.buffer.Length, 0, new AsyncCallback(onRecive), state);
 

@@ -17,7 +17,7 @@ namespace Client.Network.Messages
         //XML
         public void Run(string[] args)
         {
-            Program.clientform.SyncData(args[0]);
+            Program.clientform.AddData(args);
         }
     }
 }
