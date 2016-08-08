@@ -80,6 +80,7 @@
     <Compile Include="Interfaces\IMessage.cs" />
     <Compile Include="Network\ClientSide.cs" />
     <Compile Include="Network\Container\MessageContainer.cs" />
+    <Compile Include="Network\Messages\RowLock.cs" />
     <Compile Include="Other\Filter.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -129,9 +130,7 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Network\Messages\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="..\test\test.projitems" Label="Shared" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

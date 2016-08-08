@@ -36,7 +36,6 @@
             this.Column5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.SearchBox = new System.Windows.Forms.ToolStripTextBox();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.FilmGrid)).BeginInit();
@@ -60,6 +59,8 @@
             this.FilmGrid.ReadOnly = true;
             this.FilmGrid.Size = new System.Drawing.Size(542, 423);
             this.FilmGrid.TabIndex = 1;
+            this.FilmGrid.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.FilmGrid.MultiSelect = false;
             this.FilmGrid.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellDoubleClick);
             // 
             // Column1
@@ -109,21 +110,11 @@
             // 
             // toolStripMenuItem1
             // 
-            this.toolStripMenuItem1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.SearchBox});
             this.toolStripMenuItem1.ImageTransparentColor = System.Drawing.Color.White;
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
             this.toolStripMenuItem1.Size = new System.Drawing.Size(54, 20);
             this.toolStripMenuItem1.Text = "Search";
             this.toolStripMenuItem1.Click += new System.EventHandler(this.toolStripMenuItem1_Click);
-            // 
-            // SearchBox
-            // 
-            this.SearchBox.BackColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.SearchBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.SearchBox.Name = "SearchBox";
-            this.SearchBox.Size = new System.Drawing.Size(100, 23);
-            this.SearchBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.SearchBox_KeyPress);
             // 
             // helpToolStripMenuItem
             // 
@@ -168,7 +159,6 @@
         private System.Windows.Forms.DataGridView FilmGrid;
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
-        private System.Windows.Forms.ToolStripTextBox SearchBox;
         private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem settingsToolStripMenuItem;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column1;

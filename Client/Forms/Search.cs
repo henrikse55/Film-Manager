@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Threading;
 using System.Windows.Forms;
 
 using Client.Other;
@@ -58,15 +59,7 @@ namespace Client.Forms
 
             if (flag == false)
             {
-                Filter filter = new Filter();
-                filter.Name = FilterNameTextBox.Text;
-                filter.filterOption = (IncludeCheckBox.Checked == true ? filterOption.Include : filterOption.Exclude);
-                filter.isCaseSenestive = CaseSensetiveCheckBox.Checked;
-                filter.ToApply = ColumnBox.SelectedItem.ToString();
-                filter.Text = TextToCompare.Text;
-                filters.Add(filter);
-                FilterList.Items.Add(filter.Name);
-                ResetFields();
+                CreateFilter();
             }
             else
             {
@@ -76,60 +69,45 @@ namespace Client.Forms
                     switch (Opinon)
                     {
                         case DialogResult.Yes:
-                            for (int x = 0; x < filters.Count; x++)
-                            {
-                                Filter f = filters[x];
-                                for (int i = 0; i < FilterList.SelectedItems.Count; i++)
-                                {
-                                    String Name = FilterList.SelectedItems[i].ToString();
-                                    if (f.Name.Equals(Name))
-                                    {
-                                        filters.Remove(f);
-                                        FilterList.Items.Remove(Name);
-                                    }
-                                }
-                            }
-
-                            Filter filter = new Filter();
-                            filter.Name = FilterNameTextBox.Text;
-                            filter.filterOption = (IncludeCheckBox.Checked == true ? filterOption.Include : filterOption.Exclude);
-                            filter.isCaseSenestive = CaseSensetiveCheckBox.Checked;
-                            filter.ToApply = ColumnBox.SelectedItem.ToString();
-                            filter.Text = TextToCompare.Text;
-                            filters.Add(filter);
-                            FilterList.Items.Add(filter.Name);
-                            ResetFields();
+                            CreateFilter();
                             break;
                     }
                 }
                 else
                 {
-                    for (int x = 0; x < filters.Count; x++)
-                    {
-                        Filter f = filters[x];
-                        for (int i = 0; i < FilterList.SelectedItems.Count; i++)
-                        {
-                            String Name = FilterList.SelectedItems[i].ToString();
-                            if (f.Name.Equals(Name))
-                            {
-                                filters.Remove(f);
-                                FilterList.Items.Remove(Name);
-                            }
-                        }
-                    }
-
-                    Filter filter = new Filter();
-                    filter.Name = FilterNameTextBox.Text;
-                    filter.filterOption = (IncludeCheckBox.Checked == true ? filterOption.Include : filterOption.Exclude);
-                    filter.isCaseSenestive = CaseSensetiveCheckBox.Checked;
-                    filter.ToApply = ColumnBox.SelectedItem.ToString();
-                    filter.Text = TextToCompare.Text;
-                    filters.Add(filter);
-                    FilterList.Items.Add(filter.Name);
-                    ResetFields();
+                    CreateFilter();
                     _EditFilter = false;
                 }
             }
+
+            updateFilms();
+        }
+
+        public void CreateFilter()
+        {
+            for (int x = 0; x < filters.Count; x++)
+            {
+                Filter f = filters[x];
+                for (int i = 0; i < FilterList.SelectedItems.Count; i++)
+                {
+                    String Name = FilterList.SelectedItems[i].ToString();
+                    if (f.Name.Equals(Name))
+                    {
+                        filters.Remove(f);
+                        FilterList.Items.Remove(Name);
+                    }
+                }
+            }
+
+            Filter filter = new Filter();
+            filter.Name = FilterNameTextBox.Text;
+            filter.filterOption = (IncludeCheckBox.Checked == true ? filterOption.Include : filterOption.Exclude);
+            filter.isCaseSenestive = CaseSensetiveCheckBox.Checked;
+            filter.ToApply = ColumnBox.SelectedItem.ToString();
+            filter.Text = TextToCompare.Text;
+            filters.Add(filter);
+            FilterList.Items.Add(filter.Name);
+            ResetFields();
         }
 
         private void ResetFields()
@@ -162,25 +140,28 @@ namespace Client.Forms
         {
             FilmsInList.Clear();
             DataTable films = Program.clientform.DataTable;
-            //CheckProgress.Maximum = films.Rows.Count;
-            filters.ForEach(filter => {
-                //CheckProgress.Value = 0;
-                films.AsEnumerable().ToList().ForEach(film => {
-                    //CheckProgress.Increment(1);
+            CheckProgress.Maximum = films.Rows.Count;
+            CheckProgress.Value = 0;
+            films.AsEnumerable().ToList().ForEach(film =>
+            {
+                CheckProgress.Increment(1);
+                filters.ForEach(filter =>
+                {
                     switch (filter.filterOption)
                     {
                         case filterOption.Include:
-                            if (filter.isCaseSenestive){
+                            if (filter.isCaseSenestive)
+                            {
                                 if (film.Field<String>(filter.ToApply).Contains(filter.Text))
                                 {
-                                    FilmsInList.ImportRow(film);
+                                    addToDataTable(film);
                                 }
                             }
                             else
                             {
                                 if (film.Field<String>(filter.ToApply).ToLower().Contains(filter.Text.ToLower()))
                                 {
-                                    FilmsInList.ImportRow(film);
+                                    addToDataTable(film);
                                 }
                             }
                             break;
@@ -190,20 +171,28 @@ namespace Client.Forms
                             {
                                 if (!film.Field<String>(filter.ToApply).Contains(filter.Text))
                                 {
-                                    FilmsInList.ImportRow(film);
+                                    addToDataTable(film);
                                 }
                             }
                             else
                             {
                                 if (!film.Field<String>(filter.ToApply).ToLower().Contains(filter.Text.ToLower()))
                                 {
-                                    FilmsInList.ImportRow(film);
+                                    addToDataTable(film);
                                 }
                             }
                             break;
                     }
                 });
             });
+        }
+
+        private void addToDataTable(DataRow row)
+        {
+            DataRow rows = (from _row in FilmsInList.AsEnumerable() where _row.Field<String>("Id").Equals(row[0]) select _row).SingleOrDefault();
+            if (rows == null)
+                FilmsInList.ImportRow(row);
+
         }
 
         private void TestButton_Click(object sender, EventArgs e)

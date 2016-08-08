@@ -48,7 +48,6 @@
             this.SaveFilter = new System.Windows.Forms.Button();
             this.EditFilter = new System.Windows.Forms.Button();
             this.CheckProgress = new System.Windows.Forms.ProgressBar();
-            this.TestButton = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.FilmsFound)).BeginInit();
             this.groupBox2.SuspendLayout();
@@ -70,10 +69,13 @@
             // 
             // FilmsFound
             // 
+            this.FilmsFound.AllowUserToAddRows = false;
+            this.FilmsFound.AllowUserToDeleteRows = false;
             this.FilmsFound.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.FilmsFound.Dock = System.Windows.Forms.DockStyle.Fill;
             this.FilmsFound.Location = new System.Drawing.Point(3, 16);
             this.FilmsFound.Name = "FilmsFound";
+            this.FilmsFound.ReadOnly = true;
             this.FilmsFound.Size = new System.Drawing.Size(502, 219);
             this.FilmsFound.TabIndex = 0;
             // 
@@ -213,7 +215,6 @@
             // 
             // groupBox4
             // 
-            this.groupBox4.Controls.Add(this.TestButton);
             this.groupBox4.Controls.Add(this.RemoveFilter);
             this.groupBox4.Controls.Add(this.SaveFilter);
             this.groupBox4.Controls.Add(this.EditFilter);
@@ -264,16 +265,6 @@
             this.CheckProgress.Size = new System.Drawing.Size(650, 23);
             this.CheckProgress.TabIndex = 4;
             // 
-            // TestButton
-            // 
-            this.TestButton.Location = new System.Drawing.Point(9, 140);
-            this.TestButton.Name = "TestButton";
-            this.TestButton.Size = new System.Drawing.Size(124, 23);
-            this.TestButton.TabIndex = 3;
-            this.TestButton.Text = "Test";
-            this.TestButton.UseVisualStyleBackColor = true;
-            this.TestButton.Click += new System.EventHandler(this.TestButton_Click);
-            // 
             // Search
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -322,6 +313,5 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ComboBox ColumnBox;
         private System.Windows.Forms.ProgressBar CheckProgress;
-        private System.Windows.Forms.Button TestButton;
     }
 }

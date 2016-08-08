@@ -8,7 +8,7 @@ namespace Client
     public partial class ClientForm : Form
     {
         DataTable table = new DataTable("Test_Table");
-        String[] Columns = { "Id", "Navn", "Genre", "Desciption", "Location"};
+        String[] Columns = { "Id", "Navn", "Genre", "Description", "Location"};
 
         public ClientForm()
         {
@@ -27,36 +27,6 @@ namespace Client
             table.Rows.Add("2", "Narnia", "Fantasy", "noget", "Soveværelse");
             table.Rows.Add("3", "Rush Hour", "Action", "ting", "Stuen");
             FilmGrid.DataSource = table;
-        }
-
-        //Event til Search funktionen
-        private void SearchBox_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            //if (e.KeyChar == (char)Keys.Enter)
-            //{
-            //    bool found = false;
-            //    foreach (DataGridViewRow row in FilmGrid.Rows)
-            //    {
-            //        if (row.Cells["Column1"].Value.Equals(SearchBox.Text) || row.Cells["Column2"].Value.Equals(SearchBox.Text) ||
-            //            row.Cells["Column3"].Value.Equals(SearchBox.Text) || row.Cells["Column4"].Value.Equals(SearchBox.Text) ||
-            //            row.Cells["Column5"].Value.Equals(SearchBox.Text))
-            //        {
-            //            //Ord fundet
-            //            FilmGrid.ClearSelection(); //Afvælger den valgte celle
-            //            row.Selected = true; //vælger rowet med den søgte celle
-            //            MessageBox.Show(SearchBox.Text + " Found");
-            //            found = true;
-            //            break;
-            //        }
-            //    }
-
-            //    //Ord ikke fundet
-            //    if (!found)
-            //    {
-            //        MessageBox.Show(SearchBox.Text + " Not found");
-            //    }
-            //    SearchBox.Text = ""; 
-            //}
         }
 
         private void settingsToolStripMenuItem_Click(object sender, EventArgs e)
