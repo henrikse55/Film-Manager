@@ -44,9 +44,8 @@ namespace Client
         {
             try
             {
-                Edit_Client edit = new Edit_Client(FilmGrid.SelectedCells);
+                Editor edit = new Editor(FilmGrid);
                 edit.ShowDialog();
-                //dataGridView1.SelectedCells[0].Value.ToString()
             }
             catch { throw; }
         }
