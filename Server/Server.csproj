@@ -65,6 +65,7 @@
     <Compile Include="Handler\MessageHandler.cs" />
     <Compile Include="Interfaces\IMessage.cs" />
     <Compile Include="Network\Containers\MessageContainer.cs" />
+    <Compile Include="Network\Messages\BroadcastMessage.cs" />
     <Compile Include="Network\Messages\SyncFilmsMessage.cs" />
     <Compile Include="Network\ServerSide.cs" />
     <Compile Include="ServerForm.cs">
@@ -75,6 +76,7 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Timers\KeepNetworkAlive.cs" />
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>ServerForm.cs</DependentUpon>
     </EmbeddedResource>

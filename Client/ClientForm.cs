@@ -90,9 +90,61 @@ namespace Client
                 FilmGrid.Invoke(callback);
             }else
             {
-                Console.WriteLine("Updates");
                 FilmGrid.DataSource = null;
                 FilmGrid.DataSource = table;
+            }
+        }
+
+        private delegate void SetValueCallBack(object o);
+        public void SetProgressMax(object o)
+        {
+            if (Progress.InvokeRequired)
+            {
+                SetValueCallBack callBack = new SetValueCallBack(SetProgressMax);
+                Progress.Invoke(callBack, o);
+            }else
+            {
+                Console.WriteLine("Updateting");
+                Progress.Maximum = (int)o;
+            }
+        }
+
+        public void SetProgressValue(object o)
+        {
+            if (Progress.InvokeRequired)
+            {
+                SetValueCallBack callBack = new SetValueCallBack(SetProgressValue);
+                Progress.Invoke(callBack, o);
+            }
+            else
+            {
+                Progress.Value = (int)o;
+            }
+        }
+
+        public void IncrementProgress(object o)
+        {
+            if (Progress.InvokeRequired)
+            {
+                SetValueCallBack callBack = new SetValueCallBack(IncrementProgress);
+                Progress.Invoke(callBack, o);
+            }
+            else
+            {
+                Progress.Increment((int)o);
+            }
+        }
+
+        public void HideProgress(object o)
+        {
+            if (Progress.InvokeRequired)
+            {
+                SetValueCallBack callBack = new SetValueCallBack(HideProgress);
+                Progress.Invoke(callBack, o);
+            }
+            else
+            {
+                Progress.Visible= (bool)o;
             }
         }
 

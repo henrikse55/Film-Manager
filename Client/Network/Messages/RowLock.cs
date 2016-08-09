@@ -18,7 +18,7 @@ namespace Client.Network.Messages
 
         public void Run(string[] args)
         {
-            //Program.Network.Send(Program.);
+            //Might Not be needed
         }
     }
 }
