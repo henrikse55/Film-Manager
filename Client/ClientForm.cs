@@ -74,11 +74,17 @@ namespace Client
             search.Show();
         }
 
-        public void AddData(params Object[] obj)
+        public void AddData(Byte[] xml)
         {
-            table.Rows.Add(obj[0], obj[1], obj[2], obj[3], obj[4]);
+            BinaryWriter writer = new BinaryWriter(File.Open("Data.xml", FileMode.Create));
+            writer.Write(xml, 0, xml.Length);
+            writer.Flush();
+            writer.Close();
 
-            RefreshGrid();
+            FileStream stream = new FileStream("Data.xml", FileMode.Open);
+            table.ReadXml(stream);
+
+            MessageBox.Show("There is " + table.Rows.Count);
         }
 
         private delegate void RefreshGridCallBack();

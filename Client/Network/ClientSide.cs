@@ -90,17 +90,22 @@ namespace Client.Network
                 argsTemp.RemoveAt(0);
 
 
+                    MessageContainer container = new MessageContainer(temp[0], argsTemp.ToArray(), state.socket);
+                    Program.messageHandler.FindCommand(container); 
+
+
                 state.socket.BeginReceive(state.buffer, 0, state.buffer.Length, 0, new AsyncCallback(onRecive), state);
-
-                MessageContainer container = new MessageContainer(temp[0], argsTemp.ToArray(), state.socket);
-                Program.messageHandler.FindCommand(container);
-
             }
             catch
             {
 
             }
             
+        }
+
+        public void RestartConnection()
+        {
+
         }
         public void shutdown()
         {
@@ -119,9 +124,16 @@ namespace Client.Network
 
         public void Send(String text)
         {
-            byte[] BytesToSend = StringToBytes(text);
+            try
+            {
+                byte[] BytesToSend = StringToBytes(text);
 
-            client.BeginSend(BytesToSend, 0,BytesToSend.Length, 0, new AsyncCallback(SendCallBack), client);
+                client.BeginSend(BytesToSend, 0, BytesToSend.Length, 0, new AsyncCallback(SendCallBack), client);
+            }
+            catch
+            {
+                //throw;
+            }
         }
 
         private void SendCallBack(IAsyncResult ar)

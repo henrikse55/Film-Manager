@@ -10,7 +10,7 @@ namespace Server.Data
 {
     class DataHandler
     {
-        private SqlConnection connection = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\Elias\Source\Repos\Film-Manager\Server\Data\DataHolder.mdf;Integrated Security=True");
+        private SqlConnection connection = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=.\Film Manager\Server\Data\DataHolder.mdf;Integrated Security=True");
 
         public enum Columns
         {
@@ -19,7 +19,7 @@ namespace Server.Data
 
         public void Connect()
         {
-            try { connection.Open(); } catch { }
+            try { connection.Open(); } catch { throw; }
         }
 
         //Add ny row til tabel funktion
