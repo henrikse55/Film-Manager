@@ -28,7 +28,7 @@ namespace Client.Forms
 
         private void SaveButton_Click(object sender, EventArgs e)
         {
-            Program.Network.Send(Program.CreateNetworkMessage("addFilm", FilmTitleTextBox.Text, GenreTextBox.Text, LocationTextBox.Text, DescriptionBox.Text));
+            Program.Network.Send(Program.CreateNetworkMessage("addFilm", FilmTitleTextBox.Text, GenreTextBox.Text, DescriptionBox.Text, LocationTextBox.Text));
             this.Close();
         }
 
