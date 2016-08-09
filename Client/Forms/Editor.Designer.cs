@@ -143,6 +143,7 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.FilmTitleTextBox);
             this.Name = "Editor";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Editor";
             this.Load += new System.EventHandler(this.Editor_Load);
             this.DescriptionGroup.ResumeLayout(false);

@@ -98,7 +98,6 @@ namespace Client
 
         private void ClientForm_Load(object sender, EventArgs e)
         {
-            FilmGrid.VirtualMode = true;
             Program.Network.Send(Program.CreateNetworkMessage("SendData"));
         }
 

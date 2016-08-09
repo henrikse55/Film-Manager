@@ -23,6 +23,7 @@ namespace Client.Forms
         //TODO Lock Row for other users
         private void Editor_Load(object sender, EventArgs e)
         {
+            
             DataRow row = ((DataRowView)collection.SelectedRows[0].DataBoundItem).Row;
             FilmTitleTextBox.Text = (String) row["Name"];
             GenreTextBox.Text = (String)row["Genre"];
