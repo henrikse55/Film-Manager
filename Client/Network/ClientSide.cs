@@ -20,6 +20,7 @@ namespace Client.Network
         private Boolean _Quitting = false;
         public Boolean _isLoggedin = false;
         private Socket client;
+        private StateObject state;
 
         private static ManualResetEvent ConnectDone = new ManualResetEvent(false);
         private static ManualResetEvent ReciveDone = new ManualResetEvent(false);
@@ -101,7 +102,7 @@ namespace Client.Network
             try
             {
 
-                StateObject state = (StateObject)ar.AsyncState;
+                state = (StateObject)ar.AsyncState;
 
                 int BytesRec = state.socket.EndReceive(ar);
                 String Message = BytesToString(state.buffer, BytesRec);
@@ -111,12 +112,8 @@ namespace Client.Network
                 var argsTemp = temp.ToList();
                 argsTemp.RemoveAt(0);
 
-
                 MessageContainer container = new MessageContainer(temp[0], argsTemp.ToArray(), state.socket);
-                Program.messageHandler.FindCommand(container); 
-
-                state.socket.BeginReceive(state.buffer, 0, state.buffer.Length, 0, new AsyncCallback(onRecive), state);
-
+                Program.messageHandler.FindCommand(container);  
             }
             catch
             {
@@ -127,7 +124,7 @@ namespace Client.Network
 
         public void RestartConnection()
         {
-
+            state.socket.BeginReceive(state.buffer, 0, state.buffer.Length, 0, new AsyncCallback(onRecive), state);
         }
         public void shutdown()
         {

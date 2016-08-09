@@ -21,12 +21,14 @@ namespace Client
         [STAThread]
         static void Main()
         {
-            Thread.Sleep(500);
+            //Thread.Sleep(500);
+            messageHandler.addMessage(new SyncFilms());
+            messageHandler.addMessage(new ReSyncMessage());
+
+
             clientform = new ClientForm();
             new Thread(new ThreadStart(Network.Init)).Start();
             
-            messageHandler.addMessage(new SyncFilms());
-            messageHandler.addMessage(new ReSyncMessage());
 
             Application.EnableVisualStyles();
             Application.Run(clientform);

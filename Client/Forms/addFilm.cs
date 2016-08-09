@@ -20,6 +20,7 @@ namespace Client.Forms
         //TODO Lock Row for other users
         private void Editor_Load(object sender, EventArgs e)
         {
+            SaveButton.Enabled = false;
             //FilmTitleTextBox.Text = (String) row["Name"];
             //GenreTextBox.Text = (String)row["Genre"];
             //LocationTextBox.Text = (String)row["Location"];
@@ -35,6 +36,11 @@ namespace Client.Forms
         private void CancelButton_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void LocationTextBox_TextChanged(object sender, EventArgs e)
+        {
+            SaveButton.Enabled = !String.IsNullOrEmpty(LocationTextBox.Text) || !String.IsNullOrWhiteSpace(LocationTextBox.Text) ? true : false;
         }
     }
 }

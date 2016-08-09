@@ -107,6 +107,7 @@
             this.LocationTextBox.Name = "LocationTextBox";
             this.LocationTextBox.Size = new System.Drawing.Size(100, 20);
             this.LocationTextBox.TabIndex = 7;
+            this.LocationTextBox.TextChanged += new System.EventHandler(this.LocationTextBox_TextChanged);
             // 
             // SaveButton
             // 
