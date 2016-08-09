@@ -104,6 +104,7 @@ namespace Server.Network
             {
                 StateObject state = (StateObject)ar.AsyncState;
                 Clients.Remove(state.socket);
+                //throw;
             }
         }
 
