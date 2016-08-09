@@ -9,11 +9,12 @@ using System.Threading;
 using Client.Network;
 using Shared.Network;
 using System.Windows.Forms;
-
+using Client.Forms;
 namespace Client.Network
 {
     public class ClientSide
     {
+        private ServerFinderForm finderForm = new ServerFinderForm();
         public String Ip = Properties.Settings.Default.ServerIP;
         public int Port = Properties.Settings.Default.ServerPort;
         private Boolean _Quitting = false;
@@ -34,22 +35,43 @@ namespace Client.Network
             try
             {
                 IPAddress ipAddress = IPAddress.Parse(Ip);
-                IPEndPoint endIP = new IPEndPoint(ipAddress, Port);
 
                 client = new Socket(ipAddress.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
-                int i = 0;
-                do
+
+                lock (this)
                 {
-                    ConnectDone.Reset();
-                    client.BeginConnect(IPAddress.Parse(Ip), Port, new AsyncCallback(onConnectionCallBack), client);
-                    ConnectDone.WaitOne();
-                    i++;
-                } while (!client.Connected & i < 10);
+                    connect(Ip); 
+                }
+
+                if (!client.Connected)
+                {
+                    finderForm.ShowDialog();
+                }
+                else
+                {
+                    Program.Network.Send(Program.CreateNetworkMessage("SendData"));
+                }
+                Program.clientform.HideProgress(false);
             }
             catch (Exception e)
             {
                 Console.WriteLine("Error: " + e.Message);
             }
+        }
+
+        public void connect(string _Ip)
+        {
+            int i = 0;
+            int TimeOutLimit = 10;
+            Program.clientform.SetProgressMax(TimeOutLimit);
+            do
+            {
+                ConnectDone.Reset();
+                client.BeginConnect(IPAddress.Parse(_Ip), Port, new AsyncCallback(onConnectionCallBack), client);
+                ConnectDone.WaitOne();
+                i++;
+                Program.clientform.IncrementProgress(1);
+            } while (!client.Connected & i < TimeOutLimit);
         }
 
         public Socket socket

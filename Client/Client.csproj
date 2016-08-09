@@ -76,6 +76,12 @@
     <Compile Include="Forms\Search.Designer.cs">
       <DependentUpon>Search.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\ServerFinderForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\ServerFinderForm.Designer.cs">
+      <DependentUpon>ServerFinderForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Handler\MessageHandler.cs" />
     <Compile Include="Interfaces\IMessage.cs" />
     <Compile Include="Network\ClientSide.cs" />
@@ -105,6 +111,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Search.resx">
       <DependentUpon>Search.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\ServerFinderForm.resx">
+      <DependentUpon>ServerFinderForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

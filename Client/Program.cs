@@ -22,13 +22,12 @@ namespace Client
         static void Main()
         {
             Thread.Sleep(500);
+            clientform = new ClientForm();
             new Thread(new ThreadStart(Network.Init)).Start();
             
             messageHandler.addMessage(new SyncFilms());
-
             Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(clientform = new ClientForm());
+            Application.Run(clientform);
         }
 
         /// <summary>
