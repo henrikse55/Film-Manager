@@ -22,12 +22,15 @@ namespace Server.Network.Messages
         {
             Program.datahandler.AddCommand(args[0], args[1], args[2], args[3]);
 
-            DataTable table = Program.datahandler.DataReader();
-            StringWriter writer = new StringWriter();
-            table.WriteXml(writer);
-            byte[] message = Encoding.ASCII.GetBytes(writer.ToString());
-            Program.Network.Send(socket, Program.CreateNetworkMessage("SendData", message.Length.ToString()));
-            socket.Send(message);
+            Program.Network.ClientList.ForEach(_Socket => 
+            {
+                DataTable table = Program.datahandler.DataReader();
+                StringWriter writer = new StringWriter();
+                table.WriteXml(writer);
+                byte[] message = Encoding.ASCII.GetBytes(writer.ToString());
+                Program.Network.Send(_Socket, Program.CreateNetworkMessage("SendData", message.Length.ToString()));
+                _Socket.Send(message);
+            });
         }
     }
 }
