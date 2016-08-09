@@ -21,8 +21,9 @@ namespace Client
         [STAThread]
         static void Main()
         {
+            Thread.Sleep(500);
             new Thread(new ThreadStart(Network.Init)).Start();
-
+            
             messageHandler.addMessage(new SyncFilms());
 
             Application.EnableVisualStyles();

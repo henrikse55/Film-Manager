@@ -55,12 +55,12 @@
             this.Column4,
             this.Column5});
             this.FilmGrid.Location = new System.Drawing.Point(12, 27);
+            this.FilmGrid.MultiSelect = false;
             this.FilmGrid.Name = "FilmGrid";
             this.FilmGrid.ReadOnly = true;
+            this.FilmGrid.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.FilmGrid.Size = new System.Drawing.Size(542, 423);
             this.FilmGrid.TabIndex = 1;
-            this.FilmGrid.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.FilmGrid.MultiSelect = false;
             this.FilmGrid.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellDoubleClick);
             // 
             // Column1
@@ -146,6 +146,8 @@
             this.Name = "ClientForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Client";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.ClientForm_FormClosing);
+            this.Load += new System.EventHandler(this.ClientForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.FilmGrid)).EndInit();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();

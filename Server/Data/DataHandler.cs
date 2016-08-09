@@ -10,7 +10,8 @@ namespace Server.Data
 {
     class DataHandler
     {
-        private SqlConnection connection = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=.\Film Manager\Server\Data\DataHolder.mdf;Integrated Security=True");
+        private SqlConnection connection = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=" + 
+            Environment.CurrentDirectory + @"\Data\DataHolder.mdf;Integrated Security=True");
 
         public enum Columns
         {
@@ -19,7 +20,7 @@ namespace Server.Data
 
         public void Connect()
         {
-            try { connection.Open(); } catch { throw; }
+            try { connection.Open(); Console.WriteLine(Environment.CurrentDirectory); } catch { throw; }
         }
 
         //Add ny row til tabel funktion
@@ -54,64 +55,52 @@ namespace Server.Data
         //Hent tabel data
         public DataTable DataReader()
         {
-            try
+            Connect();
+            SqlDataReader reader = null;
+            using (SqlCommand command = new SqlCommand("SELECT * FROM Films", connection))
             {
-                Connect();
-                SqlDataReader reader = null;
-                using (SqlCommand command = new SqlCommand("SELECT * FROM Films", connection))
+                using (reader = command.ExecuteReader())
                 {
-                    using (reader = command.ExecuteReader())
+                    using (DataTable table = new DataTable("Temp"))
                     {
-                        using (DataTable table = new DataTable("Temp"))
-                        {
-                            table.Load(reader);
-                            connection.Close();
-                            return table;
-                        }
+                        table.Load(reader);
+                        connection.Close();
+                        return table;
                     }
                 }
             }
-            catch { }
-
-            return null;
         }
 
         //Opdatere tablet
         public void UpdateTabel(Columns column, string Data, int Id)
         {
-            try
+            Connect();
+            using (SqlCommand command = new SqlCommand("", connection))
             {
-                Connect();
-                using (SqlCommand command = new SqlCommand("", connection))
+                switch (column)
                 {
-                    switch(column)
-                    {
-                        case Columns.Films:
-                            command.CommandText = "UPDATE FILMS SET Films=@FILMTITLE WHERE Id=@ID";
-                            break;
-                        case Columns.Genre:
-                            command.CommandText = "UPDATE FILMS SET Genre=@GENRE WHERE Id=@ID";
-                            break;
-                        case Columns.Description:
-                            command.CommandText = "UPDATE FILMS SET Description=@DESCRIPTION WHERE Id=@ID";
-                            break;
-                        case Columns.Location:
-                            command.CommandText = "UPDATE FILMS set Location=@LOCATION WHERE Id=@ID";
-                            break;
-                    }
-                    Console.WriteLine("Hej");
-
-                    command.Parameters.AddWithValue("@FILMSTITLE", Data);
-                    command.Parameters.AddWithValue("@GENRE", Data);
-                    command.Parameters.AddWithValue("@DESCRIPTION", Data);
-                    command.Parameters.AddWithValue("@LOCATION", Data);
-                    command.Parameters.AddWithValue("@ID", Id);
-
-                    command.ExecuteNonQuery();
+                    case Columns.Films:
+                        command.CommandText = "UPDATE FILMS SET Films=@FILMTITLE WHERE Id=@ID";
+                        break;
+                    case Columns.Genre:
+                        command.CommandText = "UPDATE FILMS SET Genre=@GENRE WHERE Id=@ID";
+                        break;
+                    case Columns.Description:
+                        command.CommandText = "UPDATE FILMS SET Description=@DESCRIPTION WHERE Id=@ID";
+                        break;
+                    case Columns.Location:
+                        command.CommandText = "UPDATE FILMS set Location=@LOCATION WHERE Id=@ID";
+                        break;
                 }
-            } catch
-            {
-                throw;
+                Console.WriteLine("Hej");
+
+                command.Parameters.AddWithValue("@FILMSTITLE", Data);
+                command.Parameters.AddWithValue("@GENRE", Data);
+                command.Parameters.AddWithValue("@DESCRIPTION", Data);
+                command.Parameters.AddWithValue("@LOCATION", Data);
+                command.Parameters.AddWithValue("@ID", Id);
+
+                command.ExecuteNonQuery();
             }
 
             connection.Close();
