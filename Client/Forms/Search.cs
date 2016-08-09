@@ -80,7 +80,7 @@ namespace Client.Forms
                 }
             }
 
-            updateFilms();
+            //updateFilms();
         }
 
         public void CreateFilter()
@@ -195,7 +195,7 @@ namespace Client.Forms
 
         }
 
-        private void TestButton_Click(object sender, EventArgs e)
+        private void SearchButton_Click(object sender, EventArgs e)
         {
             updateFilms();
         }
@@ -239,6 +239,15 @@ namespace Client.Forms
         private void ColumnBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             enableSaveButton();
+        }
+
+        private void Cancel_Click(object sender, EventArgs e)
+        {
+            DialogResult dialogResult = MessageBox.Show("Are you sure you want to exit?", "", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+            if (dialogResult == DialogResult.Yes)
+            {
+                this.Close();
+            }
         }
     }
 }

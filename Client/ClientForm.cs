@@ -64,7 +64,7 @@ namespace Client
         private void toolStripMenuItem1_Click(object sender, EventArgs e)
         {
             Search search = new Search();
-            search.Show();
+            search.ShowDialog();
         }
 
         public void AddData(Byte[] xml)

@@ -44,6 +44,8 @@
             this.FilterNameTextBox = new System.Windows.Forms.TextBox();
             this.FilterNameLabel = new System.Windows.Forms.Label();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.Cancel = new System.Windows.Forms.Button();
+            this.SearchButton = new System.Windows.Forms.Button();
             this.RemoveFilter = new System.Windows.Forms.Button();
             this.SaveFilter = new System.Windows.Forms.Button();
             this.EditFilter = new System.Windows.Forms.Button();
@@ -62,7 +64,7 @@
             this.groupBox1.Controls.Add(this.FilmsFound);
             this.groupBox1.Location = new System.Drawing.Point(2, 2);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(508, 238);
+            this.groupBox1.Size = new System.Drawing.Size(552, 238);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Found Films";
@@ -76,13 +78,13 @@
             this.FilmsFound.Location = new System.Drawing.Point(3, 16);
             this.FilmsFound.Name = "FilmsFound";
             this.FilmsFound.ReadOnly = true;
-            this.FilmsFound.Size = new System.Drawing.Size(502, 219);
-            this.FilmsFound.TabIndex = 0;
+            this.FilmsFound.Size = new System.Drawing.Size(546, 219);
+            this.FilmsFound.TabIndex = 5;
             // 
             // groupBox2
             // 
             this.groupBox2.Controls.Add(this.FilterList);
-            this.groupBox2.Location = new System.Drawing.Point(513, 2);
+            this.groupBox2.Location = new System.Drawing.Point(560, 2);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(142, 238);
             this.groupBox2.TabIndex = 1;
@@ -147,7 +149,7 @@
             // groupBox5
             // 
             this.groupBox5.Controls.Add(this.TextToCompare);
-            this.groupBox5.Location = new System.Drawing.Point(254, 16);
+            this.groupBox5.Location = new System.Drawing.Point(301, 16);
             this.groupBox5.Name = "groupBox5";
             this.groupBox5.Size = new System.Drawing.Size(245, 150);
             this.groupBox5.TabIndex = 4;
@@ -215,15 +217,37 @@
             // 
             // groupBox4
             // 
+            this.groupBox4.Controls.Add(this.Cancel);
+            this.groupBox4.Controls.Add(this.SearchButton);
             this.groupBox4.Controls.Add(this.RemoveFilter);
             this.groupBox4.Controls.Add(this.SaveFilter);
             this.groupBox4.Controls.Add(this.EditFilter);
-            this.groupBox4.Location = new System.Drawing.Point(516, 246);
+            this.groupBox4.Location = new System.Drawing.Point(563, 246);
             this.groupBox4.Name = "groupBox4";
             this.groupBox4.Size = new System.Drawing.Size(139, 173);
             this.groupBox4.TabIndex = 3;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Other";
+            // 
+            // Cancel
+            // 
+            this.Cancel.Location = new System.Drawing.Point(9, 135);
+            this.Cancel.Name = "Cancel";
+            this.Cancel.Size = new System.Drawing.Size(121, 23);
+            this.Cancel.TabIndex = 0;
+            this.Cancel.Text = "Cancel";
+            this.Cancel.UseVisualStyleBackColor = true;
+            this.Cancel.Click += new System.EventHandler(this.Cancel_Click);
+            // 
+            // SearchButton
+            // 
+            this.SearchButton.Location = new System.Drawing.Point(9, 106);
+            this.SearchButton.Name = "SearchButton";
+            this.SearchButton.Size = new System.Drawing.Size(121, 23);
+            this.SearchButton.TabIndex = 3;
+            this.SearchButton.Text = "Search";
+            this.SearchButton.UseVisualStyleBackColor = true;
+            this.SearchButton.Click += new System.EventHandler(this.SearchButton_Click);
             // 
             // RemoveFilter
             // 
@@ -253,7 +277,7 @@
             this.EditFilter.Location = new System.Drawing.Point(9, 19);
             this.EditFilter.Name = "EditFilter";
             this.EditFilter.Size = new System.Drawing.Size(124, 23);
-            this.EditFilter.TabIndex = 0;
+            this.EditFilter.TabIndex = 8;
             this.EditFilter.Text = "Edit Filter";
             this.EditFilter.UseVisualStyleBackColor = true;
             this.EditFilter.Click += new System.EventHandler(this.EditFilter_Click);
@@ -262,20 +286,22 @@
             // 
             this.CheckProgress.Location = new System.Drawing.Point(5, 419);
             this.CheckProgress.Name = "CheckProgress";
-            this.CheckProgress.Size = new System.Drawing.Size(650, 23);
+            this.CheckProgress.Size = new System.Drawing.Size(696, 23);
             this.CheckProgress.TabIndex = 4;
             // 
             // Search
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(658, 445);
+            this.ClientSize = new System.Drawing.Size(713, 445);
             this.Controls.Add(this.CheckProgress);
             this.Controls.Add(this.groupBox4);
             this.Controls.Add(this.FilterGroup);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "Search";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Search";
             this.Load += new System.EventHandler(this.Search_Load);
             this.groupBox1.ResumeLayout(false);
@@ -313,5 +339,7 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ComboBox ColumnBox;
         private System.Windows.Forms.ProgressBar CheckProgress;
+        private System.Windows.Forms.Button SearchButton;
+        private System.Windows.Forms.Button Cancel;
     }
 }
