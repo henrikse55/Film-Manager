@@ -24,7 +24,7 @@ namespace Client.Forms
         private void Editor_Load(object sender, EventArgs e)
         {
             DataRow row = ((DataRowView)collection.SelectedRows[0].DataBoundItem).Row;
-            FilmTitleTextBox.Text = (String) row["Navn"];
+            FilmTitleTextBox.Text = (String) row["Name"];
             GenreTextBox.Text = (String)row["Genre"];
             LocationTextBox.Text = (String)row["Location"];
             DescriptionBox.Text = (String)row["Description"];
