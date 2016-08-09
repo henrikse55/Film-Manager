@@ -27,7 +27,7 @@ namespace Server.Data
         public void AddCommand(string films, string genre, string description, string location)
         {
             Connect();
-            using (SqlCommand command = new SqlCommand("INSERT INTO Films (Films, Genre, Description, Location)  VALUES (@Films, @Genre, @Description, @Location)", connection))
+            using (SqlCommand command = new SqlCommand("INSERT INTO Films (Name, Genre, Description, Location)  VALUES (@Films, @Genre, @Description, @Location)", connection))
             {
                 command.Parameters.AddWithValue("@Films", films);
                 command.Parameters.AddWithValue("@Genre", genre);

@@ -28,7 +28,8 @@ namespace Client.Forms
             var ServerIP = Dns.GetHostAddresses(textBox1.Text);
             lock (this)
             {
-                Program.Network.connect(ServerIP[0].ToString()); 
+                String ip = ServerIP[0].AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork ? ServerIP[0].ToString() : ServerIP[1].ToString();
+                Program.Network.connect(ip); 
             }
             Program.Network.Send(Program.CreateNetworkMessage("SendData"));
             Properties.Settings.Default.ServerIP = ServerIP[0].ToString();

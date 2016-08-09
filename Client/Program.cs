@@ -26,6 +26,8 @@ namespace Client
             new Thread(new ThreadStart(Network.Init)).Start();
             
             messageHandler.addMessage(new SyncFilms());
+            messageHandler.addMessage(new ReSyncMessage());
+
             Application.EnableVisualStyles();
             Application.Run(clientform);
         }

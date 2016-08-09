@@ -52,6 +52,12 @@
     <Compile Include="ClientForm.Designer.cs">
       <DependentUpon>ClientForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\addFilm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\addFilm.Designer.cs">
+      <DependentUpon>addFilm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\Editor.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -86,6 +92,7 @@
     <Compile Include="Interfaces\IMessage.cs" />
     <Compile Include="Network\ClientSide.cs" />
     <Compile Include="Network\Container\MessageContainer.cs" />
+    <Compile Include="Network\Messages\ReSyncMessage.cs" />
     <Compile Include="Network\Messages\RowLock.cs" />
     <Compile Include="Network\Messages\SyncFilms.cs" />
     <Compile Include="Other\Filter.cs" />
@@ -99,6 +106,9 @@
     </Compile>
     <EmbeddedResource Include="ClientForm.resx">
       <DependentUpon>ClientForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\addFilm.resx">
+      <DependentUpon>addFilm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Editor.resx">
       <DependentUpon>Editor.cs</DependentUpon>
