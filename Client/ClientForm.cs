@@ -11,7 +11,7 @@ namespace Client
     public partial class ClientForm : Form
     {
         DataTable table = new DataTable("Test_Table");
-        String[] Columns = { "Id", "Navn", "Genre", "Description", "Location"};
+        String[] Columns = { "Id", "Name", "Genre", "Description", "Location"};
 
         public ClientForm()
         {
@@ -31,7 +31,7 @@ namespace Client
             //table.Rows.Add("3", "Rush Hour", "Action", "ting", "Stuen");
             FilmGrid.DataSource = table;
 
-            Program.Network.Send(Program.CreateNetworkMessage("SendData"));
+            
         }
 
         private void settingsToolStripMenuItem_Click(object sender, EventArgs e)
@@ -81,10 +81,11 @@ namespace Client
             writer.Flush();
             writer.Close();
 
+            table.TableName = "Temp";
             FileStream stream = new FileStream("Data.xml", FileMode.Open);
             table.ReadXml(stream);
 
-            MessageBox.Show("There is " + table.Rows.Count);
+            RefreshGrid();
         }
 
         private delegate void RefreshGridCallBack();
@@ -96,8 +97,21 @@ namespace Client
                 FilmGrid.Invoke(callback);
             }else
             {
-                FilmGrid.Update();
+                Console.WriteLine("Updates");
+                FilmGrid.DataSource = null;
+                FilmGrid.DataSource = table;
             }
+        }
+
+        private void ClientForm_Load(object sender, EventArgs e)
+        {
+            FilmGrid.VirtualMode = true;
+            Program.Network.Send(Program.CreateNetworkMessage("SendData"));
+        }
+
+        private void ClientForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            Program.Network.shutdown();
         }
     }
 }

@@ -90,11 +90,11 @@ namespace Client.Network
                 argsTemp.RemoveAt(0);
 
 
-                    MessageContainer container = new MessageContainer(temp[0], argsTemp.ToArray(), state.socket);
-                    Program.messageHandler.FindCommand(container); 
-
+                MessageContainer container = new MessageContainer(temp[0], argsTemp.ToArray(), state.socket);
+                Program.messageHandler.FindCommand(container); 
 
                 state.socket.BeginReceive(state.buffer, 0, state.buffer.Length, 0, new AsyncCallback(onRecive), state);
+
             }
             catch
             {
