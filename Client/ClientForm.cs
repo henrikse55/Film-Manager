@@ -16,9 +16,6 @@ namespace Client
         public ClientForm()
         {
             InitializeComponent();
-            //this.dataGridView1.Rows.Add("1", "StarWars", "Sci-Fi", "Space", "Stuen");
-            //this.dataGridView1.Rows.Add("2", "Narnia", "Fantasy", "noget", "Soveværelse");
-            //this.dataGridView1.Rows.Add("3", "Rush Hour", "Action", "ting", "Stuen");
             FilmGrid.Columns.Clear(); // fjerner alle columns fra vores datagridview fordi den automatisk adder dem der i Datatablet.
 
             foreach (String s in Columns)
@@ -26,9 +23,6 @@ namespace Client
                 table.Columns.Add(s);
             }
 
-            //table.Rows.Add("1", "StarWars", "Sci-Fi", "Space", "Stuen");
-            //table.Rows.Add("2", "Narnia", "Fantasy", "noget", "Soveværelse");
-            //table.Rows.Add("3", "Rush Hour", "Action", "ting", "Stuen");
             FilmGrid.DataSource = table;
 
             Program.Network.Send(Program.CreateNetworkMessage("SendData"));
@@ -54,7 +48,7 @@ namespace Client
                 edit.ShowDialog();
                 //dataGridView1.SelectedCells[0].Value.ToString()
             }
-            catch { }
+            catch { throw; }
         }
 
         //Henter den nye cell value fra Edit_Client Formen
