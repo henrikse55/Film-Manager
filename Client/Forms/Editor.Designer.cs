@@ -164,6 +164,6 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TextBox LocationTextBox;
         private System.Windows.Forms.Button SaveButton;
-        private System.Windows.Forms.Button CancelButton;
+        private new System.Windows.Forms.Button CancelButton;
     }
 }
