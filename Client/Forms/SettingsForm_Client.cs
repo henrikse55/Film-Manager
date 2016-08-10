@@ -26,7 +26,26 @@ namespace Client
         //Okay button
         private void OkayButton_Click(object sender, EventArgs e)
         {
-            this.Close();
+            var Option = MessageBox.Show("Would you like to save your changed settings?", "Save Setting?", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
+            switch (Option)
+            {
+                case DialogResult.Yes:
+                    Properties.Settings.Default.ServerIP = ServerIP.Text;
+                    Properties.Settings.Default.ServerPort = int.Parse(ServerPort.Text);
+                    Properties.Settings.Default.Save();
+                    this.Close();
+                    break;
+
+                case DialogResult.No:
+                    this.Close();
+                    break;
+            }
+        }
+
+        private void Settings_Load(object sender, EventArgs e)
+        {
+            ServerIP.Text = Properties.Settings.Default.ServerIP;
+            ServerPort.Text = Properties.Settings.Default.ServerPort.ToString();
         }
     }
 }
