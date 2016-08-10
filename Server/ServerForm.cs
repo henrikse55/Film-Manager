@@ -11,10 +11,10 @@ using System.Windows.Forms;
 
 namespace Server
 {
-    public partial class Form1 : Form
+    public partial class ServerForm : Form
     {
 
-        public Form1()
+        public ServerForm()
         {
             InitializeComponent();
         }
@@ -34,6 +34,11 @@ namespace Server
             {
                 label1.Text = Program.Network.ClientList.Count().ToString();
             }
+        }
+
+        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            Environment.Exit(0);
         }
     }
 }
