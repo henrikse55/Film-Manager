@@ -136,6 +136,7 @@ namespace Client.Network
             try
             {
                 SendDone.WaitOne();
+                Send("Shutdown");
                 client.Shutdown(SocketShutdown.Both);
                 client.Close();
             }
