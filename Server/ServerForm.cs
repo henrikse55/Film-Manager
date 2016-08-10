@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Server.Network;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -12,9 +13,27 @@ namespace Server
 {
     public partial class Form1 : Form
     {
+
         public Form1()
         {
             InitializeComponent();
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+        }
+
+        private delegate void UpdateClientCountCallBack();
+        public void UpdateClientCount()
+        {
+            if(label1.InvokeRequired)
+            {
+                UpdateClientCountCallBack CallBack = new UpdateClientCountCallBack(UpdateClientCount);
+                label1.Invoke(CallBack);
+            } else
+            {
+                label1.Text = Program.Network.ClientList.Count().ToString();
+            }
         }
     }
 }

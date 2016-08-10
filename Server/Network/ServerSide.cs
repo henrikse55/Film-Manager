@@ -50,6 +50,7 @@ namespace Server.Network
             Socket client = Listner.EndAccept(ar);
 
             Clients.Add(client);
+            Program.ServerForm.UpdateClientCount();
 
             StateObject state = new StateObject(client);
 
@@ -164,5 +165,6 @@ namespace Server.Network
             GC.SuppressFinalize(this);
         }
         #endregion
+
     }
 }

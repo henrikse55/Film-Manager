@@ -17,6 +17,7 @@ namespace Server
         public static MessageHandler messageHandler = new MessageHandler();
         public static DataHandler datahandler = new DataHandler();
         public static KeepNetworkAlive keepAliveTimer = new KeepNetworkAlive();
+        public static Form1 ServerForm;
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
@@ -30,7 +31,7 @@ namespace Server
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form1());
+            Application.Run(ServerForm = new Form1());
         }
 
 

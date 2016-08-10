@@ -28,19 +28,19 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.CancelButton = new System.Windows.Forms.Button();
+            this.Cancel = new System.Windows.Forms.Button();
             this.Okaybutton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
-            // CancelButton
+            // Cancel
             // 
-            this.CancelButton.Location = new System.Drawing.Point(197, 227);
-            this.CancelButton.Name = "CancelButton";
-            this.CancelButton.Size = new System.Drawing.Size(75, 23);
-            this.CancelButton.TabIndex = 0;
-            this.CancelButton.Text = "Cancel";
-            this.CancelButton.UseVisualStyleBackColor = true;
-            this.CancelButton.Click += new System.EventHandler(this.CancelButton_Click);
+            this.Cancel.Location = new System.Drawing.Point(197, 227);
+            this.Cancel.Name = "Cancel";
+            this.Cancel.Size = new System.Drawing.Size(75, 23);
+            this.Cancel.TabIndex = 0;
+            this.Cancel.Text = "Cancel";
+            this.Cancel.UseVisualStyleBackColor = true;
+            this.Cancel.Click += new System.EventHandler(this.CancelButton_Click);
             // 
             // Okaybutton
             // 
@@ -58,7 +58,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(284, 262);
             this.Controls.Add(this.Okaybutton);
-            this.Controls.Add(this.CancelButton);
+            this.Controls.Add(this.Cancel);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "Settings";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
@@ -69,7 +69,7 @@
 
         #endregion
 
-        private System.Windows.Forms.Button CancelButton;
+        private System.Windows.Forms.Button Cancel;
         private System.Windows.Forms.Button Okaybutton;
     }
 }
