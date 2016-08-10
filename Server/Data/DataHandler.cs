@@ -10,25 +10,22 @@ namespace Server.Data
 {
     class DataHandler
     {
-        private SqlConnection connection = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=" + 
-            Environment.CurrentDirectory + @"\Data\DataHolder.mdf;Integrated Security=True");
+        private String connString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=" + 
+            Environment.CurrentDirectory + @"\Data\DataHolder.mdf;Integrated Security=True";
 
         public enum Columns
         {
             Films, Genre, Description, Location
         }
 
-        public void Connect()
-        {
-            try { connection.Open(); Console.WriteLine(Environment.CurrentDirectory); } catch { throw; }
-        }
-
         //Add ny row til tabel funktion
         public void AddCommand(string films, string genre, string description, string location)
         {
-            Connect();
-            using (SqlCommand command = new SqlCommand("INSERT INTO Films (Films, Genre, Description, Location)  VALUES (@Films, @Genre, @Description, @Location)", connection))
+            using (SqlConnection conn = new SqlConnection(connString))
+            using (SqlCommand command = new SqlCommand("INSERT INTO Films (Name, Genre, Description, Location)  VALUES (@Films, @Genre, @Description, @Location)", conn))
             {
+                conn.Open();
+
                 command.Parameters.AddWithValue("@Films", films);
                 command.Parameters.AddWithValue("@Genre", genre);
                 command.Parameters.AddWithValue("@Description", description);
@@ -36,35 +33,37 @@ namespace Server.Data
 
                 command.ExecuteNonQuery();
             }
-            connection.Close();
         }
 
         //Delete fra tabel funktion
         public void DeleteCommand(int id)
         {
-            Connect();
-            using (SqlCommand command = new SqlCommand("DELETE FROM Films WHERE Id=@ID", connection))
+            using (SqlConnection conn = new SqlConnection(connString))            
+            using (SqlCommand command = new SqlCommand("DELETE FROM Films WHERE Id=@ID", conn))
             {
+                conn.Open();
+
                 command.Parameters.AddWithValue("@ID", id);
 
                 command.ExecuteNonQuery();
             }
-            connection.Close();
         }
 
         //Hent tabel data
         public DataTable DataReader()
         {
-            Connect();
             SqlDataReader reader = null;
-            using (SqlCommand command = new SqlCommand("SELECT * FROM Films", connection))
+            using (SqlConnection conn = new SqlConnection(connString))
+            using (SqlCommand command = new SqlCommand("SELECT * FROM Films", conn))
             {
+                conn.Open();
                 using (reader = command.ExecuteReader())
                 {
                     using (DataTable table = new DataTable("Temp"))
                     {
                         table.Load(reader);
-                        connection.Close();
+                        reader.Close();
+                        conn.Close();
                         return table;
                     }
                 }
@@ -74,9 +73,10 @@ namespace Server.Data
         //Opdatere tablet
         public void UpdateTabel(Columns column, string Data, int Id)
         {
-            Connect();
-            using (SqlCommand command = new SqlCommand("", connection))
+            using (SqlConnection conn = new SqlConnection(connString))
+            using (SqlCommand command = new SqlCommand("", conn))
             {
+                conn.Open();
                 switch (column)
                 {
                     case Columns.Films:
@@ -92,7 +92,6 @@ namespace Server.Data
                         command.CommandText = "UPDATE FILMS set Location=@LOCATION WHERE Id=@ID";
                         break;
                 }
-                Console.WriteLine("Hej");
 
                 command.Parameters.AddWithValue("@FILMSTITLE", Data);
                 command.Parameters.AddWithValue("@GENRE", Data);
@@ -102,8 +101,6 @@ namespace Server.Data
 
                 command.ExecuteNonQuery();
             }
-
-            connection.Close();
         }
     }
 }

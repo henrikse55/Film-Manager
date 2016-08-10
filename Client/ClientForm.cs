@@ -69,6 +69,8 @@ namespace Client
 
         public void AddData(Byte[] xml)
         {
+            NullGrid();
+            table.Clear();
             BinaryWriter writer = new BinaryWriter(File.Open("Data.xml", FileMode.Create));
             writer.Write(xml, 0, xml.Length);
             writer.Flush();
@@ -77,7 +79,8 @@ namespace Client
             table.TableName = "Temp";
             FileStream stream = new FileStream("Data.xml", FileMode.Open);
             table.ReadXml(stream);
-
+            stream.Flush();
+            stream.Close();
             RefreshGrid();
         }
 
@@ -90,8 +93,22 @@ namespace Client
                 FilmGrid.Invoke(callback);
             }else
             {
-                FilmGrid.DataSource = null;
+                
                 FilmGrid.DataSource = table;
+            }
+        }
+
+        public void NullGrid()
+        {
+            if (FilmGrid.InvokeRequired)
+            {
+                RefreshGridCallBack callback = new RefreshGridCallBack(NullGrid);
+                FilmGrid.Invoke(callback);
+            }
+            else
+            {
+
+                FilmGrid.DataSource = null;
             }
         }
 
@@ -156,6 +173,24 @@ namespace Client
         private void ClientForm_FormClosing(object sender, FormClosingEventArgs e)
         {
             Program.Network.shutdown();
+        }
+
+        private void addToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            AddFilm film = new AddFilm();
+            film.ShowDialog();
+        }
+
+        private void removeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            String ID = (String)FilmGrid.SelectedRows[0].Cells["Id"].Value;
+            Program.Network.Send(Program.CreateNetworkMessage("RemoveFilm", ID));
+        }
+
+        private void editToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Editor edit = new Editor(FilmGrid);
+            edit.ShowDialog();
         }
     }
 }

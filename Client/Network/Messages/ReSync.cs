@@ -4,21 +4,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Client.Interfaces;
-
 namespace Client.Network.Messages
 {
-    class RowLock : IMessage
+    class ReSyncMessage : IMessage
     {
-        //ID
-
         public string Name
         {
-            get{ return "LockRow";}
+            get{ return "ReSync";}
         }
 
         public void Run(string[] args)
         {
-            //Might Not be needed
+            Console.WriteLine("ReSyncing...");
+            Program.Network.Send("SendData");
         }
     }
 }
