@@ -8,19 +8,24 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Net;
 
 namespace Server
 {
-    public partial class Form1 : Form
+    public partial class ServerForm : Form
     {
 
-        public Form1()
+        public ServerForm()
         {
             InitializeComponent();
+            this.Text = Dns.GetHostName();
+            label3.Text = Dns.GetHostName();
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            UpdateMovieCount();
+            
         }
 
         private delegate void UpdateClientCountCallBack();
@@ -34,6 +39,25 @@ namespace Server
             {
                 label1.Text = Program.Network.ClientList.Count().ToString();
             }
+        }
+
+        private delegate void UpdateMovieCountCallBack();
+        public void UpdateMovieCount()
+        {
+            if (label1.InvokeRequired)
+            {
+                UpdateMovieCountCallBack CallBack = new UpdateMovieCountCallBack(UpdateMovieCount);
+                label1.Invoke(CallBack);
+            }
+            else
+            {
+                label2.Text = Program.datahandler.DataReader().Rows.Count.ToString();
+            }
+        }
+
+        public void SetHostName()
+        {
+            
         }
     }
 }

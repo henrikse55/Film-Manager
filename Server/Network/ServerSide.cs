@@ -18,7 +18,7 @@ namespace Server.Network
         private Socket server;
 
         private ManualResetEvent AllDone = new ManualResetEvent(false);
-
+        
         public void Init()
         {
             IPAddress ipAddress = IPAddress.Any;
@@ -29,7 +29,6 @@ namespace Server.Network
                 server = new Socket(ipAddress.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
                 server.Bind(remoteEP);
                 server.Listen(4);
-
                 while (true)
                 {
                     AllDone.Reset();

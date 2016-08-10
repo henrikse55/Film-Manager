@@ -33,6 +33,8 @@ namespace Server.Data
 
                 command.ExecuteNonQuery();
             }
+            Program.ServerForm.UpdateMovieCount();
+
         }
 
         //Delete fra tabel funktion
@@ -46,6 +48,7 @@ namespace Server.Data
                 command.Parameters.AddWithValue("@ID", id);
 
                 command.ExecuteNonQuery();
+                Program.ServerForm.UpdateMovieCount();
             }
         }
 
