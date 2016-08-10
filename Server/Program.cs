@@ -28,6 +28,7 @@ namespace Server
 
             messageHandler.addMessage(new SyncFilmsMessage());
             messageHandler.addMessage(new AddFilmMessage());
+            messageHandler.addMessage(new RemoveMessage());
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);

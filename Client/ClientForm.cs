@@ -180,5 +180,17 @@ namespace Client
             AddFilm film = new AddFilm();
             film.ShowDialog();
         }
+
+        private void removeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            String ID = (String)FilmGrid.SelectedRows[0].Cells["Id"].Value;
+            Program.Network.Send(Program.CreateNetworkMessage("RemoveFilm", ID));
+        }
+
+        private void editToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Editor edit = new Editor(FilmGrid);
+            edit.ShowDialog();
+        }
     }
 }
