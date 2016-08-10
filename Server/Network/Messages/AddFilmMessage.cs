@@ -24,7 +24,6 @@ namespace Server.Network.Messages
             Program.Network.ClientList.ForEach(_Socket => 
             {
                 Program.Network.Send(_Socket, "ReSync");
-                Console.WriteLine("Sended To Client: " + i);
             });
         }
     }
