@@ -13,7 +13,7 @@ namespace Client.Forms
     public partial class Editor : Form
     {
         DataGridView collection;
-
+        DataRow row;
         public Editor(DataGridView grid)
         {
             InitializeComponent();
@@ -24,7 +24,7 @@ namespace Client.Forms
         private void Editor_Load(object sender, EventArgs e)
         {
             
-            DataRow row = ((DataRowView)collection.SelectedRows[0].DataBoundItem).Row;
+            row = ((DataRowView)collection.SelectedRows[0].DataBoundItem).Row;
             FilmTitleTextBox.Text = (String) row["Name"];
             GenreTextBox.Text = (String)row["Genre"];
             LocationTextBox.Text = (String)row["Location"];
@@ -39,6 +39,19 @@ namespace Client.Forms
                 case DialogResult.Yes:
                     DataRow row = ((DataRowView)collection.SelectedRows[0].DataBoundItem).Row;
                     collection.SelectedRows[0].SetValues(row["Id"], FilmTitleTextBox.Text, GenreTextBox.Text, DescriptionBox.Text, LocationTextBox.Text);
+
+                    if(!FilmTitleTextBox.Text.Equals(row["Name"]))
+                        Program.Network.Send(Program.CreateNetworkMessage("EditFilm", "Name", FilmTitleTextBox.Text, (String)collection.SelectedRows[0].Cells[0].Value));
+
+                    if (!FilmTitleTextBox.Text.Equals(row["Genre"]))
+                        Program.Network.Send(Program.CreateNetworkMessage("EditFilm", "Genre", GenreTextBox.Text, (String)collection.SelectedRows[0].Cells[0].Value));
+
+                    if (!FilmTitleTextBox.Text.Equals(row["Description"]))
+                        Program.Network.Send(Program.CreateNetworkMessage("EditFilm", "Description", DescriptionBox.Text, (String)collection.SelectedRows[0].Cells[0].Value));
+
+                    if (!FilmTitleTextBox.Text.Equals(row["Location"]))
+                        Program.Network.Send(Program.CreateNetworkMessage("EditFilm", "Location", LocationTextBox.Text, (String)collection.SelectedRows[0].Cells[0].Value));
+
                     this.Close();
                     break;
             }

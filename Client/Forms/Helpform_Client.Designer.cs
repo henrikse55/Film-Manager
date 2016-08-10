@@ -65,9 +65,9 @@
             this.label2.ForeColor = System.Drawing.SystemColors.HotTrack;
             this.label2.Location = new System.Drawing.Point(6, 88);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(52, 18);
+            this.label2.Size = new System.Drawing.Size(145, 18);
             this.label2.TabIndex = 2;
-            this.label2.Text = "label2";
+            this.label2.Text = "How do I remove?";
             this.label2.Click += new System.EventHandler(this.label2_Click);
             // 
             // label3
