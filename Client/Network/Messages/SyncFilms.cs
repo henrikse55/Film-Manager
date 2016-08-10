@@ -34,7 +34,6 @@ namespace Client.Network.Messages
             {
                 Console.WriteLine("Everything recived!");
                 Program.clientform.AddData(buffer);
-                Program.Network.RestartConnection();
             }else
             {
             Program.Network.socket.BeginReceive(buffer, 0, buffer.Length, 0, new AsyncCallback(asyncNet), Program.Network.socket);

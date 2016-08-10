@@ -21,15 +21,19 @@ namespace Server.Network.Messages
         public void Run(string[] args, Socket socket)
         {
             Program.datahandler.AddCommand(args[0], args[1], args[2], args[3]);
-
+            int i = 0;
             Program.Network.ClientList.ForEach(_Socket => 
             {
-                DataTable table = Program.datahandler.DataReader();
-                StringWriter writer = new StringWriter();
-                table.WriteXml(writer);
-                byte[] message = Encoding.ASCII.GetBytes(writer.ToString());
-                Program.Network.Send(_Socket, Program.CreateNetworkMessage("SendData", message.Length.ToString()));
-                _Socket.Send(message);
+                Program.Network.Send(_Socket, "ReSync");
+                Console.WriteLine("Sended To Client: " + i);
+                i++;
+                //DataTable table = Program.datahandler.DataReader();
+                //StringWriter writer = new StringWriter();
+                //table.WriteXml(writer);
+                //byte[] message = Encoding.ASCII.GetBytes(writer.ToString());
+                //Program.Network.Send(_Socket, Program.CreateNetworkMessage("SendData", message.Length.ToString()));
+                //Program.Network.Send(_Socket, writer.ToString());
+                //_Socket.Send(message);
             });
         }
     }

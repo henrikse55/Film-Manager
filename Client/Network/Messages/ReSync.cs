@@ -15,6 +15,7 @@ namespace Client.Network.Messages
 
         public void Run(string[] args)
         {
+            Console.WriteLine("ReSyncing...");
             Program.Network.Send("SendData");
         }
     }

@@ -24,7 +24,7 @@ namespace Server.Network.Messages
             table.WriteXml(writer);
             byte[] message = Encoding.ASCII.GetBytes(writer.ToString());
             Program.Network.Send(socket, Program.CreateNetworkMessage("SendData", message.Length.ToString()));
-            socket.Send(message);
+            Program.Network.Send(socket, writer.ToString());
         }
     }
 }

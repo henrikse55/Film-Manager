@@ -10,6 +10,8 @@ using Client.Network;
 using Shared.Network;
 using System.Windows.Forms;
 using Client.Forms;
+using System.Threading.Tasks;
+
 namespace Client.Network
 {
     public class ClientSide
@@ -113,7 +115,9 @@ namespace Client.Network
                 argsTemp.RemoveAt(0);
 
                 MessageContainer container = new MessageContainer(temp[0], argsTemp.ToArray(), state.socket);
-                Program.messageHandler.FindCommand(container);  
+                Program.messageHandler.FindCommand(container);
+
+                RestartConnection();
             }
             catch
             {

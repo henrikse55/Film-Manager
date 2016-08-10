@@ -92,7 +92,7 @@
     <Compile Include="Interfaces\IMessage.cs" />
     <Compile Include="Network\ClientSide.cs" />
     <Compile Include="Network\Container\MessageContainer.cs" />
-    <Compile Include="Network\Messages\ReSyncMessage.cs" />
+    <Compile Include="Network\Messages\ReSync.cs" />
     <Compile Include="Network\Messages\RowLock.cs" />
     <Compile Include="Network\Messages\SyncFilms.cs" />
     <Compile Include="Other\Filter.cs" />
