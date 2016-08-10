@@ -7,7 +7,7 @@ using System.Net.Sockets;
 
 namespace Shared.Network
 {
-    class StateObject
+    public class StateObject
     {
         /// <summary>
         /// Creates a stateObject for comunication with the server

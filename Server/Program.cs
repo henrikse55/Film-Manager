@@ -27,6 +27,7 @@ namespace Server
             new Thread(new ThreadStart(keepAliveTimer.Start)).Start();
 
             messageHandler.addMessage(new SyncFilmsMessage());
+            messageHandler.addMessage(new AddFilmMessage());
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
