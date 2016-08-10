@@ -85,6 +85,7 @@ namespace Server.Network
                     Clients.Remove(state.socket);
                     state.socket.Shutdown(SocketShutdown.Both);
                     state.socket.Close();
+                    Program.ServerForm.UpdateClientCount();
                 }
                 else
                 {
