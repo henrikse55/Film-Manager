@@ -35,6 +35,8 @@ namespace Client.Handler
             //}
 
             IMessage _command = (from _com in Messages where _com.Name.ToUpper().Equals(network.Message.ToUpper()) select _com).SingleOrDefault();
+
+            if(_command != null)
             _command.Run(network.args);
 
         }
