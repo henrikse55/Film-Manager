@@ -44,12 +44,12 @@
             this.FilterNameTextBox = new System.Windows.Forms.TextBox();
             this.FilterNameLabel = new System.Windows.Forms.Label();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.FilterStateButton = new System.Windows.Forms.Button();
             this.Cancel = new System.Windows.Forms.Button();
             this.SearchButton = new System.Windows.Forms.Button();
             this.RemoveFilter = new System.Windows.Forms.Button();
             this.SaveFilter = new System.Windows.Forms.Button();
             this.EditFilter = new System.Windows.Forms.Button();
-            this.CheckProgress = new System.Windows.Forms.ProgressBar();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.FilmsFound)).BeginInit();
             this.groupBox2.SuspendLayout();
@@ -80,6 +80,7 @@
             this.FilmsFound.ReadOnly = true;
             this.FilmsFound.Size = new System.Drawing.Size(546, 219);
             this.FilmsFound.TabIndex = 20;
+            this.FilmsFound.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.FilmsFound_CellDoubleClick);
             // 
             // groupBox2
             // 
@@ -93,12 +94,14 @@
             // 
             // FilterList
             // 
+            this.FilterList.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
             this.FilterList.FormattingEnabled = true;
-            this.FilterList.Location = new System.Drawing.Point(3, 16);
+            this.FilterList.Location = new System.Drawing.Point(3, 20);
             this.FilterList.Name = "FilterList";
             this.FilterList.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
             this.FilterList.Size = new System.Drawing.Size(139, 212);
             this.FilterList.TabIndex = 7;
+            this.FilterList.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.FilterList_DrawItem);
             this.FilterList.SelectedIndexChanged += new System.EventHandler(this.FilterList_SelectedIndexChanged);
             // 
             // FilterGroup
@@ -216,6 +219,7 @@
             // 
             // groupBox4
             // 
+            this.groupBox4.Controls.Add(this.FilterStateButton);
             this.groupBox4.Controls.Add(this.Cancel);
             this.groupBox4.Controls.Add(this.SearchButton);
             this.groupBox4.Controls.Add(this.RemoveFilter);
@@ -223,14 +227,24 @@
             this.groupBox4.Controls.Add(this.EditFilter);
             this.groupBox4.Location = new System.Drawing.Point(563, 246);
             this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(139, 173);
+            this.groupBox4.Size = new System.Drawing.Size(139, 192);
             this.groupBox4.TabIndex = 6;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Other";
             // 
+            // FilterStateButton
+            // 
+            this.FilterStateButton.Location = new System.Drawing.Point(9, 106);
+            this.FilterStateButton.Name = "FilterStateButton";
+            this.FilterStateButton.Size = new System.Drawing.Size(121, 23);
+            this.FilterStateButton.TabIndex = 6;
+            this.FilterStateButton.Text = "Disable/Enable Filter";
+            this.FilterStateButton.UseVisualStyleBackColor = true;
+            this.FilterStateButton.Click += new System.EventHandler(this.button1_Click);
+            // 
             // Cancel
             // 
-            this.Cancel.Location = new System.Drawing.Point(9, 135);
+            this.Cancel.Location = new System.Drawing.Point(9, 163);
             this.Cancel.Name = "Cancel";
             this.Cancel.Size = new System.Drawing.Size(121, 23);
             this.Cancel.TabIndex = 0;
@@ -240,7 +254,7 @@
             // 
             // SearchButton
             // 
-            this.SearchButton.Location = new System.Drawing.Point(9, 106);
+            this.SearchButton.Location = new System.Drawing.Point(9, 134);
             this.SearchButton.Name = "SearchButton";
             this.SearchButton.Size = new System.Drawing.Size(121, 23);
             this.SearchButton.TabIndex = 2;
@@ -281,19 +295,11 @@
             this.EditFilter.UseVisualStyleBackColor = true;
             this.EditFilter.Click += new System.EventHandler(this.EditFilter_Click);
             // 
-            // CheckProgress
-            // 
-            this.CheckProgress.Location = new System.Drawing.Point(5, 419);
-            this.CheckProgress.Name = "CheckProgress";
-            this.CheckProgress.Size = new System.Drawing.Size(696, 23);
-            this.CheckProgress.TabIndex = 4;
-            // 
             // Search
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(713, 445);
-            this.Controls.Add(this.CheckProgress);
             this.Controls.Add(this.groupBox4);
             this.Controls.Add(this.FilterGroup);
             this.Controls.Add(this.groupBox2);
@@ -337,8 +343,8 @@
         private System.Windows.Forms.RichTextBox TextToCompare;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ComboBox ColumnBox;
-        private System.Windows.Forms.ProgressBar CheckProgress;
         private System.Windows.Forms.Button SearchButton;
         private System.Windows.Forms.Button Cancel;
+        private System.Windows.Forms.Button FilterStateButton;
     }
 }
