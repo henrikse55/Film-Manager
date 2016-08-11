@@ -44,20 +44,15 @@ namespace Server
         private delegate void UpdateMovieCountCallBack();
         public void UpdateMovieCount()
         {
-            if (label1.InvokeRequired)
+            if (label2.InvokeRequired)
             {
                 UpdateMovieCountCallBack CallBack = new UpdateMovieCountCallBack(UpdateMovieCount);
-                label1.Invoke(CallBack);
+                label2.Invoke(CallBack);
             }
             else
             {
                 label2.Text = Program.datahandler.DataReader().Rows.Count.ToString();
             }
-        }
-
-        public void SetHostName()
-        {
-            
         }
     }
 }
