@@ -88,6 +88,7 @@ namespace Client.Forms
 
         public void CreateFilter()
         {
+            FilterList.ClearSelected();
             for (int x = 0; x < filters.Count; x++)
             {
                 Filter f = filters.ToArray()[x];
@@ -122,11 +123,10 @@ namespace Client.Forms
                     stream.Close();
                 }
             }
-            catch
+            catch (IOException)
             {
                 
             }
-
         }
 
         private void ResetFields()
@@ -232,6 +232,7 @@ namespace Client.Forms
 
         private void RemoveFilter_Click(object sender, EventArgs e)
         {
+            FilterList.ClearSelected();
             for (int x = 0; x < filters.Count; x++)
             {
                 Filter filter = filters.ToArray()[x];
@@ -247,7 +248,6 @@ namespace Client.Forms
                     }
                 }
             }
-
             updateFilms();
         }
 
@@ -303,11 +303,10 @@ namespace Client.Forms
 
         private void FilterList_DrawItem(object sender, DrawItemEventArgs e)
         {
-            FilterList.ClearSelected();
-
+            FilterList.BackColor = Color.Gray;
             e.DrawBackground();
             var filter = filters[e.Index];
-            Brush brush = !filter.isDisabled ? Brushes.DarkGreen : Brushes.Red;
+            Brush brush = !filter.isDisabled ? Brushes.Green : Brushes.Red;
 
             e.Graphics.DrawString(filter.Name, e.Font, brush, e.Bounds, StringFormat.GenericDefault);
         }
