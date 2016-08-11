@@ -165,6 +165,8 @@ namespace Client.Forms
             columns.ToList().ForEach(x => { ColumnBox.Items.Add(x.ColumnName); FilmsInList.Columns.Add(x.ColumnName); });
             FilmsFound.DataSource = FilmsInList;
             ColumnBox.SelectedIndex = 0;
+            ColumnBox.BackColor = Color.Gray;
+            this.Invalidate();
 
             String FiltersDir = @".\Filters\";
             var files = Directory.GetFiles(FiltersDir);
@@ -313,8 +315,8 @@ namespace Client.Forms
 
         private void FilterList_DrawItem(object sender, DrawItemEventArgs e)
         {
-            FilterList.BackColor = Color.LightGray;
             e.DrawBackground();
+            FilterList.BackColor = Color.LightGray;
             if (FilterList.Items.Count != 0)
             {
                 var filter = filters[e.Index];
