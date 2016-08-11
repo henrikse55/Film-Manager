@@ -65,7 +65,7 @@
             this.groupBox1.Location = new System.Drawing.Point(2, 2);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(552, 238);
-            this.groupBox1.TabIndex = 0;
+            this.groupBox1.TabIndex = 21;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Found Films";
             // 
@@ -79,7 +79,7 @@
             this.FilmsFound.Name = "FilmsFound";
             this.FilmsFound.ReadOnly = true;
             this.FilmsFound.Size = new System.Drawing.Size(546, 219);
-            this.FilmsFound.TabIndex = 5;
+            this.FilmsFound.TabIndex = 20;
             // 
             // groupBox2
             // 
@@ -87,7 +87,7 @@
             this.groupBox2.Location = new System.Drawing.Point(560, 2);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(142, 238);
-            this.groupBox2.TabIndex = 1;
+            this.groupBox2.TabIndex = 8;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Applied Filters";
             // 
@@ -98,7 +98,7 @@
             this.FilterList.Name = "FilterList";
             this.FilterList.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
             this.FilterList.Size = new System.Drawing.Size(139, 212);
-            this.FilterList.TabIndex = 0;
+            this.FilterList.TabIndex = 7;
             this.FilterList.SelectedIndexChanged += new System.EventHandler(this.FilterList_SelectedIndexChanged);
             // 
             // FilterGroup
@@ -113,7 +113,7 @@
             this.FilterGroup.Location = new System.Drawing.Point(5, 246);
             this.FilterGroup.Name = "FilterGroup";
             this.FilterGroup.Size = new System.Drawing.Size(505, 173);
-            this.FilterGroup.TabIndex = 2;
+            this.FilterGroup.TabIndex = 11;
             this.FilterGroup.TabStop = false;
             this.FilterGroup.Text = "New/edit Filter";
             // 
@@ -123,7 +123,7 @@
             this.label1.Location = new System.Drawing.Point(7, 130);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(58, 13);
-            this.label1.TabIndex = 7;
+            this.label1.TabIndex = 13;
             this.label1.Text = "Applied To";
             // 
             // ColumnBox
@@ -133,7 +133,7 @@
             this.ColumnBox.Location = new System.Drawing.Point(6, 146);
             this.ColumnBox.Name = "ColumnBox";
             this.ColumnBox.Size = new System.Drawing.Size(121, 21);
-            this.ColumnBox.TabIndex = 6;
+            this.ColumnBox.TabIndex = 12;
             this.ColumnBox.SelectedIndexChanged += new System.EventHandler(this.ColumnBox_SelectedIndexChanged);
             // 
             // CaseSensetiveCheckBox
@@ -142,7 +142,7 @@
             this.CaseSensetiveCheckBox.Location = new System.Drawing.Point(9, 42);
             this.CaseSensetiveCheckBox.Name = "CaseSensetiveCheckBox";
             this.CaseSensetiveCheckBox.Size = new System.Drawing.Size(100, 17);
-            this.CaseSensetiveCheckBox.TabIndex = 5;
+            this.CaseSensetiveCheckBox.TabIndex = 17;
             this.CaseSensetiveCheckBox.Text = "Case Sensetive";
             this.CaseSensetiveCheckBox.UseVisualStyleBackColor = true;
             // 
@@ -152,7 +152,7 @@
             this.groupBox5.Location = new System.Drawing.Point(301, 16);
             this.groupBox5.Name = "groupBox5";
             this.groupBox5.Size = new System.Drawing.Size(245, 150);
-            this.groupBox5.TabIndex = 4;
+            this.groupBox5.TabIndex = 9;
             this.groupBox5.TabStop = false;
             this.groupBox5.Text = "Text to Compare";
             // 
@@ -162,7 +162,7 @@
             this.TextToCompare.Location = new System.Drawing.Point(3, 16);
             this.TextToCompare.Name = "TextToCompare";
             this.TextToCompare.Size = new System.Drawing.Size(239, 131);
-            this.TextToCompare.TabIndex = 0;
+            this.TextToCompare.TabIndex = 10;
             this.TextToCompare.Text = "";
             // 
             // groupBox3
@@ -172,7 +172,7 @@
             this.groupBox3.Location = new System.Drawing.Point(9, 61);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Size = new System.Drawing.Size(72, 66);
-            this.groupBox3.TabIndex = 3;
+            this.groupBox3.TabIndex = 14;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Filter Type";
             // 
@@ -182,7 +182,7 @@
             this.ExcludeCheckBox.Location = new System.Drawing.Point(6, 39);
             this.ExcludeCheckBox.Name = "ExcludeCheckBox";
             this.ExcludeCheckBox.Size = new System.Drawing.Size(64, 17);
-            this.ExcludeCheckBox.TabIndex = 3;
+            this.ExcludeCheckBox.TabIndex = 16;
             this.ExcludeCheckBox.Text = "Exclude";
             this.ExcludeCheckBox.UseVisualStyleBackColor = true;
             this.ExcludeCheckBox.CheckedChanged += new System.EventHandler(this.ExcludeCheckBox_CheckedChanged);
@@ -193,7 +193,7 @@
             this.IncludeCheckBox.Location = new System.Drawing.Point(6, 19);
             this.IncludeCheckBox.Name = "IncludeCheckBox";
             this.IncludeCheckBox.Size = new System.Drawing.Size(61, 17);
-            this.IncludeCheckBox.TabIndex = 2;
+            this.IncludeCheckBox.TabIndex = 15;
             this.IncludeCheckBox.Text = "Include";
             this.IncludeCheckBox.UseVisualStyleBackColor = true;
             this.IncludeCheckBox.CheckedChanged += new System.EventHandler(this.IncludeCheckBox_CheckedChanged);
@@ -203,7 +203,7 @@
             this.FilterNameTextBox.Location = new System.Drawing.Point(72, 16);
             this.FilterNameTextBox.Name = "FilterNameTextBox";
             this.FilterNameTextBox.Size = new System.Drawing.Size(99, 20);
-            this.FilterNameTextBox.TabIndex = 1;
+            this.FilterNameTextBox.TabIndex = 19;
             this.FilterNameTextBox.TextChanged += new System.EventHandler(this.FilterNameTextBox_TextChanged);
             // 
             // FilterNameLabel
@@ -212,7 +212,7 @@
             this.FilterNameLabel.Location = new System.Drawing.Point(6, 19);
             this.FilterNameLabel.Name = "FilterNameLabel";
             this.FilterNameLabel.Size = new System.Drawing.Size(60, 13);
-            this.FilterNameLabel.TabIndex = 0;
+            this.FilterNameLabel.TabIndex = 18;
             this.FilterNameLabel.Text = "Filter Name";
             // 
             // groupBox4
@@ -225,7 +225,7 @@
             this.groupBox4.Location = new System.Drawing.Point(563, 246);
             this.groupBox4.Name = "groupBox4";
             this.groupBox4.Size = new System.Drawing.Size(139, 173);
-            this.groupBox4.TabIndex = 3;
+            this.groupBox4.TabIndex = 6;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Other";
             // 
@@ -244,7 +244,7 @@
             this.SearchButton.Location = new System.Drawing.Point(9, 106);
             this.SearchButton.Name = "SearchButton";
             this.SearchButton.Size = new System.Drawing.Size(121, 23);
-            this.SearchButton.TabIndex = 3;
+            this.SearchButton.TabIndex = 2;
             this.SearchButton.Text = "Search";
             this.SearchButton.UseVisualStyleBackColor = true;
             this.SearchButton.Click += new System.EventHandler(this.SearchButton_Click);
@@ -255,7 +255,7 @@
             this.RemoveFilter.Location = new System.Drawing.Point(9, 77);
             this.RemoveFilter.Name = "RemoveFilter";
             this.RemoveFilter.Size = new System.Drawing.Size(124, 23);
-            this.RemoveFilter.TabIndex = 2;
+            this.RemoveFilter.TabIndex = 3;
             this.RemoveFilter.Text = "Remove Filter";
             this.RemoveFilter.UseVisualStyleBackColor = true;
             this.RemoveFilter.Click += new System.EventHandler(this.RemoveFilter_Click);
@@ -266,7 +266,7 @@
             this.SaveFilter.Location = new System.Drawing.Point(9, 48);
             this.SaveFilter.Name = "SaveFilter";
             this.SaveFilter.Size = new System.Drawing.Size(124, 23);
-            this.SaveFilter.TabIndex = 1;
+            this.SaveFilter.TabIndex = 4;
             this.SaveFilter.Text = "Save Filter";
             this.SaveFilter.UseVisualStyleBackColor = true;
             this.SaveFilter.Click += new System.EventHandler(this.SaveFilter_Click);
@@ -277,7 +277,7 @@
             this.EditFilter.Location = new System.Drawing.Point(9, 19);
             this.EditFilter.Name = "EditFilter";
             this.EditFilter.Size = new System.Drawing.Size(124, 23);
-            this.EditFilter.TabIndex = 8;
+            this.EditFilter.TabIndex = 5;
             this.EditFilter.Text = "Edit Filter";
             this.EditFilter.UseVisualStyleBackColor = true;
             this.EditFilter.Click += new System.EventHandler(this.EditFilter_Click);
