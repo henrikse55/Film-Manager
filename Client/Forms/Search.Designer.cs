@@ -80,6 +80,7 @@
             this.FilmsFound.ReadOnly = true;
             this.FilmsFound.Size = new System.Drawing.Size(546, 219);
             this.FilmsFound.TabIndex = 20;
+            this.FilmsFound.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.FilmsFound_CellDoubleClick);
             // 
             // groupBox2
             // 

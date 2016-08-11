@@ -7,10 +7,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Threading;
+using System.IO;
 using System.Windows.Forms;
-
 using Client.Other;
 using static System.Windows.Forms.ListBox;
+using System.Runtime.Serialization.Formatters.Binary;
 
 namespace Client.Forms
 {
@@ -25,6 +26,9 @@ namespace Client.Forms
             InitializeComponent();
             IncludeCheckBox.Checked = true;
             CaseSensetiveCheckBox.Checked = true;
+
+            if (!Directory.Exists(@"Filters\"))
+                Directory.CreateDirectory(@"Filters\");
         }
 
         private void IncludeCheckBox_CheckedChanged(object sender, EventArgs e)
@@ -79,8 +83,6 @@ namespace Client.Forms
                     _EditFilter = false;
                 }
             }
-
-            //updateFilms();
         }
 
         public void CreateFilter()
@@ -108,6 +110,15 @@ namespace Client.Forms
             filters.Add(filter);
             FilterList.Items.Add(filter.Name);
             ResetFields();
+
+            String FilterDir = @".\Filters\" + filter.Name;
+            using (Stream stream = new FileStream(FilterDir, FileMode.CreateNew, FileAccess.ReadWrite, FileShare.None))
+            {
+                BinaryFormatter formater = new BinaryFormatter();
+                formater.Serialize(stream, filter);
+                stream.Close();
+            }
+
         }
 
         private void ResetFields()
@@ -126,6 +137,19 @@ namespace Client.Forms
             Program.clientform.DataTable.Columns.CopyTo(columns, 0);
             columns.ToList().ForEach(x => { ColumnBox.Items.Add(x.ColumnName); FilmsInList.Columns.Add(x.ColumnName); });
             FilmsFound.DataSource = FilmsInList;
+
+            String FiltersDir = @".\Filters\";
+            var files = Directory.GetFiles(FiltersDir);
+            files.ToList().ForEach(file => {
+                using (Stream stream = new FileStream(file,FileMode.Open, FileAccess.ReadWrite, FileShare.None))
+                {
+                    BinaryFormatter formatter = new BinaryFormatter();
+                    Filter Filter = (Filter)formatter.Deserialize(stream);
+                    filters.Add(Filter);
+                    FilterList.Items.Add(Filter.Name);
+                }
+            });
+            
         }
 
         private void FilterList_SelectedIndexChanged(object sender, EventArgs e)
@@ -212,6 +236,8 @@ namespace Client.Forms
                     {
                         filters.Remove(filter);
                         FilterList.Items.Remove(Name);
+                        String dir = @".\Filters\" + Name;
+                        File.Delete(dir);
                     }
                 }
             }
@@ -248,6 +274,12 @@ namespace Client.Forms
             {
                 this.Close();
             }
+        }
+
+        private void FilmsFound_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            Editor edit = new Editor(FilmsFound);
+            edit.ShowDialog();
         }
     }
 }
