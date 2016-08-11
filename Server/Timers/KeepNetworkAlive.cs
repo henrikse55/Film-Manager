@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace Server.Timers
 {
@@ -18,9 +19,9 @@ namespace Server.Timers
             timer.Interval = Interval;
         }
 
-        private void Elapsed(object sender, System.Timers.ElapsedEventArgs e)
+        private async void Elapsed(object sender, System.Timers.ElapsedEventArgs e)
         {
-            Program.Network.keepAlive();
+            await Program.Network.keepAlive();
         }
 
         public void Start()

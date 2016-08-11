@@ -62,6 +62,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Data\DataHandler.cs" />
+    <Compile Include="EnumHolder.cs" />
     <Compile Include="Handler\MessageHandler.cs" />
     <Compile Include="Interfaces\IMessage.cs" />
     <Compile Include="Network\Containers\MessageContainer.cs" />

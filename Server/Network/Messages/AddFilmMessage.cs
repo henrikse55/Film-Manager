@@ -18,13 +18,15 @@ namespace Server.Network.Messages
         }
 
         //Name, Genre, Desc, Location
-        public void Run(string[] args, Socket socket)
+        public Task<AsyncMessageResult> Run(string[] args, Socket socket)
         {
             Program.datahandler.AddCommand(args[0], args[1], args[2], args[3]);
             Program.Network.ClientList.ForEach(_Socket => 
             {
                 Program.Network.Send(_Socket, "ReSync");
             });
+
+            return Task.FromResult(AsyncMessageResult.Succeful);
         }
     }
 }

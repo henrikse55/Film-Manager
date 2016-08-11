@@ -17,14 +17,22 @@ namespace Server.Network.Messages
             get{ return "SendData";}
         }
 
-        public void Run(string[] args, Socket socket)
+        public Task<AsyncMessageResult> Run(string[] args, Socket socket)
         {
-            DataTable table = Program.datahandler.DataReader();
-            StringWriter writer = new StringWriter();
-            table.WriteXml(writer);
-            byte[] message = Encoding.ASCII.GetBytes(writer.ToString());
-            Program.Network.Send(socket, Program.CreateNetworkMessage("SendData", message.Length.ToString()));
-            Program.Network.Send(socket, writer.ToString());
+            try
+            {
+                DataTable table = Program.datahandler.DataReader();
+                StringWriter writer = new StringWriter();
+                table.WriteXml(writer);
+                byte[] message = Encoding.ASCII.GetBytes(writer.ToString());
+                Program.Network.Send(socket, Program.CreateNetworkMessage("SendData", message.Length.ToString()));
+                Program.Network.Send(socket, writer.ToString());
+                return Task.FromResult(AsyncMessageResult.Succeful);
+            }
+            catch
+            {
+                return Task.FromResult(AsyncMessageResult.Error);
+            }
         }
     }
 }

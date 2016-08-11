@@ -8,6 +8,7 @@ using System.Net.Sockets;
 using System.Collections;
 using System.Threading;
 using Shared.Network;
+using System.Threading.Tasks;
 
 namespace Server.Network
 {
@@ -56,22 +57,18 @@ namespace Server.Network
             client.BeginReceive(state.buffer, 0, state.buffer.Length,0 , new AsyncCallback(onDataRecived), state);
         }
 
-        public Socket getSocketByIP(String IP)
-        {
-            return (from socket in Clients where socket.RemoteEndPoint.ToString().Equals(IP) select socket).SingleOrDefault(null);
-        }
-
         public List<Socket> ClientList
         {
             get { return Clients; }
         }
 
-        public void keepAlive()
+        public Task keepAlive()
         {
             Clients.ForEach(x => Send(x, "HeartBeat".ToUpper()));
+            return Task.FromResult(5);
         }
 
-        private void onDataRecived(IAsyncResult ar)
+        private async void onDataRecived(IAsyncResult ar)
         {
             try
             {
@@ -94,7 +91,7 @@ namespace Server.Network
 
                     MessageContainer container = new MessageContainer(temp, args.ToArray(), state.socket);
 
-                    Program.messageHandler.FindCommand(container);
+                    await Program.messageHandler.FindCommand(container);
 
                     //if(!temp.Equals("SendFile"))
                     state.socket.BeginReceive(state.buffer, 0, state.buffer.Length, 0, new AsyncCallback(onDataRecived), state);

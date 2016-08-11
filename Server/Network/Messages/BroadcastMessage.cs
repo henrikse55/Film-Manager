@@ -16,7 +16,7 @@ namespace Server.Network.Messages
             get { return "broadcast";}
         }
 
-        public void Run(string[] args, Socket socket)
+        public Task<AsyncMessageResult> Run(string[] args, Socket socket)
         {
             List<String> list = new List<string>();
             list.AddRange(args);
@@ -26,6 +26,8 @@ namespace Server.Network.Messages
                 if(_Socket != socket)
                 Program.Network.Send(_Socket, Program.CreateNetworkMessage(args[0], list.ToArray()));
             });
+
+            return Task.FromResult(AsyncMessageResult.Succeful);
         }
     }
 }

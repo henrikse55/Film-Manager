@@ -18,27 +18,29 @@ namespace Server.Network.Messages
             
         }
 
-        public void Run(string[] args, Socket socket)
+        public Task<AsyncMessageResult> Run(string[] args, Socket socket)
         {
             switch(args[0])
             {
                 case "Name":
                     Program.datahandler.UpdateTabel(Data.DataHandler.Columns.Name, args[1], Convert.ToInt32(args[2]));
                     ReSync();
-                    break;
+                    return Task.FromResult(AsyncMessageResult.Succeful);
                 case "Genre":
                     Program.datahandler.UpdateTabel(Data.DataHandler.Columns.Genre, args[1], Convert.ToInt32(args[2]));
                     ReSync();
-                    break;
+                    return Task.FromResult(AsyncMessageResult.Succeful);
                 case "Description":
                     Program.datahandler.UpdateTabel(Data.DataHandler.Columns.Description, args[1], Convert.ToInt32(args[2]));
                     ReSync();
-                    break;
+                    return Task.FromResult(AsyncMessageResult.Succeful);
                 case "Location":
                     Program.datahandler.UpdateTabel(Data.DataHandler.Columns.Location, args[1], Convert.ToInt32(args[2]));
                     ReSync();
-                    break;
+                    return Task.FromResult(AsyncMessageResult.Succeful);
             }
+
+            return Task.FromResult(AsyncMessageResult.Error);
         }
 
         private void ReSync()

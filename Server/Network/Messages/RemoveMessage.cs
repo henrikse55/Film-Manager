@@ -15,7 +15,7 @@ namespace Server.Network.Messages
             get{ return "RemoveFilm";}
         }
 
-        public void Run(string[] args, Socket socket)
+        public Task<AsyncMessageResult> Run(string[] args, Socket socket)
         {
             Program.datahandler.DeleteCommand(int.Parse(args[0]));
 
@@ -23,6 +23,8 @@ namespace Server.Network.Messages
             {
                 Program.Network.Send(_Socket,"ReSync");
             });
+
+            return Task.FromResult(AsyncMessageResult.Succeful);
         }
     }
 }

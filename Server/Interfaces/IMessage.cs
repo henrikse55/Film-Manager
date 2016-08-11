@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 
 using System.Net.Sockets;
+using System.Threading.Tasks;
 
 namespace Server.Interfaces
 {
@@ -11,6 +12,6 @@ namespace Server.Interfaces
     {
         String Name { get; }
 
-        void Run(String[] args, Socket socket);
+        Task<AsyncMessageResult> Run(String[] args, Socket socket);
     }
 }
