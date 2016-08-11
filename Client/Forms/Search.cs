@@ -18,6 +18,7 @@ namespace Client.Forms
     public partial class Search : Form
     {
         private List<Filter> filters = new List<Filter>();
+        //private Dictionary<Filter, Brush> _filters = new Dictionary<Filter, Brush>();
         private DataTable FilmsInList = new DataTable("FilmsFound");
         private bool _EditFilter = false;
 
@@ -89,14 +90,14 @@ namespace Client.Forms
         {
             for (int x = 0; x < filters.Count; x++)
             {
-                Filter f = filters[x];
+                Filter f = filters.ToArray()[x];
                 for (int i = 0; i < FilterList.SelectedItems.Count; i++)
                 {
                     String Name = FilterList.SelectedItems[i].ToString();
                     if (f.Name.Equals(Name))
                     {
                         filters.Remove(f);
-                        FilterList.Items.Remove(Name);
+                        FilterList.Items.Remove(FilterList.SelectedItems[i]);
                     }
                 }
             }
@@ -111,12 +112,19 @@ namespace Client.Forms
             FilterList.Items.Add(filter.Name);
             ResetFields();
 
-            String FilterDir = @".\Filters\" + filter.Name;
-            using (Stream stream = new FileStream(FilterDir, FileMode.CreateNew, FileAccess.ReadWrite, FileShare.None))
+            try
             {
-                BinaryFormatter formater = new BinaryFormatter();
-                formater.Serialize(stream, filter);
-                stream.Close();
+                String FilterDir = @".\Filters\" + filter.Name;
+                using (Stream stream = new FileStream(FilterDir, FileMode.CreateNew, FileAccess.ReadWrite, FileShare.None))
+                {
+                    BinaryFormatter formater = new BinaryFormatter();
+                    formater.Serialize(stream, filter);
+                    stream.Close();
+                }
+            }
+            catch
+            {
+                
             }
 
         }
@@ -140,15 +148,15 @@ namespace Client.Forms
 
             String FiltersDir = @".\Filters\";
             var files = Directory.GetFiles(FiltersDir);
-            files.ToList().ForEach(file => {
-                using (Stream stream = new FileStream(file,FileMode.Open, FileAccess.ReadWrite, FileShare.None))
+            files.ToList().ForEach((Action<string>)(file => {
+                using (Stream stream = new FileStream(file, FileMode.Open, FileAccess.ReadWrite, FileShare.None))
                 {
                     BinaryFormatter formatter = new BinaryFormatter();
                     Filter Filter = (Filter)formatter.Deserialize(stream);
                     filters.Add(Filter);
-                    FilterList.Items.Add(Filter.Name);
+                    this.FilterList.Items.Add(Filter.Name);
                 }
-            });
+            }));
             
         }
 
@@ -164,13 +172,11 @@ namespace Client.Forms
         {
             FilmsInList.Clear();
             DataTable films = Program.clientform.DataTable;
-            CheckProgress.Maximum = films.Rows.Count;
-            CheckProgress.Value = 0;
             films.AsEnumerable().ToList().ForEach(film =>
             {
-                CheckProgress.Increment(1);
-                filters.ForEach(filter =>
+                filters.ToList().ForEach(filter =>
                 {
+                    if(!filter.isDisabled)
                     switch (filter.filterOption)
                     {
                         case filterOption.Include:
@@ -228,14 +234,14 @@ namespace Client.Forms
         {
             for (int x = 0; x < filters.Count; x++)
             {
-                Filter filter = filters[x];
+                Filter filter = filters.ToArray()[x];
                 for (int i = 0; i < FilterList.SelectedItems.Count; i++)
                 {
                     String Name = FilterList.SelectedItems[i].ToString();
                     if (filter.Name.Equals(Name))
                     {
                         filters.Remove(filter);
-                        FilterList.Items.Remove(Name);
+                        FilterList.Items.Remove(FilterList.SelectedItems[i]);
                         String dir = @".\Filters\" + Name;
                         File.Delete(dir);
                     }
@@ -249,7 +255,7 @@ namespace Client.Forms
         {
             foreach (Filter filter in filters)
             {
-                if (filter.Name.Equals(FilterList.SelectedItem))
+                if (filter.Name.Equals(FilterList.SelectedItems[0]))
                 {
                     FilterNameTextBox.Text = filter.Name;
                     IncludeCheckBox.Checked = filter.filterOption == filterOption.Include ? true : false;
@@ -280,6 +286,30 @@ namespace Client.Forms
         {
             Editor edit = new Editor(FilmsFound);
             edit.ShowDialog();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            filters.ToList().ForEach(filter =>
+            {
+                if (this.FilterList.SelectedItems.Count == 1)
+                    if (filter.Name.Equals(FilterList.SelectedItems[0]))
+                    {
+                        filter.isDisabled = !filter.isDisabled;
+                        FilterList.Invalidate();
+                    }
+            });
+        }
+
+        private void FilterList_DrawItem(object sender, DrawItemEventArgs e)
+        {
+            FilterList.ClearSelected();
+
+            e.DrawBackground();
+            var filter = filters[e.Index];
+            Brush brush = !filter.isDisabled ? Brushes.DarkGreen : Brushes.Red;
+
+            e.Graphics.DrawString(filter.Name, e.Font, brush, e.Bounds, StringFormat.GenericDefault);
         }
     }
 }
