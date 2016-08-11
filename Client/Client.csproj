@@ -108,6 +108,7 @@
     <Compile Include="Network\Messages\ReSync.cs" />
     <Compile Include="Network\Messages\SyncFilms.cs" />
     <Compile Include="Other\Filter.cs" />
+    <Compile Include="Other\SpeedTester.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Forms\SettingsForm_Client.cs">
