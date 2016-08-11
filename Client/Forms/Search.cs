@@ -1,16 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Threading;
 using System.IO;
 using System.Windows.Forms;
 using Client.Other;
-using static System.Windows.Forms.ListBox;
 using System.Runtime.Serialization.Formatters.Binary;
 
 namespace Client.Forms
@@ -110,13 +105,13 @@ namespace Client.Forms
             filter.ToApply = ColumnBox.SelectedItem.ToString();
             filter.Text = TextToCompare.Text;
             filters.Add(filter);
-            FilterList.Items.Add(filter.Name);
+            addToList(filter.Name);
             ResetFields();
 
             try
             {
                 String FilterDir = @".\Filters\" + filter.Name;
-                using (Stream stream = new FileStream(FilterDir, FileMode.CreateNew, FileAccess.ReadWrite, FileShare.None))
+                using (Stream stream = new FileStream(FilterDir, FileMode.Create, FileAccess.ReadWrite, FileShare.None))
                 {
                     BinaryFormatter formater = new BinaryFormatter();
                     formater.Serialize(stream, filter);
@@ -125,7 +120,19 @@ namespace Client.Forms
             }
             catch (IOException)
             {
-                
+                var opinion = MessageBox.Show("There is alrady a filter with this name\n would you like to overwrite it?");
+                switch (opinion)
+                {
+                    case DialogResult.Yes:
+                        String FilterDir = @".\Filters\" + filter.Name;
+                        using (Stream stream = new FileStream(FilterDir, FileMode.Truncate, FileAccess.ReadWrite, FileShare.None))
+                        {
+                            BinaryFormatter formater = new BinaryFormatter();
+                            formater.Serialize(stream, filter);
+                            stream.Close();
+                        }
+                        break;
+                }
             }
         }
 
@@ -139,12 +146,25 @@ namespace Client.Forms
             ColumnBox.SelectedIndex = 0;
         }
 
+        private void addToList(String Filter)
+        {
+            foreach (String _ in FilterList.Items)
+            {
+                if (_.Equals(Filter))
+                {
+                    return;
+                }
+            }
+            FilterList.Items.Add(Filter);
+        }
+
         private void Search_Load(object sender, EventArgs e)
         {
             DataColumn[] columns = new DataColumn[Program.clientform.DataTable.Columns.Count];
             Program.clientform.DataTable.Columns.CopyTo(columns, 0);
             columns.ToList().ForEach(x => { ColumnBox.Items.Add(x.ColumnName); FilmsInList.Columns.Add(x.ColumnName); });
             FilmsFound.DataSource = FilmsInList;
+            ColumnBox.SelectedIndex = 0;
 
             String FiltersDir = @".\Filters\";
             var files = Directory.GetFiles(FiltersDir);
@@ -164,7 +184,8 @@ namespace Client.Forms
         {
             ListBox list = (ListBox)sender;
             EditFilter.Enabled = list.SelectedItems.Count == 1 ? true : false;
-            RemoveFilter.Enabled = list.SelectedItems.Count > 0 ? true : false; 
+            RemoveFilter.Enabled = list.SelectedItems.Count > 0 ? true : false;
+            FilterStateButton.Enabled = list.SelectedItems.Count > 0 ? true : false;
 
         }
 
@@ -232,22 +253,9 @@ namespace Client.Forms
 
         private void RemoveFilter_Click(object sender, EventArgs e)
         {
-            FilterList.ClearSelected();
-            for (int x = 0; x < filters.Count; x++)
-            {
-                Filter filter = filters.ToArray()[x];
-                for (int i = 0; i < FilterList.SelectedItems.Count; i++)
-                {
-                    String Name = FilterList.SelectedItems[i].ToString();
-                    if (filter.Name.Equals(Name))
-                    {
-                        filters.Remove(filter);
-                        FilterList.Items.Remove(FilterList.SelectedItems[i]);
-                        String dir = @".\Filters\" + Name;
-                        File.Delete(dir);
-                    }
-                }
-            }
+            File.Delete(@".\Filters\" + FilterList.SelectedItem);
+            FilterList.Items.Remove(FilterList.SelectedItem);
+            filters.Remove(filters.Find(x => x.Name.Equals(FilterList.SelectedItem)));
             updateFilms();
         }
 
@@ -261,7 +269,7 @@ namespace Client.Forms
                     IncludeCheckBox.Checked = filter.filterOption == filterOption.Include ? true : false;
                     ExcludeCheckBox.Checked = filter.filterOption == filterOption.Exclude ? true : false;
                     CaseSensetiveCheckBox.Checked = filter.isCaseSenestive;
-                    ColumnBox.SelectedValue = filter.ToApply;
+                    ColumnBox.SelectedIndex = ColumnBox.Items.IndexOf(filter.ToApply);
                     TextToCompare.Text = filter.Text;
                     _EditFilter = true;
                 }
@@ -292,23 +300,28 @@ namespace Client.Forms
         {
             filters.ToList().ForEach(filter =>
             {
-                if (this.FilterList.SelectedItems.Count == 1)
-                    if (filter.Name.Equals(FilterList.SelectedItems[0]))
+                foreach (String s in FilterList.SelectedItems)
+                {
+                    if (filter.Name.Equals(s))
                     {
                         filter.isDisabled = !filter.isDisabled;
                         FilterList.Invalidate();
                     }
+                }
             });
         }
 
         private void FilterList_DrawItem(object sender, DrawItemEventArgs e)
         {
-            FilterList.BackColor = Color.Gray;
+            FilterList.BackColor = Color.LightGray;
             e.DrawBackground();
-            var filter = filters[e.Index];
-            Brush brush = !filter.isDisabled ? Brushes.Green : Brushes.Red;
+            if (FilterList.Items.Count != 0)
+            {
+                var filter = filters[e.Index];
+                Brush brush = !filter.isDisabled ? Brushes.Green : Brushes.Red;
 
-            e.Graphics.DrawString(filter.Name, e.Font, brush, e.Bounds, StringFormat.GenericDefault);
+                e.Graphics.DrawString(filter.Name, e.Font, brush, e.Bounds, StringFormat.GenericDefault);
+            }
         }
     }
 }

@@ -241,6 +241,7 @@
             this.FilterStateButton.Text = "Disable/Enable Filter";
             this.FilterStateButton.UseVisualStyleBackColor = true;
             this.FilterStateButton.Click += new System.EventHandler(this.button1_Click);
+            this.FilterStateButton.Enabled = false;
             // 
             // Cancel
             // 
