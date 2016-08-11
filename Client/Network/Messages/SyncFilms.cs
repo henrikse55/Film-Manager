@@ -20,10 +20,18 @@ namespace Client.Network.Messages
 
         public void Run(string[] args)
         {
-            int Size = int.Parse(args[0]);
-            buffer = new byte[Size];
-            Program.Network.socket.BeginReceive(buffer,0,buffer.Length, 0, new AsyncCallback(asyncNet), Program.Network.socket);
+            try
+            {
+                int Size = int.Parse(args[0]);
+                buffer = new byte[Size];
+                Program.Network.socket.BeginReceive(buffer, 0, buffer.Length, 0, new AsyncCallback(asyncNet), Program.Network.socket);
 
+            }
+            catch
+            {
+                Console.WriteLine("something went horrobly wrong, attempting to reSync");
+                Program.Network.Send("SendData");
+            }
         }
 
         private void asyncNet(IAsyncResult ar)

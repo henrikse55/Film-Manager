@@ -69,19 +69,41 @@ namespace Client
 
         public void AddData(Byte[] xml)
         {
-            NullGrid();
-            table.Clear();
-            BinaryWriter writer = new BinaryWriter(File.Open("Data.xml", FileMode.Create));
-            writer.Write(xml, 0, xml.Length);
-            writer.Flush();
-            writer.Close();
+            try
+            {
+                NullGrid();
+                table.Clear();
+                BinaryWriter writer = new BinaryWriter(File.Open("Data.xml", FileMode.Create));
+                writer.Write(xml, 0, xml.Length);
+                writer.Flush();
+                writer.Close();
 
-            table.TableName = "Temp";
-            FileStream stream = new FileStream("Data.xml", FileMode.Open);
-            table.ReadXml(stream);
-            stream.Flush();
-            stream.Close();
-            RefreshGrid();
+                table.TableName = "Temp";
+                FileStream stream = new FileStream("Data.xml", FileMode.Open);
+                table.ReadXml(stream);
+                stream.Flush();
+                stream.Close();
+                File.Encrypt("Data.xml");
+                RefreshGrid();
+            }
+            catch (IOException)
+            {
+                NullGrid();
+                table.Clear();
+                BinaryWriter writer = new BinaryWriter(File.Open("Temp.xml", FileMode.Create));
+                writer.Write(xml, 0, xml.Length);
+                writer.Flush();
+                writer.Close();
+
+                table.TableName = "Temp";
+                FileStream stream = new FileStream("Temp.xml", FileMode.Open);
+                table.ReadXml(stream);
+                stream.Flush();
+                stream.Close();
+                RefreshGrid();
+
+                File.Delete("Temp.xml");
+            }
         }
 
         private delegate void RefreshGridCallBack();

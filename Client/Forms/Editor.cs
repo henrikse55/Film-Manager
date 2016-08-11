@@ -37,19 +37,19 @@ namespace Client.Forms
             switch (option)
             {
                 case DialogResult.Yes:
-                    DataRow row = ((DataRowView)collection.SelectedRows[0].DataBoundItem).Row;
-                    collection.SelectedRows[0].SetValues(row["Id"], FilmTitleTextBox.Text, GenreTextBox.Text, DescriptionBox.Text, LocationTextBox.Text);
+                    //DataRow row = ((DataRowView)collection.SelectedRows[0].DataBoundItem).Row;
+                    //collection.SelectedRows[0].SetValues(row["Id"], FilmTitleTextBox.Text, GenreTextBox.Text, DescriptionBox.Text, LocationTextBox.Text);
 
                     if(!FilmTitleTextBox.Text.Equals(row["Name"]))
                         Program.Network.Send(Program.CreateNetworkMessage("EditFilm", "Name", FilmTitleTextBox.Text, (String)collection.SelectedRows[0].Cells[0].Value));
 
-                    if (!FilmTitleTextBox.Text.Equals(row["Genre"]))
+                    if (!GenreTextBox.Text.Equals(row["Genre"]))
                         Program.Network.Send(Program.CreateNetworkMessage("EditFilm", "Genre", GenreTextBox.Text, (String)collection.SelectedRows[0].Cells[0].Value));
 
-                    if (!FilmTitleTextBox.Text.Equals(row["Description"]))
+                    if (!DescriptionBox.Text.Equals(row["Description"]))
                         Program.Network.Send(Program.CreateNetworkMessage("EditFilm", "Description", DescriptionBox.Text, (String)collection.SelectedRows[0].Cells[0].Value));
 
-                    if (!FilmTitleTextBox.Text.Equals(row["Location"]))
+                    if (!LocationTextBox.Text.Equals(row["Location"]))
                         Program.Network.Send(Program.CreateNetworkMessage("EditFilm", "Location", LocationTextBox.Text, (String)collection.SelectedRows[0].Cells[0].Value));
 
                     this.Close();

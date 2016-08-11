@@ -24,6 +24,7 @@ namespace Server
         [STAThread]
         static void Main()
         {
+            Thread.Sleep(100);
             new Thread(new ThreadStart(Network.Init)).Start();
             new Thread(new ThreadStart(keepAliveTimer.Start)).Start();
 
