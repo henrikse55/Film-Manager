@@ -50,12 +50,6 @@ namespace Client
             catch { throw; }
         }
 
-        //Henter den nye cell value fra Edit_Client Formen
-        public void changer(String text)
-        {
-            FilmGrid.SelectedCells[0].Value = text;
-        }
-
         public DataTable DataTable
         {
             get { return table; }
@@ -83,7 +77,6 @@ namespace Client
                 table.ReadXml(stream);
                 stream.Flush();
                 stream.Close();
-                File.Encrypt("Data.xml");
                 RefreshGrid();
             }
             catch (IOException)
@@ -184,6 +177,7 @@ namespace Client
             else
             {
                 Progress.Visible= (bool)o;
+
             }
         }
 
@@ -195,6 +189,7 @@ namespace Client
         private void ClientForm_FormClosing(object sender, FormClosingEventArgs e)
         {
             Program.Network.shutdown();
+            Environment.Exit(0);
         }
 
         private void addToolStripMenuItem_Click(object sender, EventArgs e)

@@ -21,7 +21,6 @@ namespace Client
         [STAThread]
         static void Main()
         {
-            //Thread.Sleep(500);
             messageHandler.addMessage(new SyncFilms());
             messageHandler.addMessage(new ReSyncMessage());
 

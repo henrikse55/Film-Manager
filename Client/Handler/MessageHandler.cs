@@ -5,6 +5,8 @@ using System.Text;
 
 using Client.Interfaces;
 using Client.Network;
+using System.Threading.Tasks;
+
 namespace Client.Handler
 {
     public class MessageHandler
@@ -23,14 +25,18 @@ namespace Client.Handler
 
         public void FindCommand(MessageContainer network)
         {
-            foreach (IMessage command in Messages)
-            {
-                if (command.Name.ToUpper().Equals(network.Message.ToUpper()))
-                {
-                    Console.WriteLine("Found Message");
-                    command.Run(network.args);
-                }
-            }
+            //foreach (IMessage command in Messages)
+            //{
+            //    if (command.Name.ToUpper().Equals(network.Message.ToUpper()))
+            //    {
+            //        Console.WriteLine("Found Message");
+            //        command.Run(network.args);
+            //    }
+            //}
+
+            IMessage _command = (from _com in Messages where _com.Name.ToUpper().Equals(network.Message.ToUpper()) select _com).SingleOrDefault();
+            _command.Run(network.args);
+
         }
     }
 }
