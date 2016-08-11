@@ -83,7 +83,7 @@ namespace Server.Data
                 switch (column)
                 {
                     case Columns.Name:
-                        command.CommandText = "UPDATE FILMS SET Films=@FILMTITLE WHERE Id=@ID";
+                        command.CommandText = "UPDATE FILMS SET Name=@FILMTITLE WHERE Id=@ID";
                         break;
                     case Columns.Genre:
                         command.CommandText = "UPDATE FILMS SET Genre=@GENRE WHERE Id=@ID";
@@ -96,7 +96,7 @@ namespace Server.Data
                         break;
                 }
 
-                command.Parameters.AddWithValue("@FILMSTITLE", Data);
+                command.Parameters.AddWithValue("@FILMTITLE", Data);
                 command.Parameters.AddWithValue("@GENRE", Data);
                 command.Parameters.AddWithValue("@DESCRIPTION", Data);
                 command.Parameters.AddWithValue("@LOCATION", Data);

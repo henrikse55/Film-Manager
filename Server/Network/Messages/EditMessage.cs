@@ -24,17 +24,25 @@ namespace Server.Network.Messages
             {
                 case "Name":
                     Program.datahandler.UpdateTabel(Data.DataHandler.Columns.Name, args[1], Convert.ToInt32(args[2]));
+                    ReSync();
                     break;
                 case "Genre":
                     Program.datahandler.UpdateTabel(Data.DataHandler.Columns.Genre, args[1], Convert.ToInt32(args[2]));
+                    ReSync();
                     break;
                 case "Description":
                     Program.datahandler.UpdateTabel(Data.DataHandler.Columns.Description, args[1], Convert.ToInt32(args[2]));
+                    ReSync();
                     break;
                 case "Location":
                     Program.datahandler.UpdateTabel(Data.DataHandler.Columns.Location, args[1], Convert.ToInt32(args[2]));
+                    ReSync();
                     break;
             }
+        }
+
+        private void ReSync()
+        {
             Program.Network.ClientList.ForEach(_socket =>
             {
                 Program.Network.Send(_socket, "Resync");
