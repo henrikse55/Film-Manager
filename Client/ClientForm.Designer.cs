@@ -59,6 +59,7 @@
             this.Column3,
             this.Column4,
             this.Column5});
+            this.FilmGrid.Enabled = false;
             this.FilmGrid.Location = new System.Drawing.Point(12, 27);
             this.FilmGrid.MultiSelect = false;
             this.FilmGrid.Name = "FilmGrid";
@@ -120,6 +121,7 @@
             this.addToolStripMenuItem,
             this.removeToolStripMenuItem,
             this.editToolStripMenuItem});
+            this.filmToolStripMenuItem.Enabled = false;
             this.filmToolStripMenuItem.Name = "filmToolStripMenuItem";
             this.filmToolStripMenuItem.Size = new System.Drawing.Size(42, 20);
             this.filmToolStripMenuItem.Text = "Film";
@@ -147,6 +149,7 @@
             // 
             // toolStripMenuItem1
             // 
+            this.toolStripMenuItem1.Enabled = false;
             this.toolStripMenuItem1.ImageTransparentColor = System.Drawing.Color.White;
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
             this.toolStripMenuItem1.Size = new System.Drawing.Size(54, 20);
@@ -156,6 +159,7 @@
             // helpToolStripMenuItem
             // 
             this.helpToolStripMenuItem.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.helpToolStripMenuItem.Enabled = false;
             this.helpToolStripMenuItem.ForeColor = System.Drawing.SystemColors.ControlText;
             this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
             this.helpToolStripMenuItem.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
@@ -165,6 +169,7 @@
             // 
             // settingsToolStripMenuItem
             // 
+            this.settingsToolStripMenuItem.Enabled = false;
             this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
             this.settingsToolStripMenuItem.Size = new System.Drawing.Size(61, 20);
             this.settingsToolStripMenuItem.Text = "Settings";
