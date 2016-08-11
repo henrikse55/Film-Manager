@@ -162,6 +162,14 @@ namespace Client
             else
             {
                 Progress.Visible= (bool)o;
+
+                //Kør kode der gør at man kan trykke på knapperne igen
+                filmToolStripMenuItem.Enabled = true;
+                toolStripMenuItem1.Enabled = true;
+                settingsToolStripMenuItem.Enabled = true;
+                helpToolStripMenuItem.Enabled = true;
+                FilmGrid.Enabled = true;
+
             }
         }
 
