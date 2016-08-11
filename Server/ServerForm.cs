@@ -42,7 +42,7 @@ namespace Server
         }
 
         private delegate void UpdateMovieCountCallBack();
-        public void UpdateMovieCount()
+        public async void UpdateMovieCount()
         {
             if (label2.InvokeRequired)
             {
@@ -51,7 +51,8 @@ namespace Server
             }
             else
             {
-                label2.Text = Program.datahandler.DataReader().Rows.Count.ToString();
+                DataTable Database = await Program.datahandler.DataReader();
+                label2.Text = Database.Rows.Count.ToString();
             }
         }
     }

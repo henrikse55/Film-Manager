@@ -17,21 +17,21 @@ namespace Server.Network.Messages
             get{ return "SendData";}
         }
 
-        public Task<AsyncMessageResult> Run(string[] args, Socket socket)
+        public async Task<AsyncMessageResult> Run(string[] args, Socket socket)
         {
             try
             {
-                DataTable table = Program.datahandler.DataReader();
+                DataTable table = await Program.datahandler.DataReader();
                 StringWriter writer = new StringWriter();
                 table.WriteXml(writer);
                 byte[] message = Encoding.ASCII.GetBytes(writer.ToString());
                 Program.Network.Send(socket, Program.CreateNetworkMessage("SendData", message.Length.ToString()));
                 Program.Network.Send(socket, writer.ToString());
-                return Task.FromResult(AsyncMessageResult.Succeful);
+                return AsyncMessageResult.Succeful;
             }
             catch
             {
-                return Task.FromResult(AsyncMessageResult.Error);
+                return AsyncMessageResult.Error;
             }
         }
     }

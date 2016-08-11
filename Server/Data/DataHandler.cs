@@ -19,7 +19,7 @@ namespace Server.Data
         }
 
         //Add ny row til tabel funktion
-        public void AddCommand(string films, string genre, string description, string location)
+        public Task<AsyncSQLResult> AddCommand(string films, string genre, string description, string location)
         {
             using (SqlConnection conn = new SqlConnection(connString))
             using (SqlCommand command = new SqlCommand("INSERT INTO Films (Name, Genre, Description, Location)  VALUES (@Films, @Genre, @Description, @Location)", conn))
@@ -35,10 +35,11 @@ namespace Server.Data
             }
             Program.ServerForm.UpdateMovieCount();
 
+            return Task.FromResult(AsyncSQLResult.Succeful);
         }
 
         //Delete fra tabel funktion
-        public void DeleteCommand(int id)
+        public Task<AsyncSQLResult> DeleteCommand(int id)
         {
             using (SqlConnection conn = new SqlConnection(connString))            
             using (SqlCommand command = new SqlCommand("DELETE FROM Films WHERE Id=@ID", conn))
@@ -49,11 +50,13 @@ namespace Server.Data
 
                 command.ExecuteNonQuery();
                 Program.ServerForm.UpdateMovieCount();
+
+                return Task.FromResult(AsyncSQLResult.Succeful);
             }
         }
 
         //Hent tabel data
-        public DataTable DataReader()
+        public Task<DataTable> DataReader()
         {
             SqlDataReader reader = null;
             using (SqlConnection conn = new SqlConnection(connString))
@@ -67,14 +70,14 @@ namespace Server.Data
                         table.Load(reader);
                         reader.Close();
                         conn.Close();
-                        return table;
+                        return Task.FromResult(table);
                     }
                 }
             }
         }
 
         //Opdatere tablet
-        public void UpdateTabel(Columns column, string Data, int Id)
+        public Task<AsyncSQLResult> UpdateTabel(Columns column, string Data, int Id)
         {
             using (SqlConnection conn = new SqlConnection(connString))
             using (SqlCommand command = new SqlCommand("", conn))
@@ -103,6 +106,8 @@ namespace Server.Data
                 command.Parameters.AddWithValue("@ID", Id);
 
                 command.ExecuteNonQuery();
+
+                return Task.FromResult(AsyncSQLResult.Succeful);
             }
         }
     }

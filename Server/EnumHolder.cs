@@ -10,4 +10,9 @@ namespace Server
     {
         Succeful = 0, Error = -1, halted = 1
     }
+
+    public enum AsyncSQLResult
+    {
+        Succeful, Error, Crash
+    }
 }
