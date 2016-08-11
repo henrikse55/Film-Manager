@@ -30,6 +30,7 @@ namespace Server
             messageHandler.addMessage(new SyncFilmsMessage());
             messageHandler.addMessage(new AddFilmMessage());
             messageHandler.addMessage(new RemoveMessage());
+            messageHandler.addMessage(new EditMessage());
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);

@@ -67,6 +67,7 @@
     <Compile Include="Network\Containers\MessageContainer.cs" />
     <Compile Include="Network\Messages\AddFilmMessage.cs" />
     <Compile Include="Network\Messages\BroadcastMessage.cs" />
+    <Compile Include="Network\Messages\EditMessage.cs" />
     <Compile Include="Network\Messages\RemoveMessage.cs" />
     <Compile Include="Network\Messages\SyncFilmsMessage.cs" />
     <Compile Include="Network\ServerSide.cs" />

@@ -15,7 +15,7 @@ namespace Server.Data
 
         public enum Columns
         {
-            Films, Genre, Description, Location
+            Name, Genre, Description, Location
         }
 
         //Add ny row til tabel funktion
@@ -82,7 +82,7 @@ namespace Server.Data
                 conn.Open();
                 switch (column)
                 {
-                    case Columns.Films:
+                    case Columns.Name:
                         command.CommandText = "UPDATE FILMS SET Films=@FILMTITLE WHERE Id=@ID";
                         break;
                     case Columns.Genre:
