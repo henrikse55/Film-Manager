@@ -59,7 +59,7 @@ namespace Client.Network
             catch (Exception e)
             {
                 //Console.WriteLine("Error: " + e.Message);
-                await Program.logger.CreateCrashLog(e.Message, e.Data);
+                //await Program.logger.CreateCrashLog(e.Message, e.Data);
             }
         }
 

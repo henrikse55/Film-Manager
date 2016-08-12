@@ -25,15 +25,21 @@ namespace Client.Forms
 
         private void button1_Click(object sender, EventArgs e)
         {
-            var ServerIP = Dns.GetHostAddresses(textBox1.Text);
-            lock (this)
+            try
             {
+                var ServerIP = Dns.GetHostAddresses(textBox1.Text);
+                Console.WriteLine(ServerIP[0].AddressFamily.ToString());
                 String ip = ServerIP[0].AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork ? ServerIP[0].ToString() : ServerIP[1].ToString();
-                Program.Network.connect(ip); 
+                Program.Network.connect(ip);
+                Program.Network.Send(Program.CreateNetworkMessage("SendData"));
+                Properties.Settings.Default.ServerIP = ServerIP[0].ToString();
+                Properties.Settings.Default.Save();
             }
-            Program.Network.Send(Program.CreateNetworkMessage("SendData"));
-            Properties.Settings.Default.ServerIP = ServerIP[0].ToString();
-            Properties.Settings.Default.Save();
+            catch (Exception)
+            {
+
+                throw;
+            }
             this.Close();
 
         }

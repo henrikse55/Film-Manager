@@ -46,7 +46,7 @@
             this.FilmTitleTextBox.Location = new System.Drawing.Point(12, 36);
             this.FilmTitleTextBox.Name = "FilmTitleTextBox";
             this.FilmTitleTextBox.Size = new System.Drawing.Size(114, 20);
-            this.FilmTitleTextBox.TabIndex = 6;
+            this.FilmTitleTextBox.TabIndex = 1;
             // 
             // label1
             // 
@@ -62,7 +62,7 @@
             this.label2.Location = new System.Drawing.Point(12, 59);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(36, 13);
-            this.label2.TabIndex = 5;
+            this.label2.TabIndex = 9;
             this.label2.Text = "Genre";
             // 
             // GenreTextBox
@@ -70,7 +70,7 @@
             this.GenreTextBox.Location = new System.Drawing.Point(12, 75);
             this.GenreTextBox.Name = "GenreTextBox";
             this.GenreTextBox.Size = new System.Drawing.Size(114, 20);
-            this.GenreTextBox.TabIndex = 4;
+            this.GenreTextBox.TabIndex = 2;
             // 
             // DescriptionGroup
             // 
@@ -78,7 +78,7 @@
             this.DescriptionGroup.Location = new System.Drawing.Point(12, 101);
             this.DescriptionGroup.Name = "DescriptionGroup";
             this.DescriptionGroup.Size = new System.Drawing.Size(296, 211);
-            this.DescriptionGroup.TabIndex = 2;
+            this.DescriptionGroup.TabIndex = 6;
             this.DescriptionGroup.TabStop = false;
             this.DescriptionGroup.Text = "Description";
             // 
@@ -97,7 +97,7 @@
             this.label3.Location = new System.Drawing.Point(145, 20);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(48, 13);
-            this.label3.TabIndex = 9;
+            this.label3.TabIndex = 8;
             this.label3.Text = "Location";
             // 
             // LocationTextBox
@@ -105,7 +105,7 @@
             this.LocationTextBox.Location = new System.Drawing.Point(148, 36);
             this.LocationTextBox.Name = "LocationTextBox";
             this.LocationTextBox.Size = new System.Drawing.Size(100, 20);
-            this.LocationTextBox.TabIndex = 8;
+            this.LocationTextBox.TabIndex = 4;
             this.LocationTextBox.TextChanged += new System.EventHandler(this.LocationTextBox_TextChanged);
             // 
             // SaveButton
@@ -113,7 +113,7 @@
             this.SaveButton.Location = new System.Drawing.Point(165, 318);
             this.SaveButton.Name = "SaveButton";
             this.SaveButton.Size = new System.Drawing.Size(75, 23);
-            this.SaveButton.TabIndex = 1;
+            this.SaveButton.TabIndex = 5;
             this.SaveButton.Text = "Save";
             this.SaveButton.UseVisualStyleBackColor = true;
             this.SaveButton.Click += new System.EventHandler(this.SaveButton_Click);
