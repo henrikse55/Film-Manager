@@ -316,7 +316,6 @@ namespace Client.Forms
         private void FilterList_DrawItem(object sender, DrawItemEventArgs e)
         {
             e.DrawBackground();
-            FilterList.BackColor = Color.LightGray;
             if (FilterList.Items.Count != 0)
             {
                 var filter = filters[e.Index];

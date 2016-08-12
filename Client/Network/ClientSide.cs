@@ -33,7 +33,7 @@ namespace Client.Network
             get { return this; }
         }
 
-        public void Init()
+        public async void Init()
         {
             try
             {
@@ -58,7 +58,8 @@ namespace Client.Network
             }
             catch (Exception e)
             {
-                Console.WriteLine("Error: " + e.Message);
+                //Console.WriteLine("Error: " + e.Message);
+                await Program.logger.CreateCrashLog(e.Message, e.Data);
             }
         }
 

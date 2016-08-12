@@ -6,14 +6,16 @@ using Client.Handler;
 using System.Text;
 using System.Collections.Generic;
 using Client.Network.Messages;
+using Client.Other;
 
 namespace Client
 {
     static class Program
     {
         public static ClientForm clientform;
-        public static MessageHandler messageHandler = new MessageHandler();
         public static ClientSide Network = new ClientSide();
+        public static MessageHandler messageHandler = new MessageHandler();
+        public static CrashLogger logger = new CrashLogger();
 
         /// <summary>
         /// The main entry point for the application.
