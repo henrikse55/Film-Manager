@@ -7,7 +7,7 @@ using System.Text;
 using System.Collections.Generic;
 using Client.Network.Messages;
 using Client.Other;
-
+using System.Net;
 namespace Client
 {
     static class Program

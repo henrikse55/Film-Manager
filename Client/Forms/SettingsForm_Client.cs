@@ -33,7 +33,7 @@ namespace Client
                     Properties.Settings.Default.ServerIP = ServerIP.Text;
                     Properties.Settings.Default.ServerPort = int.Parse(ServerPort.Text);
                     Properties.Settings.Default.Save();
-                    Application.Restart();
+                    Environment.Exit(0);
                     break;
 
                 case DialogResult.No:

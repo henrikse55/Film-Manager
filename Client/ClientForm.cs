@@ -34,6 +34,12 @@ namespace Client
             settings.ShowDialog();
         }
 
+        public void Settings()
+        {
+            ServerFinderForm form = new ServerFinderForm();
+            form.ShowDialog();
+        }
+
         private void helpToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Helpform_Client help = new Helpform_Client();

@@ -20,27 +20,65 @@ namespace Client.Forms
 
         private void ServerFinderForm_Load(object sender, EventArgs e)
         {
-            MainLabel.Text = "Sorry, We were unable to connect you to the server \n      please enter the Hostname of the Pc";
+            MainLabel.Text = "Sorry, We were unable to connect you to the server \n      please enter the Hostname of the Pc \n so we can connect next time we start";
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private async void button1_Click(object sender, EventArgs e)
         {
-            var ServerIP = Dns.GetHostAddresses(textBox1.Text);
-            lock (this)
-            {
-                String ip = ServerIP[0].AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork ? ServerIP[0].ToString() : ServerIP[1].ToString();
-                Program.Network.connect(ip); 
-            }
-            Program.Network.Send(Program.CreateNetworkMessage("SendData"));
-            Properties.Settings.Default.ServerIP = ServerIP[0].ToString();
-            Properties.Settings.Default.Save();
+            await Task.Run(garther);
+            ChangeTest();
             this.Close();
+        }
 
+        private delegate void changetestCallBack();
+        private void ChangeTest()
+        {
+            if (MainLabel.InvokeRequired)
+            {
+                changetestCallBack c = new changetestCallBack(ChangeTest);
+                MainLabel.Invoke(c);
+            }else
+            {
+                MainLabel.Text = "Please wait... \n This might take a while";
+            }
+        }
+
+        public Task garther()
+        {
+            try
+            {
+                var ServerIP = Dns.GetHostAddresses(textBox1.Text);
+                String ip = String.Empty;
+                foreach (IPAddress i in ServerIP)
+                {
+                    if (!i.ToString().Contains("f"))
+                    {
+                        ip = i.ToString();
+                        break;
+                    }
+                }
+
+                Properties.Settings.Default.ServerIP = ip;
+                Properties.Settings.Default.Save();
+                //this.Close();
+                //Environment.Exit(0);
+                return Task.FromResult(0);
+
+            }
+            catch (Exception)
+            {
+                return Task.FromResult(0);
+            }
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
             Environment.Exit(0);
+        }
+
+        private void ServerFinderForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            Application.Restart();
         }
     }
 }
