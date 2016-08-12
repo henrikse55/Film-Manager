@@ -55,5 +55,10 @@ namespace Server
                 label2.Text = Database.Rows.Count.ToString();
             }
         }
+
+        private void ServerForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            Environment.Exit(0);
+        }
     }
 }
