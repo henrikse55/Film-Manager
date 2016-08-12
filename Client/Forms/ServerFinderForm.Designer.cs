@@ -81,6 +81,7 @@
             this.Name = "ServerFinderForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Server not found";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.ServerFinderForm_FormClosing);
             this.Load += new System.EventHandler(this.ServerFinderForm_Load);
             this.ResumeLayout(false);
             this.PerformLayout();

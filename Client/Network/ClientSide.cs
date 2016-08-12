@@ -33,22 +33,19 @@ namespace Client.Network
             get { return this; }
         }
 
+        Object test = new object();
         public async void Init()
         {
             try
             {
                 IPAddress ipAddress = IPAddress.Parse(Ip);
-
                 client = new Socket(ipAddress.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
 
-                lock (this)
-                {
-                    connect(Ip); 
-                }
+                connect(Ip);  
 
                 if (!client.Connected)
                 {
-                    finderForm.ShowDialog();
+                    MessageBox.Show("Sorry! \n We were unable to connect you to the server\n pleas go to the settings menu and change the IP to the propper one \n this application will shutdown right after.");
                 }
                 else
                 {
@@ -60,22 +57,33 @@ namespace Client.Network
             {
                 //Console.WriteLine("Error: " + e.Message);
                 //await Program.logger.CreateCrashLog(e.Message, e.Data);
+                throw;
             }
         }
 
         public void connect(string _Ip)
         {
-            int i = 0;
-            int TimeOutLimit = 10;
-            Program.clientform.SetProgressMax(TimeOutLimit);
-            do
+            try
             {
-                ConnectDone.Reset();
-                client.BeginConnect(IPAddress.Parse(_Ip), Port, new AsyncCallback(onConnectionCallBack), client);
-                ConnectDone.WaitOne();
-                i++;
-                Program.clientform.IncrementProgress(1);
-            } while (!client.Connected & i < TimeOutLimit);
+                int i = 0;
+                int TimeOutLimit = 10;
+                Program.clientform.SetProgressMax(TimeOutLimit);
+
+                do
+                {
+                    Console.WriteLine("Attempt connection");
+                    ConnectDone.Reset();
+                    client.BeginConnect(new IPEndPoint(IPAddress.Parse(_Ip), Port), new AsyncCallback(onConnectionCallBack), client);
+                    ConnectDone.WaitOne();
+                    i++;
+                    Program.clientform.IncrementProgress(1);
+                } while (!client.Connected & i < TimeOutLimit);
+                Console.WriteLine("Connected");
+            }
+            catch
+            {
+                throw;
+            }
         }
 
         public Socket socket
@@ -120,7 +128,7 @@ namespace Client.Network
 
                 RestartConnection();
             }
-            catch
+            catch (ObjectDisposedException)
             {
 
             }
