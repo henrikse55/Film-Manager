@@ -8,7 +8,7 @@ using Server.Network;
 using Server.Data;
 using System.Text;
 using Server.Network.Messages;
-
+using Server.Timers;
 namespace Server
 {
     static class Program
@@ -16,19 +16,26 @@ namespace Server
         public static ServerSide Network = new ServerSide();
         public static MessageHandler messageHandler = new MessageHandler();
         public static DataHandler datahandler = new DataHandler();
+        public static KeepNetworkAlive keepAliveTimer = new KeepNetworkAlive();
+        public static ServerForm ServerForm;
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
         [STAThread]
         static void Main()
         {
+            Thread.Sleep(100);
             new Thread(new ThreadStart(Network.Init)).Start();
+            new Thread(new ThreadStart(keepAliveTimer.Start)).Start();
 
             messageHandler.addMessage(new SyncFilmsMessage());
+            messageHandler.addMessage(new AddFilmMessage());
+            messageHandler.addMessage(new RemoveMessage());
+            messageHandler.addMessage(new EditMessage());
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form1());
+            Application.Run(ServerForm = new ServerForm());
         }
 
 

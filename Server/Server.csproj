@@ -62,9 +62,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Data\DataHandler.cs" />
+    <Compile Include="EnumHolder.cs" />
     <Compile Include="Handler\MessageHandler.cs" />
     <Compile Include="Interfaces\IMessage.cs" />
     <Compile Include="Network\Containers\MessageContainer.cs" />
+    <Compile Include="Network\Messages\AddFilmMessage.cs" />
+    <Compile Include="Network\Messages\BroadcastMessage.cs" />
+    <Compile Include="Network\Messages\EditMessage.cs" />
+    <Compile Include="Network\Messages\RemoveMessage.cs" />
     <Compile Include="Network\Messages\SyncFilmsMessage.cs" />
     <Compile Include="Network\ServerSide.cs" />
     <Compile Include="ServerForm.cs">
@@ -75,9 +80,7 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="Form1.resx">
-      <DependentUpon>ServerForm.cs</DependentUpon>
-    </EmbeddedResource>
+    <Compile Include="Timers\KeepNetworkAlive.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -87,6 +90,9 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="ServerForm.resx">
+      <DependentUpon>ServerForm.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

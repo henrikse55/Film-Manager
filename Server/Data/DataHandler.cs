@@ -10,24 +10,22 @@ namespace Server.Data
 {
     class DataHandler
     {
-        private SqlConnection connection = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\Elias\Source\Repos\Film-Manager\Server\Data\DataHolder.mdf;Integrated Security=True");
+        private String connString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=" + 
+            Environment.CurrentDirectory + @"\Data\DataHolder.mdf;Integrated Security=True";
 
         public enum Columns
         {
-            Films, Genre, Description, Location
-        }
-
-        public void Connect()
-        {
-            try { connection.Open(); } catch { }
+            Name, Genre, Description, Location
         }
 
         //Add ny row til tabel funktion
-        public void AddCommand(string films, string genre, string description, string location)
+        public Task<AsyncSQLResult> AddCommand(string films, string genre, string description, string location)
         {
-            Connect();
-            using (SqlCommand command = new SqlCommand("INSERT INTO Films (Films, Genre, Description, Location)  VALUES (@Films, @Genre, @Description, @Location)", connection))
+            using (SqlConnection conn = new SqlConnection(connString))
+            using (SqlCommand command = new SqlCommand("INSERT INTO Films (Name, Genre, Description, Location)  VALUES (@Films, @Genre, @Description, @Location)", conn))
             {
+                conn.Open();
+
                 command.Parameters.AddWithValue("@Films", films);
                 command.Parameters.AddWithValue("@Genre", genre);
                 command.Parameters.AddWithValue("@Description", description);
@@ -35,86 +33,82 @@ namespace Server.Data
 
                 command.ExecuteNonQuery();
             }
-            connection.Close();
+            Program.ServerForm.UpdateMovieCount();
+
+            return Task.FromResult(AsyncSQLResult.Succeful);
         }
 
         //Delete fra tabel funktion
-        public void DeleteCommand(int id)
+        public Task<AsyncSQLResult> DeleteCommand(int id)
         {
-            Connect();
-            using (SqlCommand command = new SqlCommand("DELETE FROM Films WHERE Id=@ID", connection))
+            using (SqlConnection conn = new SqlConnection(connString))            
+            using (SqlCommand command = new SqlCommand("DELETE FROM Films WHERE Id=@ID", conn))
             {
+                conn.Open();
+
                 command.Parameters.AddWithValue("@ID", id);
 
                 command.ExecuteNonQuery();
+                Program.ServerForm.UpdateMovieCount();
+
+                return Task.FromResult(AsyncSQLResult.Succeful);
             }
-            connection.Close();
         }
 
         //Hent tabel data
-        public DataTable DataReader()
+        public Task<DataTable> DataReader()
         {
-            try
+            SqlDataReader reader = null;
+            using (SqlConnection conn = new SqlConnection(connString))
+            using (SqlCommand command = new SqlCommand("SELECT * FROM Films", conn))
             {
-                Connect();
-                SqlDataReader reader = null;
-                using (SqlCommand command = new SqlCommand("SELECT * FROM Films", connection))
+                conn.Open();
+                using (reader = command.ExecuteReader())
                 {
-                    using (reader = command.ExecuteReader())
+                    using (DataTable table = new DataTable("Temp"))
                     {
-                        using (DataTable table = new DataTable("Temp"))
-                        {
-                            table.Load(reader);
-                            connection.Close();
-                            return table;
-                        }
+                        table.Load(reader);
+                        reader.Close();
+                        conn.Close();
+                        return Task.FromResult(table);
                     }
                 }
             }
-            catch { }
-
-            return null;
         }
 
         //Opdatere tablet
-        public void UpdateTabel(Columns column, string Data, int Id)
+        public Task<AsyncSQLResult> UpdateTabel(Columns column, string Data, int Id)
         {
-            try
+            using (SqlConnection conn = new SqlConnection(connString))
+            using (SqlCommand command = new SqlCommand("", conn))
             {
-                Connect();
-                using (SqlCommand command = new SqlCommand("", connection))
+                conn.Open();
+                switch (column)
                 {
-                    switch(column)
-                    {
-                        case Columns.Films:
-                            command.CommandText = "UPDATE FILMS SET Films=@FILMTITLE WHERE Id=@ID";
-                            break;
-                        case Columns.Genre:
-                            command.CommandText = "UPDATE FILMS SET Genre=@GENRE WHERE Id=@ID";
-                            break;
-                        case Columns.Description:
-                            command.CommandText = "UPDATE FILMS SET Description=@DESCRIPTION WHERE Id=@ID";
-                            break;
-                        case Columns.Location:
-                            command.CommandText = "UPDATE FILMS set Location=@LOCATION WHERE Id=@ID";
-                            break;
-                    }
-                    Console.WriteLine("Hej");
-
-                    command.Parameters.AddWithValue("@FILMSTITLE", Data);
-                    command.Parameters.AddWithValue("@GENRE", Data);
-                    command.Parameters.AddWithValue("@DESCRIPTION", Data);
-                    command.Parameters.AddWithValue("@LOCATION", Data);
-                    command.Parameters.AddWithValue("@ID", Id);
-
-                    command.ExecuteNonQuery();
+                    case Columns.Name:
+                        command.CommandText = "UPDATE FILMS SET Name=@FILMTITLE WHERE Id=@ID";
+                        break;
+                    case Columns.Genre:
+                        command.CommandText = "UPDATE FILMS SET Genre=@GENRE WHERE Id=@ID";
+                        break;
+                    case Columns.Description:
+                        command.CommandText = "UPDATE FILMS SET Description=@DESCRIPTION WHERE Id=@ID";
+                        break;
+                    case Columns.Location:
+                        command.CommandText = "UPDATE FILMS set Location=@LOCATION WHERE Id=@ID";
+                        break;
                 }
-            } catch
-            {
-                throw;
-            }
 
-            connection.Close();
+                command.Parameters.AddWithValue("@FILMTITLE", Data);
+                command.Parameters.AddWithValue("@GENRE", Data);
+                command.Parameters.AddWithValue("@DESCRIPTION", Data);
+                command.Parameters.AddWithValue("@LOCATION", Data);
+                command.Parameters.AddWithValue("@ID", Id);
+
+                command.ExecuteNonQuery();
+
+                return Task.FromResult(AsyncSQLResult.Succeful);
+            }
         }
     }
 }

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 
 using Server.Interfaces;
+using System.Threading.Tasks;
 
 namespace Server.Network
 {
@@ -21,16 +22,20 @@ namespace Server.Network
             Messages.AddRange(Message);
         }
 
-        public void FindCommand(MessageContainer network)
+        public async Task FindCommand(MessageContainer network)
         {
-            foreach (IMessage command in Messages)
-            {
-                if (command.Name.ToUpper().Equals(network.Message.ToUpper()))
-                {
-                    Console.WriteLine("Found Message");
-                    command.Run(network.args, network.Client);
-                }
-            }
+            //foreach (IMessage command in Messages)
+            //{
+            //    if (command.Name.ToUpper().Equals(network.Message.ToUpper()))
+            //    {
+            //        command.Run(network.args, network.Client);
+            //    }
+            //}
+
+            IMessage _command = (from _com in Messages where _com.Name.ToUpper().Equals(network.Message.ToUpper()) select _com).SingleOrDefault();
+
+            if (_command != null)
+                await _command.Run(network.args, network.Client);
         }
     }
 }

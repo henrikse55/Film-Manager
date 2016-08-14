@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace Client.Other
 {
+    [Serializable]
     public class Filter
     {
         private String _Name;

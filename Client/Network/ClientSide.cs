@@ -9,16 +9,20 @@ using System.Threading;
 using Client.Network;
 using Shared.Network;
 using System.Windows.Forms;
+using Client.Forms;
+using System.Threading.Tasks;
 
 namespace Client.Network
 {
     public class ClientSide
     {
+        private ServerFinderForm finderForm = new ServerFinderForm();
         public String Ip = Properties.Settings.Default.ServerIP;
         public int Port = Properties.Settings.Default.ServerPort;
         private Boolean _Quitting = false;
         public Boolean _isLoggedin = false;
         private Socket client;
+        private StateObject state;
 
         private static ManualResetEvent ConnectDone = new ManualResetEvent(false);
         private static ManualResetEvent ReciveDone = new ManualResetEvent(false);
@@ -29,26 +33,56 @@ namespace Client.Network
             get { return this; }
         }
 
-        public void Init()
+        Object test = new object();
+        public async void Init()
         {
             try
             {
                 IPAddress ipAddress = IPAddress.Parse(Ip);
-                IPEndPoint endIP = new IPEndPoint(ipAddress, Port);
-
                 client = new Socket(ipAddress.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
-                int i = 0;
-                do
+
+                connect(Ip);  
+
+                if (!client.Connected)
                 {
-                    ConnectDone.Reset();
-                    client.BeginConnect(IPAddress.Parse(Ip), Port, new AsyncCallback(onConnectionCallBack), client);
-                    ConnectDone.WaitOne();
-                    i++;
-                } while (!client.Connected & i < 10);
+                    MessageBox.Show("Sorry! \n We were unable to connect you to the server\n pleas go to the settings menu and change the IP to the propper one \n this application will shutdown right after.");
+                }
+                else
+                {
+                    Program.Network.Send(Program.CreateNetworkMessage("SendData"));
+                }
+                Program.clientform.HideProgress(false);
             }
             catch (Exception e)
             {
-                Console.WriteLine("Error: " + e.Message);
+                //Console.WriteLine("Error: " + e.Message);
+                //await Program.logger.CreateCrashLog(e.Message, e.Data);
+                throw;
+            }
+        }
+
+        public void connect(string _Ip)
+        {
+            try
+            {
+                int i = 0;
+                int TimeOutLimit = 10;
+                Program.clientform.SetProgressMax(TimeOutLimit);
+
+                do
+                {
+                    Console.WriteLine("Attempt connection");
+                    ConnectDone.Reset();
+                    client.BeginConnect(new IPEndPoint(IPAddress.Parse(_Ip), Port), new AsyncCallback(onConnectionCallBack), client);
+                    ConnectDone.WaitOne();
+                    i++;
+                    Program.clientform.IncrementProgress(1);
+                } while (!client.Connected & i < TimeOutLimit);
+                Console.WriteLine("Connected");
+            }
+            catch
+            {
+                throw;
             }
         }
 
@@ -79,7 +113,7 @@ namespace Client.Network
             try
             {
 
-                StateObject state = (StateObject)ar.AsyncState;
+                state = (StateObject)ar.AsyncState;
 
                 int BytesRec = state.socket.EndReceive(ar);
                 String Message = BytesToString(state.buffer, BytesRec);
@@ -89,18 +123,21 @@ namespace Client.Network
                 var argsTemp = temp.ToList();
                 argsTemp.RemoveAt(0);
 
-
-                state.socket.BeginReceive(state.buffer, 0, state.buffer.Length, 0, new AsyncCallback(onRecive), state);
-
                 MessageContainer container = new MessageContainer(temp[0], argsTemp.ToArray(), state.socket);
                 Program.messageHandler.FindCommand(container);
 
+                RestartConnection();
             }
-            catch
+            catch (ObjectDisposedException)
             {
 
             }
             
+        }
+
+        public void RestartConnection()
+        {
+            state.socket.BeginReceive(state.buffer, 0, state.buffer.Length, 0, new AsyncCallback(onRecive), state);
         }
         public void shutdown()
         {
@@ -108,6 +145,7 @@ namespace Client.Network
             try
             {
                 SendDone.WaitOne();
+                Send("Shutdown");
                 client.Shutdown(SocketShutdown.Both);
                 client.Close();
             }
@@ -119,9 +157,16 @@ namespace Client.Network
 
         public void Send(String text)
         {
-            byte[] BytesToSend = StringToBytes(text);
+            try
+            {
+                byte[] BytesToSend = StringToBytes(text);
 
-            client.BeginSend(BytesToSend, 0,BytesToSend.Length, 0, new AsyncCallback(SendCallBack), client);
+                client.BeginSend(BytesToSend, 0, BytesToSend.Length, 0, new AsyncCallback(SendCallBack), client);
+            }
+            catch
+            {
+                //throw;
+            }
         }
 
         private void SendCallBack(IAsyncResult ar)

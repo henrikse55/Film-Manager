@@ -8,6 +8,7 @@ using System.Net.Sockets;
 using System.Collections;
 using System.Threading;
 using Shared.Network;
+using System.Threading.Tasks;
 
 namespace Server.Network
 {
@@ -18,7 +19,7 @@ namespace Server.Network
         private Socket server;
 
         private ManualResetEvent AllDone = new ManualResetEvent(false);
-
+        
         public void Init()
         {
             IPAddress ipAddress = IPAddress.Any;
@@ -29,7 +30,6 @@ namespace Server.Network
                 server = new Socket(ipAddress.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
                 server.Bind(remoteEP);
                 server.Listen(4);
-
                 while (true)
                 {
                     AllDone.Reset();
@@ -50,15 +50,11 @@ namespace Server.Network
             Socket client = Listner.EndAccept(ar);
 
             Clients.Add(client);
+            Program.ServerForm.UpdateClientCount();
 
             StateObject state = new StateObject(client);
 
             client.BeginReceive(state.buffer, 0, state.buffer.Length,0 , new AsyncCallback(onDataRecived), state);
-        }
-
-        public Socket getSocketByIP(String IP)
-        {
-            return (from socket in Clients where socket.RemoteEndPoint.ToString().Equals(IP) select socket).SingleOrDefault(null);
         }
 
         public List<Socket> ClientList
@@ -66,12 +62,13 @@ namespace Server.Network
             get { return Clients; }
         }
 
-        public void keepAlive()
+        public Task keepAlive()
         {
             Clients.ForEach(x => Send(x, "HeartBeat".ToUpper()));
+            return Task.FromResult(5);
         }
 
-        private void onDataRecived(IAsyncResult ar)
+        private async void onDataRecived(IAsyncResult ar)
         {
             try
             {
@@ -84,6 +81,7 @@ namespace Server.Network
                     Clients.Remove(state.socket);
                     state.socket.Shutdown(SocketShutdown.Both);
                     state.socket.Close();
+                    Program.ServerForm.UpdateClientCount();
                 }
                 else
                 {
@@ -93,7 +91,7 @@ namespace Server.Network
 
                     MessageContainer container = new MessageContainer(temp, args.ToArray(), state.socket);
 
-                    Program.messageHandler.FindCommand(container);
+                    await Program.messageHandler.FindCommand(container);
 
                     //if(!temp.Equals("SendFile"))
                     state.socket.BeginReceive(state.buffer, 0, state.buffer.Length, 0, new AsyncCallback(onDataRecived), state);
@@ -104,6 +102,7 @@ namespace Server.Network
             {
                 StateObject state = (StateObject)ar.AsyncState;
                 Clients.Remove(state.socket);
+                //throw;
             }
         }
 
@@ -163,5 +162,6 @@ namespace Server.Network
             GC.SuppressFinalize(this);
         }
         #endregion
+
     }
 }

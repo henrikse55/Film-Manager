@@ -1,22 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Threading;
+using System.IO;
 using System.Windows.Forms;
-
 using Client.Other;
-using static System.Windows.Forms.ListBox;
+using System.Runtime.Serialization.Formatters.Binary;
 
 namespace Client.Forms
 {
     public partial class Search : Form
     {
         private List<Filter> filters = new List<Filter>();
+        //private Dictionary<Filter, Brush> _filters = new Dictionary<Filter, Brush>();
         private DataTable FilmsInList = new DataTable("FilmsFound");
         private bool _EditFilter = false;
 
@@ -25,6 +22,9 @@ namespace Client.Forms
             InitializeComponent();
             IncludeCheckBox.Checked = true;
             CaseSensetiveCheckBox.Checked = true;
+
+            if (!Directory.Exists(@"Filters\"))
+                Directory.CreateDirectory(@"Filters\");
         }
 
         private void IncludeCheckBox_CheckedChanged(object sender, EventArgs e)
@@ -79,22 +79,21 @@ namespace Client.Forms
                     _EditFilter = false;
                 }
             }
-
-            updateFilms();
         }
 
         public void CreateFilter()
         {
+            FilterList.ClearSelected();
             for (int x = 0; x < filters.Count; x++)
             {
-                Filter f = filters[x];
+                Filter f = filters.ToArray()[x];
                 for (int i = 0; i < FilterList.SelectedItems.Count; i++)
                 {
                     String Name = FilterList.SelectedItems[i].ToString();
                     if (f.Name.Equals(Name))
                     {
                         filters.Remove(f);
-                        FilterList.Items.Remove(Name);
+                        FilterList.Items.Remove(FilterList.SelectedItems[i]);
                     }
                 }
             }
@@ -106,8 +105,35 @@ namespace Client.Forms
             filter.ToApply = ColumnBox.SelectedItem.ToString();
             filter.Text = TextToCompare.Text;
             filters.Add(filter);
-            FilterList.Items.Add(filter.Name);
+            addToList(filter.Name);
             ResetFields();
+
+            try
+            {
+                String FilterDir = @".\Filters\" + filter.Name;
+                using (Stream stream = new FileStream(FilterDir, FileMode.Create, FileAccess.ReadWrite, FileShare.None))
+                {
+                    BinaryFormatter formater = new BinaryFormatter();
+                    formater.Serialize(stream, filter);
+                    stream.Close();
+                }
+            }
+            catch (IOException)
+            {
+                var opinion = MessageBox.Show("There is alrady a filter with this name\n would you like to overwrite it?");
+                switch (opinion)
+                {
+                    case DialogResult.Yes:
+                        String FilterDir = @".\Filters\" + filter.Name;
+                        using (Stream stream = new FileStream(FilterDir, FileMode.Truncate, FileAccess.ReadWrite, FileShare.None))
+                        {
+                            BinaryFormatter formater = new BinaryFormatter();
+                            formater.Serialize(stream, filter);
+                            stream.Close();
+                        }
+                        break;
+                }
+            }
         }
 
         private void ResetFields()
@@ -120,19 +146,48 @@ namespace Client.Forms
             ColumnBox.SelectedIndex = 0;
         }
 
+        private void addToList(String Filter)
+        {
+            foreach (String _ in FilterList.Items)
+            {
+                if (_.Equals(Filter))
+                {
+                    return;
+                }
+            }
+            FilterList.Items.Add(Filter);
+        }
+
         private void Search_Load(object sender, EventArgs e)
         {
             DataColumn[] columns = new DataColumn[Program.clientform.DataTable.Columns.Count];
             Program.clientform.DataTable.Columns.CopyTo(columns, 0);
             columns.ToList().ForEach(x => { ColumnBox.Items.Add(x.ColumnName); FilmsInList.Columns.Add(x.ColumnName); });
             FilmsFound.DataSource = FilmsInList;
+            ColumnBox.SelectedIndex = 0;
+            ColumnBox.BackColor = Color.Gray;
+            this.Invalidate();
+
+            String FiltersDir = @".\Filters\";
+            var files = Directory.GetFiles(FiltersDir);
+            files.ToList().ForEach((Action<string>)(file => {
+                using (Stream stream = new FileStream(file, FileMode.Open, FileAccess.ReadWrite, FileShare.None))
+                {
+                    BinaryFormatter formatter = new BinaryFormatter();
+                    Filter Filter = (Filter)formatter.Deserialize(stream);
+                    filters.Add(Filter);
+                    this.FilterList.Items.Add(Filter.Name);
+                }
+            }));
+            
         }
 
         private void FilterList_SelectedIndexChanged(object sender, EventArgs e)
         {
             ListBox list = (ListBox)sender;
             EditFilter.Enabled = list.SelectedItems.Count == 1 ? true : false;
-            RemoveFilter.Enabled = list.SelectedItems.Count > 0 ? true : false; 
+            RemoveFilter.Enabled = list.SelectedItems.Count > 0 ? true : false;
+            FilterStateButton.Enabled = list.SelectedItems.Count > 0 ? true : false;
 
         }
 
@@ -140,13 +195,11 @@ namespace Client.Forms
         {
             FilmsInList.Clear();
             DataTable films = Program.clientform.DataTable;
-            CheckProgress.Maximum = films.Rows.Count;
-            CheckProgress.Value = 0;
             films.AsEnumerable().ToList().ForEach(film =>
             {
-                CheckProgress.Increment(1);
-                filters.ForEach(filter =>
+                filters.ToList().ForEach(filter =>
                 {
+                    if(!filter.isDisabled)
                     switch (filter.filterOption)
                     {
                         case filterOption.Include:
@@ -195,27 +248,16 @@ namespace Client.Forms
 
         }
 
-        private void TestButton_Click(object sender, EventArgs e)
+        private void SearchButton_Click(object sender, EventArgs e)
         {
             updateFilms();
         }
 
         private void RemoveFilter_Click(object sender, EventArgs e)
         {
-            for (int x = 0; x < filters.Count; x++)
-            {
-                Filter filter = filters[x];
-                for (int i = 0; i < FilterList.SelectedItems.Count; i++)
-                {
-                    String Name = FilterList.SelectedItems[i].ToString();
-                    if (filter.Name.Equals(Name))
-                    {
-                        filters.Remove(filter);
-                        FilterList.Items.Remove(Name);
-                    }
-                }
-            }
-
+            File.Delete(@".\Filters\" + FilterList.SelectedItem);
+            FilterList.Items.Remove(FilterList.SelectedItem);
+            filters.Remove(filters.Find(x => x.Name.Equals(FilterList.SelectedItem)));
             updateFilms();
         }
 
@@ -223,13 +265,13 @@ namespace Client.Forms
         {
             foreach (Filter filter in filters)
             {
-                if (filter.Name.Equals(FilterList.SelectedItem))
+                if (filter.Name.Equals(FilterList.SelectedItems[0]))
                 {
                     FilterNameTextBox.Text = filter.Name;
                     IncludeCheckBox.Checked = filter.filterOption == filterOption.Include ? true : false;
                     ExcludeCheckBox.Checked = filter.filterOption == filterOption.Exclude ? true : false;
                     CaseSensetiveCheckBox.Checked = filter.isCaseSenestive;
-                    ColumnBox.SelectedValue = filter.ToApply;
+                    ColumnBox.SelectedIndex = ColumnBox.Items.IndexOf(filter.ToApply);
                     TextToCompare.Text = filter.Text;
                     _EditFilter = true;
                 }
@@ -239,6 +281,48 @@ namespace Client.Forms
         private void ColumnBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             enableSaveButton();
+        }
+
+        private void Cancel_Click(object sender, EventArgs e)
+        {
+            DialogResult dialogResult = MessageBox.Show("Are you sure you want to exit?", "", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+            if (dialogResult == DialogResult.Yes)
+            {
+                this.Close();
+            }
+        }
+
+        private void FilmsFound_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            Editor edit = new Editor(FilmsFound);
+            edit.ShowDialog();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            filters.ToList().ForEach(filter =>
+            {
+                foreach (String s in FilterList.SelectedItems)
+                {
+                    if (filter.Name.Equals(s))
+                    {
+                        filter.isDisabled = !filter.isDisabled;
+                        FilterList.Invalidate();
+                    }
+                }
+            });
+        }
+
+        private void FilterList_DrawItem(object sender, DrawItemEventArgs e)
+        {
+            e.DrawBackground();
+            if (FilterList.Items.Count != 0)
+            {
+                var filter = filters[e.Index];
+                Brush brush = !filter.isDisabled ? Brushes.Green : Brushes.Red;
+
+                e.Graphics.DrawString(filter.Name, e.Font, brush, e.Bounds, StringFormat.GenericDefault);
+            }
         }
     }
 }
