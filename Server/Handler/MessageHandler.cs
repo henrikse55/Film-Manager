@@ -24,14 +24,6 @@ namespace Server.Network
 
         public async Task FindCommand(MessageContainer network)
         {
-            //foreach (IMessage command in Messages)
-            //{
-            //    if (command.Name.ToUpper().Equals(network.Message.ToUpper()))
-            //    {
-            //        command.Run(network.args, network.Client);
-            //    }
-            //}
-
             IMessage _command = (from _com in Messages where _com.Name.ToUpper().Equals(network.Message.ToUpper()) select _com).SingleOrDefault();
 
             if (_command != null)
