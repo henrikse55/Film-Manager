@@ -11,36 +11,28 @@ namespace Manager_Networker.Containers
      public class Client
      {
           String IP = String.Empty;
-          int Port = 0;
+          int __Port = 0;
 
           public Client(String _IP, int _Port)
           {
                IP = _IP;
-               Port = _Port;
+               __Port = _Port;
           }
 
           [DataMember]
-          string getIpString
+          string Ip
           {
                get { return IP; }
                set { IP = value; }
           }
 
           [DataMember]
-          IPAddress getAsIPAddress
+          int Port
           {
-               get { return convertToIPAddress(IP); }
+               get { return __Port; }
+               set { __Port = value; }
           }
 
-          public IPAddress convertToIPAddress(String IP)
-          {
-               IPAddress _temp = IPAddress.None;
-               bool temp = IPAddress.TryParse(IP, out _temp);
-               if (temp)
-               {
-                    return _temp;
-               }
-               return null;
-          }
+
      }
 }

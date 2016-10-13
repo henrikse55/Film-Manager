@@ -54,6 +54,8 @@
     <Compile Include="IManagerService.cs" />
     <Compile Include="ManagerService.svc.cs" />
     <Compile Include="Network\Broadcaster.cs" />
+    <Compile Include="Network\ClientManager.cs" />
+    <Compile Include="Network\Reciver.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

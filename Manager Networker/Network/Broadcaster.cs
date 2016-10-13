@@ -27,7 +27,7 @@ namespace Manager_Networker.Network
                     BroadcastClient.Send(BytesToSend, BytesToSend.Length, Ip);
                     BroadcastClient.Close();
                }
-               catch { }
+               catch { throw; }
                return Task.FromResult(0);
           }
      }
