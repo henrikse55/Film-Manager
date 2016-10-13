@@ -29,7 +29,6 @@ namespace Client.Handler
 
             if(_command != null)
             _command.Run(network.args);
-
         }
     }
 }

@@ -21,5 +21,8 @@ namespace Manager_Networker
 
           [OperationContract]
           void SendMessageTo(Client client, String Message);
+
+          [OperationContract]
+          void StartListening();
      }
 }
