@@ -22,10 +22,20 @@ namespace Manager_Networker.Network
                     Clients.Add(User, client);
           }
 
-          public Task addClientToDictionaryAsync()
+          public Client FindUserByName(String User)
           {
+               return (Client) Clients.Where(x => x.Key.Equals(User)).Select(x => x.Value).DefaultIfEmpty(null);
+          }
 
-               return Task.FromResult(0);
+          public bool RemoveByName(String user)
+          {
+               return Clients.Remove(user);
+          }
+
+          public bool RemoveByClient(Client cli)
+          {
+               String temp = Clients.Where(x => x.Value == cli).Select(x => x.Key).ToString();
+               return Clients.Remove(temp);
           }
      }
 }
