@@ -5,6 +5,7 @@ using System.Runtime.Serialization;
 using System.ServiceModel;
 using System.Text;
 using System.Diagnostics;
+using System.Threading;
 using System.Threading.Tasks;
 using Manager_Networker.Containers;
 using Manager_Networker.Network;
@@ -49,6 +50,16 @@ namespace Manager_Networker
           public void SendMessageTo(Client client, string Message)
           {
                
+          }
+
+          public void StartListening()
+          {
+               Thread ReciverThread = new Thread(async (x) =>
+               {
+                    Reciver reciver = new Reciver();
+                    await reciver.StartListening();
+               });
+               ReciverThread.Start();
           }
      }
 }

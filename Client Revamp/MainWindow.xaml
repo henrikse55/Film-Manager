@@ -19,13 +19,33 @@
           <Grid.RowDefinitions>
                <RowDefinition Height="20"/>
                <RowDefinition/>
+               <RowDefinition/>
           </Grid.RowDefinitions>
 
           <Menu>
+               <Menu.ItemsPanel>
+                    <ItemsPanelTemplate>
+                         <DockPanel HorizontalAlignment="Stretch"/>
+                    </ItemsPanelTemplate>
+               </Menu.ItemsPanel>
+               
                <MenuItem Header="_File">
                     <MenuItem Header="Options"/>
+                    <Separator/>
+                    <MenuItem Header="_About"></MenuItem>
+                    <Separator/>
+                    <MenuItem Header="_Exit"/>
+               </MenuItem>
+
+               <MenuItem Header="_Search">
+
+               </MenuItem>
+
+               <MenuItem Header="_Help" HorizontalAlignment="Right">
                </MenuItem>
           </Menu>
+
+          <Button Content="Test" Grid.Row="1" Margin="40" Click="Button_Click"/>
           
     </Grid>
 </Window>

@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.25807.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Server", "Server\Server.csproj", "{B84EB243-BCA6-4DA9-913B-49E70EBC7D95}"
 EndProject
@@ -12,6 +12,9 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Manager Networker", "Manager Networker\Manager Networker.csproj", "{9FB8F9BB-6DAA-48EE-A55A-1CFB1D71A4F9}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Client Revamp", "Client Revamp\Client Revamp.csproj", "{750DB47D-6B1A-40BE-9636-8B6F592C7543}"
+	ProjectSection(ProjectDependencies) = postProject
+		{9FB8F9BB-6DAA-48EE-A55A-1CFB1D71A4F9} = {9FB8F9BB-6DAA-48EE-A55A-1CFB1D71A4F9}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution

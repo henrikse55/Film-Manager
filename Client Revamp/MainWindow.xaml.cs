@@ -24,6 +24,11 @@ namespace Client_Revamp
           {
                InitializeComponent();
           }
+
+          private void Button_Click(Object sender, RoutedEventArgs e)
+          {
+               
+          }
      }
 
      public class Commands
