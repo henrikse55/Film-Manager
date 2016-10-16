@@ -17,9 +17,15 @@
           </Grid.ColumnDefinitions>
 
           <Grid.RowDefinitions>
-               <RowDefinition Height="25"/>
+               <RowDefinition Height="20"/>
                <RowDefinition/>
           </Grid.RowDefinitions>
+
+          <Menu>
+               <MenuItem Header="_File">
+                    <MenuItem Header="Options"/>
+               </MenuItem>
+          </Menu>
           
     </Grid>
 </Window>
