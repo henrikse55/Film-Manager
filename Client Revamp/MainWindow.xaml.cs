@@ -12,6 +12,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Client_Revamp.Forms;
+
 
 namespace Client_Revamp
 {
@@ -20,19 +22,38 @@ namespace Client_Revamp
      /// </summary>
      public partial class MainWindow : Window
      {
+          private OptionsMenu menu = new OptionsMenu();
           public MainWindow()
           {
                InitializeComponent();
           }
 
-          private void Button_Click(Object sender, RoutedEventArgs e)
+          private void CommandBinding_Close(object sender, ExecutedRoutedEventArgs e)
           {
-               
+               Environment.Exit(0);
+          }
+
+          private void CommandBinding_About(object sender, ExecutedRoutedEventArgs e)
+          {
+               //TODO Add About Form
+               throw new NotImplementedException("This feature ain't implemented yet.");
+          }
+
+          private void CommandBinding_Options(object sender, ExecutedRoutedEventArgs e)
+          {
+               menu.ShowDialog();
           }
      }
 
      public class Commands
      {
+          #region MainWindow Commands
+          public static readonly RoutedUICommand AboutCommand = new RoutedUICommand("About Command", "About", typeof(MainWindow));
+          public static readonly RoutedUICommand OptionsCommand = new RoutedUICommand("Options Command", "Options", typeof(MainWindow));
+          #endregion
 
+          #region Options Window and Pages
+          public static readonly RoutedUICommand SaveCommand = new RoutedUICommand("Save Command", "Save", typeof(OptionsMenu));
+          #endregion
      }
 }

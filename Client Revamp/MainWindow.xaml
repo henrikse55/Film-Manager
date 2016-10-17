@@ -8,8 +8,16 @@
         Title="Manager" Height="600" Width="525">
 
      <Window.CommandBindings>
-          
+          <CommandBinding Command="ApplicationCommands.Close" Executed="CommandBinding_Close"/>
+          <CommandBinding Command="local:Commands.AboutCommand" Executed="CommandBinding_About"/>
+          <CommandBinding Command="local:Commands.OptionsCommand" Executed="CommandBinding_Options"/>
+
      </Window.CommandBindings>
+
+     <Window.InputBindings>
+          <KeyBinding Key="F4" Modifiers="Alt" Gesture="ALT+F4" Command="ApplicationCommands.Close"/>
+          <KeyBinding Key="O" Modifiers="Ctrl+Alt" Gesture="Ctrl+Alt+O" Command="local:Commands.OptionsCommand"/>
+     </Window.InputBindings>
      
      <Grid>
           <Grid.ColumnDefinitions>
@@ -19,7 +27,7 @@
           <Grid.RowDefinitions>
                <RowDefinition Height="20"/>
                <RowDefinition/>
-               <RowDefinition/>
+               <RowDefinition Height="28"/>
           </Grid.RowDefinitions>
 
           <Menu>
@@ -28,13 +36,13 @@
                          <DockPanel HorizontalAlignment="Stretch"/>
                     </ItemsPanelTemplate>
                </Menu.ItemsPanel>
-               
+
                <MenuItem Header="_File">
-                    <MenuItem Header="Options"/>
+                    <MenuItem Header="Options" Command="local:Commands.OptionsCommand" InputGestureText="Ctrl+Alt+O"/>
                     <Separator/>
-                    <MenuItem Header="_About"></MenuItem>
+                    <MenuItem Header="_About" Command="local:Commands.AboutCommand"/>
                     <Separator/>
-                    <MenuItem Header="_Exit"/>
+                    <MenuItem Header="_Exit" Command="ApplicationCommands.Close" InputGestureText="ALT+F4"/>
                </MenuItem>
 
                <MenuItem Header="_Search">
@@ -45,7 +53,6 @@
                </MenuItem>
           </Menu>
 
-          <Button Content="Test" Grid.Row="1" Margin="40" Click="Button_Click"/>
-          
-    </Grid>
+          <Label Name="StatusLabel" Grid.Row="2" Content="Status: "/>
+     </Grid>
 </Window>

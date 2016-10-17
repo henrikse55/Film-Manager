@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.25807.0
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Server", "Server\Server.csproj", "{B84EB243-BCA6-4DA9-913B-49E70EBC7D95}"
 EndProject
@@ -9,12 +9,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Client", "Client\Client.csp
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "SharedCode", "test\SharedCode.shproj", "{36BD8320-08A1-44F0-BF35-A9241CC80AAF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Manager Networker", "Manager Networker\Manager Networker.csproj", "{9FB8F9BB-6DAA-48EE-A55A-1CFB1D71A4F9}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Client Revamp", "Client Revamp\Client Revamp.csproj", "{750DB47D-6B1A-40BE-9636-8B6F592C7543}"
-	ProjectSection(ProjectDependencies) = postProject
-		{9FB8F9BB-6DAA-48EE-A55A-1CFB1D71A4F9} = {9FB8F9BB-6DAA-48EE-A55A-1CFB1D71A4F9}
-	EndProjectSection
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
@@ -65,22 +60,6 @@ Global
 		{6CB8DA74-DFA3-4C57-928D-29CCCCE497D4}.Release|x64.Build.0 = Release|Any CPU
 		{6CB8DA74-DFA3-4C57-928D-29CCCCE497D4}.Release|x86.ActiveCfg = Release|Any CPU
 		{6CB8DA74-DFA3-4C57-928D-29CCCCE497D4}.Release|x86.Build.0 = Release|Any CPU
-		{9FB8F9BB-6DAA-48EE-A55A-1CFB1D71A4F9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9FB8F9BB-6DAA-48EE-A55A-1CFB1D71A4F9}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9FB8F9BB-6DAA-48EE-A55A-1CFB1D71A4F9}.Debug|ARM.ActiveCfg = Debug|Any CPU
-		{9FB8F9BB-6DAA-48EE-A55A-1CFB1D71A4F9}.Debug|ARM.Build.0 = Debug|Any CPU
-		{9FB8F9BB-6DAA-48EE-A55A-1CFB1D71A4F9}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{9FB8F9BB-6DAA-48EE-A55A-1CFB1D71A4F9}.Debug|x64.Build.0 = Debug|Any CPU
-		{9FB8F9BB-6DAA-48EE-A55A-1CFB1D71A4F9}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{9FB8F9BB-6DAA-48EE-A55A-1CFB1D71A4F9}.Debug|x86.Build.0 = Debug|Any CPU
-		{9FB8F9BB-6DAA-48EE-A55A-1CFB1D71A4F9}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9FB8F9BB-6DAA-48EE-A55A-1CFB1D71A4F9}.Release|Any CPU.Build.0 = Release|Any CPU
-		{9FB8F9BB-6DAA-48EE-A55A-1CFB1D71A4F9}.Release|ARM.ActiveCfg = Release|Any CPU
-		{9FB8F9BB-6DAA-48EE-A55A-1CFB1D71A4F9}.Release|ARM.Build.0 = Release|Any CPU
-		{9FB8F9BB-6DAA-48EE-A55A-1CFB1D71A4F9}.Release|x64.ActiveCfg = Release|Any CPU
-		{9FB8F9BB-6DAA-48EE-A55A-1CFB1D71A4F9}.Release|x64.Build.0 = Release|Any CPU
-		{9FB8F9BB-6DAA-48EE-A55A-1CFB1D71A4F9}.Release|x86.ActiveCfg = Release|Any CPU
-		{9FB8F9BB-6DAA-48EE-A55A-1CFB1D71A4F9}.Release|x86.Build.0 = Release|Any CPU
 		{750DB47D-6B1A-40BE-9636-8B6F592C7543}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{750DB47D-6B1A-40BE-9636-8B6F592C7543}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{750DB47D-6B1A-40BE-9636-8B6F592C7543}.Debug|ARM.ActiveCfg = Debug|Any CPU
