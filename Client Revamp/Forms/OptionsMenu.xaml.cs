@@ -32,9 +32,9 @@ namespace Client_Revamp.Forms
 
           private void Window_Initialized(object sender, EventArgs e)
           {
-               Pages.Add("General", new General());
+               Pages.Add("General", new General(this));
                Pages.Add("Network", new Network(this));
-               Pages.Add("Search", new Search());
+               Pages.Add("Search", new Search(this));
 
                RefreshPage();
           }
@@ -57,6 +57,8 @@ namespace Client_Revamp.Forms
           {
                if (Save != null)
                     Save.Invoke(this,null);
+
+               this.Close();
           }
 
           private void CommandBinding_Close(object sender, ExecutedRoutedEventArgs e)

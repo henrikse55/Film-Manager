@@ -58,7 +58,7 @@
                     </Grid.RowDefinitions>
 
                     <Label Content="Username:" VerticalAlignment="Center" HorizontalAlignment="Left"/>
-                    <TextBox Name="Username" Grid.Column="0" Margin="66,14,40,12" Grid.ColumnSpan="2"/>
+                    <TextBox Name="UsernameTextBox" Grid.Column="0" Margin="66,14,40,12" Grid.ColumnSpan="2"/>
 
                     <Grid Grid.Row="1" Grid.ColumnSpan="2">
                          <Grid.RowDefinitions>
@@ -71,16 +71,15 @@
                          <CheckBox Name="AutoScanCheckBox" VerticalAlignment="Center" HorizontalAlignment="Center" Content="Auto Scan" Grid.Row="1"/>
                     </Grid>
 
-                    <ComboBox Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2" VerticalAlignment="Center" SelectedIndex="0" ToolTip="What should happen when a manager attempts a connection?" SelectionChanged="ComboBox_SelectionChanged">
+                    <ComboBox Name="PromptLevelComboBox" Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2" VerticalAlignment="Center" SelectedIndex="0" ToolTip="What should happen when a manager attempts a connection?" SelectionChanged="ComboBox_SelectionChanged">
                          <ComboBoxItem Content="Prompt on connection"/>
                          <ComboBoxItem Content="Prompt on movie share"/>
                          <ComboBoxItem Content="Require authentication"/>
-                         <ComboBoxItem Content="Disable"/>
+                         <ComboBoxItem Content="Disable Feature"/>
                     </ComboBox>
 
                     <Label Name="WarningLabel" Grid.Row="3" Grid.ColumnSpan="3" VerticalAlignment="Top" Foreground="Red" Content="*Please remeber to add accounts in the security tab!" Visibility="Hidden"/>
                </Grid>
           </GroupBox>
-          <Button Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Center"/>
      </Grid>
 </Page>
