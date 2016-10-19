@@ -13,6 +13,8 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
+using Client_Revamp.Interfaces;
+
 namespace Client_Revamp.Forms.OptionPages
 {
      /// <summary>
@@ -20,9 +22,15 @@ namespace Client_Revamp.Forms.OptionPages
      /// </summary>
      public partial class General : Page
      {
-          public General()
+          public General(OptionsMenu menu)
           {
                InitializeComponent();
+               menu.Save += Menu_Save;
+          }
+
+          private void Menu_Save(object sender, EventArgs e)
+          {
+               
           }
      }
 }

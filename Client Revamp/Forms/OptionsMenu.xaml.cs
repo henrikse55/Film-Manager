@@ -12,26 +12,28 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using Client_Revamp.Forms.OptionPages;
+using Client_Revamp.Interfaces;
 
 namespace Client_Revamp.Forms
 {
      /// <summary>
      /// Interaction logic for OptionsMenu.xaml
      /// </summary>
-     public partial class OptionsMenu : Window
+     public partial class OptionsMenu : Window, ISave
      {
           Dictionary<String, Page> Pages = new Dictionary<string, Page>();
+
+          public event EventHandler Save;
 
           public OptionsMenu()
           {
                InitializeComponent();
-
           }
 
           private void Window_Initialized(object sender, EventArgs e)
           {
                Pages.Add("General", new General());
-               Pages.Add("Network", new Network());
+               Pages.Add("Network", new Network(this));
                Pages.Add("Search", new Search());
 
                RefreshPage();
@@ -53,7 +55,8 @@ namespace Client_Revamp.Forms
 
           private void CommandBinding_Save(object sender, ExecutedRoutedEventArgs e)
           {
-
+               if (Save != null)
+                    Save.Invoke(this,null);
           }
 
           private void CommandBinding_Close(object sender, ExecutedRoutedEventArgs e)

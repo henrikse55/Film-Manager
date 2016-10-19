@@ -99,6 +99,7 @@
     <Compile Include="Forms\OptionPages\General.xaml.cs">
       <DependentUpon>General.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Interfaces\ISave.cs" />
     <Compile Include="Forms\OptionPages\Network.xaml.cs">
       <DependentUpon>Network.xaml</DependentUpon>
     </Compile>

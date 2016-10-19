@@ -20,9 +20,25 @@ namespace Client_Revamp.Forms.OptionPages
      /// </summary>
      public partial class Network : Page
      {
-          public Network()
+          public Network(OptionsMenu menu)
           {
                InitializeComponent();
+               menu.Save += Menu_Save;
+          }
+
+          private void Menu_Save(object sender, EventArgs e)
+          {
+              
+          }
+
+          private void Page_Initialized(object sender, EventArgs e)
+          {
+
+          }
+
+          private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+          {
+
           }
      }
 }
